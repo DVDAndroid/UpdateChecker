@@ -2,12 +2,16 @@ package com.dvd.updatechecker;
 
 import java.util.Random;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,8 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class MainActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
@@ -81,6 +83,22 @@ public class MainActivity extends PreferenceActivity implements
 			if (!Build.MODEL.equals("Nexus 5")) {
 				Toast.makeText(getApplicationContext(),
 						getString(R.string.noNexus5), Toast.LENGTH_LONG).show();
+			}
+
+			if (isPackageInstalled(Utils.TSB_1)
+					|| isPackageInstalled(Utils.TSB_2)) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						MainActivity.this);
+
+				alertDialogBuilder.setTitle(getApplicationContext().getString(
+						R.string.warn));
+				alertDialogBuilder.setMessage(getApplicationContext()
+						.getString(R.string.module_ok));
+				alertDialogBuilder.setPositiveButton(android.R.string.ok, null);
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.setCancelable(false);
+				alertDialog.show();
+
 			}
 
 			prefs.edit().putBoolean("welcome", false).commit();
@@ -245,6 +263,16 @@ public class MainActivity extends PreferenceActivity implements
 			random++;
 		}
 		return random;
+	}
+
+	private boolean isPackageInstalled(String packagename) {
+		PackageManager pm = getPackageManager();
+		try {
+			pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+			return true;
+		} catch (NameNotFoundException e) {
+			return false;
+		}
 	}
 
 	@Override

@@ -59,7 +59,10 @@ public class Utils {
 	public static String KEY_SYS_INFO_XPOSED = "xposed";
 	public static String KEY_SYS_INFO_BUSYBOX = "busybox";
 
-	static int duration = Toast.LENGTH_SHORT;
+	public static String TSB_1 = "com.mohammadag.colouredstatusbar";
+	public static String TSB_2 = "com.woalk.apps.xposed.ttsb";
+
+	public static int duration = Toast.LENGTH_SHORT;
 
 	public static boolean hasRoot() {
 

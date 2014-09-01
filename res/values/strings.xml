@@ -99,5 +99,7 @@
     <string name="sysui">System UI mode</string>
     <string name="sysui_plat">System UI mode (in the platlogo)</string>
     <string name="restart">Restart</string>
+    <string name="warn"><b>WARNING!</b></string>
+    <string name="module_ok">HAVE BEEN DETECTED SOME XPOSED MODULES WHICH MODIFY THE COLOR OF THE STATUS BAR. THESE CAN JOIN IN CONFLICT WITH THIS APP.</string>
     
 </resources>

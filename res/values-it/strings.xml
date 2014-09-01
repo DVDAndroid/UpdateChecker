@@ -92,4 +92,6 @@
     <string name="sysui">System UI mode</string>
     <string name="sysui_plat">System UI mode (platlogo)</string>
     <string name="restart">Riavvia</string>
+    <string name="warn"><b>ATTENZIONE!</b></string>
+    <string name="module_ok">SONO STATI RILEVATI DEI MODULI XPOSED I QUALI MODIFICANO IL COLORE DELLA STATUS BAR. QUESTI POSSONO ENTRARE IN CONFLITTO CON QUESTA APP.</string>
 </resources>
