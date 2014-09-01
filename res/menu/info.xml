@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dvd.updatechecker.InfoActivity" >
+    
+    <item
+        android:id="@+id/action_add"
+        android:showAsAction="withText"
+        android:title="@string/add_shortcut"
+        android:orderInCategory="1" />
+	
+	<item
+	    android:id="@+id/action_remove"
+	    android:title="@string/remove_shortcut"
+        android:showAsAction="withText"
+	    android:orderInCategory="2"/>
+		
+	<item
+	    android:id="@+id/sys_info"
+	    android:title="@string/title_activity_sys_info"
+        android:showAsAction="always|withText"
+        android:icon="@android:drawable/android:ic_menu_help"
+	    android:orderInCategory="4" />
+	
+	<item
+	    android:id="@+id/sett"
+	    android:icon="@android:drawable/android:ic_menu_manage"
+	    android:title="@string/settings"
+	    android:showAsAction="always|withText" />
+	
+	
+</menu>

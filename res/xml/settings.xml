@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:title="@string/cat_sel_icon">
+        
+        <ListPreference
+            android:summary="@string/device_info_default"
+            android:title="@string/select_icon"
+            android:key="select_icons"
+            android:enabled="true"
+            android:dialogIcon="@android:drawable/android:ic_menu_manage"
+            android:entryValues="@array/listValuesicons"
+            android:entries="@array/listArrayicons"
+            android:dialogLayout="@layout/icon_sel"
+            android:defaultValue="2"/>
+
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="@string/set_ver_icon">
+        
+            <CheckBoxPreference
+                android:title="@string/hide_icon"
+                android:summaryOn="@string/hide_icon_toast_false"
+                android:key="hide_icon"
+                android:summaryOff="@string/hide_icon_toast_true"/>
+            
+            <CheckBoxPreference
+                android:title="@string/no_add"
+                android:summaryOff="@string/no_add_toast_false"
+                android:key="no_add"
+                android:summaryOn="@string/no_add_toast_true"/>
+            
+        </PreferenceCategory>
+    <PreferenceCategory android:title="@string/color_sett">
+        
+        <CheckBoxPreference
+            android:title="@string/enable_random_color"
+            android:summary="@string/enable_random_color_summary"
+            android:selectable="true"
+            android:key="random_colors"
+            android:enabled="true" android:defaultValue="false"/>
+        
+        <CheckBoxPreference
+            android:title="@string/enable_random_color_act"
+            android:summary="@string/enable_random_color_act_summary"
+            android:selectable="true"
+            android:key="random_colors_act"
+            android:enabled="true" android:defaultValue="false"/>
+    </PreferenceCategory>
+    
+</PreferenceScreen>

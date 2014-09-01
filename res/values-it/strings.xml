@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Verifica aggiornamenti</string>
+    <string name="noNexus5">Attenzione! Nexus 5 non rilevato! Questa app è ottimizata per Nexus 5!</string>
+    <string name="choose_color" tools:ignore="TypographyEllipsis">Scegli colore...</string>
+    <string name="title_activity_settings" tools:ignore="TypographyEllipsis">Impostazioni...</string>
+    <string name="title_activity_update" tools:ignore="TypographyEllipsis">Verifica...</string>
+    <string name="title_activity_info">Info</string>
+    <string name="title_activity_sys_info">Info sistema</string>
+    <string name="vers">Versione</string>    
+    <string name="verifica">Verifica!</string>
+    <string name="action_info">Info</string>
+    <string name="action_exit">Esci</string>    
+    <string name="opensources">Librerie Open Source</string>
+    <string name="sysbartint">SystemBarTint</string>
+    <string name="info_sysbartint">by jgilfelt</string>
+    <string name="credits">Crediti</string>
+    <string name="made_by">Creata da</string>
+    <string name="my_name">Davide Maggio</string>    
+	<string name="add_shortcut">Aggiungi collegamenti</string>
+    <string name="remove_shortcut">Rimuovi collegamenti</string>
+    <string name="settings">Impostazioni</string>
+    <string name="add_short_text">La scorciatoia %1$s è stata aggiunta</string>
+    <string name="curr_ver">Versione corrente:</string>
+    <string name="device_info_default">Sconosciuto</string>
+    <string name="model">Numero modello</string>
+    <string name="device">Nome in codice telefono</string>
+    <string name="manufacturer">Produttore</string>
+    <string name="product">Prodotto</string>
+    <string name="serial">Seriale</string>
+    <string name="ver_rel">Versione di Android</string>
+    <string name="ver_codename">Versione codename</string>
+    <string name="ver_incr">Versione incrementale</string>
+    <string name="time">Tempo</string>
+    <string name="type">Tipo</string>
+    <string name="user">Utente</string>
+    <string name="general_info">Info generali</string>
+    <string name="other_info">Altre info</string>
+    <string name="radio">Radio - Versione banda di base</string>
+    <string name="id">ID - Numero build</string>    
+	<string name="holo_blue_light">Holo blu chiaro</string>
+    <string name="holo_blue_bright">Holo blu acceso</string>
+    <string name="holo_blue_dark">Holo blu scuro</string>    
+    <string name="holo_green_light">Holo verde chiaro</string>
+    <string name="holo_green_dark">Holo verde scuro</string>    
+    <string name="holo_red_light">Holo rosso chiaro</string>
+    <string name="holo_red_dark">Holo rosso scuro</string>    
+    <string name="holo_purple">Holo porpora</string>    
+    <string name="holo_orange_light">Holo arancione chiaro</string>
+    <string name="holo_orange_dark">Holo arancione scuro</string>    
+    <string name="this_color">Il colore corrente è</string>
+    <string name="nd">funzione non ancora disp.</string>    
+    <string name="welcome">Benvenuto!</string>    
+    <string name="set_ver_icon">Preferenze icona verifica</string>
+    <string name="curr_icon">L\'icona corrente è di</string>
+    <string name="hide_icon">Nascondi icona sul launcher</string>
+    <string name="no_add">Aggiungi collegamento sulla homescreen</string>
+    <string name="hide_icon_toast_true">L\'icona è visibile nel launcher</string>
+    <string name="hide_icon_toast_false">L\'icona non è visibile nel launcher</string>
+    <string name="no_add_toast_true">L\'icona verrà aggiunta sulla homescreen</string>
+    <string name="no_add_toast_false">L\'icona non verrà aggiunta sulla homescreen</string>   
+    <string name="cat_sel_icon">Impostazioni icone</string>
+    <string name="select_icon" tools:ignore="TypographyEllipsis">Seleziona icona...</string>   
+    <string name="prev">Anteprima:</string>    
+    <string name="color_sett">Impostazioni colori</string>
+    <string name="o_act_bar">Applica colori solo sulla ActionBar</string>
+	<string name="enable_random_color">Abilita colori casuali</string>
+	<string name="enable_random_color_summary">Abilita colori casuali a ogni avvio dell\'app</string>
+    <string name="enable_random_color_act">Abilita colori casuali nelle attività</string>
+    <string name="enable_random_color_act_summary">Abilita colori casuali a ogni attività</string>
+    
+	<string name="title_version_text">Nome versione</string>
+    <string name="title_version_num">Numero versione</string>
+    <string name="title_version_letter">Lettera della versione</string>
+    <string name="title_jb_int">Numero di Beans</string>
+    <string name="title_clicks_int">Clicks massimi</string>
+    <string name="let_interpol">Interpolator della lettera</string>
+    <string name="title_anim_int">Durata animazione</string>
+    <string name="anim_acc">Accelera</string>
+    <string name="def_anim">Decelera</string>
+    <string name="anim_acc_dec">Accelera + Decelera</string>
+    <string name="anim_ant">Anticipa</string>
+    <string name="anim_ove">Overshoot</string>
+    <string name="anim_ant_ov">Anticipa + Overshoot</string>
+    <string name="anim_lin">Lineare</string>
+    <string name="anim_bounce">Rimbalza</string>
+
+    <string name="none">Normale</string>
+    <string name="immerge">Immersive Mode</string>
+    <string name="translucent">Translucent Mode</string>
+    <string name="sysui">System UI mode</string>
+    <string name="sysui_plat">System UI mode (platlogo)</string>
+    <string name="restart">Riavvia</string>
+</resources>

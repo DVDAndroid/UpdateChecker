@@ -1,0 +1,11 @@
+<resources>
+	<style name="Theme.Transparent" parent="@android:style/Theme.Holo.Light">
+		<item name="android:windowTranslucentStatus">true</item>
+		<item name="android:windowTranslucentNavigation">true</item>
+	</style>
+	
+	<style name="Theme.NoTransparent" parent="@android:style/Theme.Holo.Light">
+	    <item name="android:windowTranslucentStatus">false</item>
+		<item name="android:windowTranslucentNavigation">false</item>
+	</style>
+</resources>
