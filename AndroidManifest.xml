@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.updatechecker"
     android:versionCode="244"
-    android:versionName="4.1.6.2 - stable" >
+    android:versionName="4.1.6.3 - stable" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -36,6 +36,18 @@
             </intent-filter>
         </activity>
         <activity-alias
+		    android:label="@string/app_name" 
+		    android:icon="@drawable/ic_launcher_settings_kk" 
+		    android:name=".MainActivity-KK"
+		    android:enabled="true"
+		    android:targetActivity=".MainActivity">
+		    <intent-filter>
+		        <action android:name="android.intent.action.MAIN" />
+		        
+		        <category android:name="android.intent.category.LAUNCHER" />
+		    </intent-filter>   
+		</activity-alias>
+        <activity-alias
             android:name=".UpdateActivity-sh"
             android:icon="@drawable/ic_launcher_gsm"
             android:label="@string/title_activity_update"
@@ -53,18 +65,6 @@
 		    android:icon="@drawable/ic_launcher_settings_jb" 
 		    android:name=".MainActivity-JB"
 		    android:enabled="false"
-		    android:targetActivity=".MainActivity">
-		    <intent-filter>
-		        <action android:name="android.intent.action.MAIN" />
-		        
-		        <category android:name="android.intent.category.LAUNCHER" />
-		    </intent-filter>   
-		</activity-alias>
-		<activity-alias
-		    android:label="@string/app_name" 
-		    android:icon="@drawable/ic_launcher_settings_kk" 
-		    android:name=".MainActivity-KK"
-		    android:enabled="true"
 		    android:targetActivity=".MainActivity">
 		    <intent-filter>
 		        <action android:name="android.intent.action.MAIN" />

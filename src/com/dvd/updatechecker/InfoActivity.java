@@ -32,7 +32,6 @@ import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -212,8 +211,6 @@ public class InfoActivity extends PreferenceActivity {
 
 				try {
 					URL url = new URL(urlLink);
-					Log.i("FILE_NAME", "File name is " + fileName);
-					Log.i("FILE_URLLINK", "File URL is " + url);
 					URLConnection connection = url.openConnection();
 					connection.connect();
 					// int fileLength = connection.getContentLength();
@@ -269,7 +266,8 @@ public class InfoActivity extends PreferenceActivity {
 							}
 
 							if (!versione.equals(pInfo.versionName)) {
-
+								new File(getFilesDir() + "/" + fileName)
+										.delete();
 								updateAvailable(versione);
 
 							} else {
@@ -288,8 +286,6 @@ public class InfoActivity extends PreferenceActivity {
 								alertDialog.setCancelable(false);
 								alertDialog.show();
 							}
-
-							new File(getFilesDir() + "/" + fileName).delete();
 
 						}
 					});
@@ -352,7 +348,7 @@ public class InfoActivity extends PreferenceActivity {
 					public void onClick(DialogInterface dialog, int id) {
 
 						String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
-						String path = "apk.apk";
+						String path = "UpdateChecker_new_apk.apk";
 
 						doApkDownload(url, path, prefs);
 					}
@@ -383,7 +379,7 @@ public class InfoActivity extends PreferenceActivity {
 							url.openStream());
 					OutputStream output = new FileOutputStream(
 							Environment.getExternalStorageDirectory()
-									+ "/download/" + "UpdateChecker" + fileName);
+									+ "/download/" + fileName);
 
 					byte data[] = new byte[2048];
 					long total = 0;
@@ -408,8 +404,7 @@ public class InfoActivity extends PreferenceActivity {
 							Intent intent = new Intent(Intent.ACTION_VIEW);
 							intent.setDataAndType(Uri.fromFile(new File(
 									Environment.getExternalStorageDirectory()
-											+ "/download/" + "UpdateChecker"
-											+ fileName)),
+											+ "/download/" + fileName)),
 									"application/vnd.android.package-archive");
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							startActivity(intent);
