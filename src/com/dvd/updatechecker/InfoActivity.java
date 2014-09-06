@@ -351,7 +351,7 @@ public class InfoActivity extends PreferenceActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						String url = "https://sites.google.com/site/dvdandroid99/Fake%20Shutdown.apk?attredirects=0&d=1";
+						String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
 						String path = "apk.apk";
 
 						doApkDownload(url, path, prefs);
