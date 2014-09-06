@@ -41,10 +41,6 @@ public class InfoActivity extends PreferenceActivity {
 
 	PackageInfo pInfo;
 
-	// ProgressDialog dialog;
-
-	// SharedPreferences prefs;
-
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +103,8 @@ public class InfoActivity extends PreferenceActivity {
 		}
 
 		String line = prefs.getString("new_ver_line", null);
-		updateAvailable(line);
+		if (!line.equals("NO"))
+			updateAvailable(line);
 
 		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 

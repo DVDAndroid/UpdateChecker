@@ -49,7 +49,6 @@ public class MainActivity extends PreferenceActivity implements
 	public static ListPreference mListPreferenceColor;
 
 	PackageInfo pInfo;
-	// SharedPreferences prefs;
 	ProgressDialog dialog;
 
 	@Override
@@ -323,6 +322,9 @@ public class MainActivity extends PreferenceActivity implements
 								notification.defaults |= Notification.DEFAULT_SOUND;
 								nm.notify(0, notification);
 
+							} else {
+								prefs.edit().putString("new_ver_line", "NO")
+										.commit();
 							}
 						}
 					});
