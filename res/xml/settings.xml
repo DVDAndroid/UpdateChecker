@@ -48,6 +48,9 @@
             android:selectable="true"
             android:key="random_colors_act"
             android:enabled="true" android:defaultValue="false"/>
+        
+    </PreferenceCategory><PreferenceCategory android:title="@string/cat_up">
+        <CheckBoxPreference android:title="@string/no_auto_upd" android:key="no_auto_upd"/>
     </PreferenceCategory>
     
 </PreferenceScreen>

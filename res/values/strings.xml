@@ -102,4 +102,14 @@
     <string name="warn"><b>WARNING!</b></string>
     <string name="module_ok">HAVE BEEN DETECTED SOME XPOSED MODULES WHICH MODIFY THE COLOR OF THE STATUS BAR. THESE CAN JOIN IN CONFLICT WITH THIS APP.</string>
     
+    <string name="title_checking">Check updates for this app!</string>
+    <string name="checking">Checking...</string>
+    <string name="no_upds">No updates available!</string>
+    <string name="yes_up_not">Update available!\nClick here for download!</string>
+    <string name="upd_yes">Update available!\n\nCurrent code version is %1$s, available %2$s.\n\n\nDownload it now?</string>
+    <string name="no_int">Please turn on Wi-Fi or mobile data.</string>
+    <string name="no_auto_upd">Enable auto updates</string>
+    <string name="cat_up">UPDATE SETTINGS</string>
+    
+    
 </resources>

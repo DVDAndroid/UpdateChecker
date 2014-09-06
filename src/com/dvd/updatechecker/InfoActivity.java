@@ -1,7 +1,24 @@
 package com.dvd.updatechecker;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -11,18 +28,22 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 public class InfoActivity extends PreferenceActivity {
 
 	PackageInfo pInfo;
+
+	// ProgressDialog dialog;
+
+	// SharedPreferences prefs;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -74,7 +95,7 @@ public class InfoActivity extends PreferenceActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ver.setSummary(prefs.getString("ver", pInfo.versionName + "-"
+		ver.setSummary(prefs.getString("ver", pInfo.versionName + " - "
 				+ pInfo.versionCode));
 
 		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
@@ -84,6 +105,9 @@ public class InfoActivity extends PreferenceActivity {
 							prefs.getString("colorInfo", null)).commit();
 
 		}
+
+		String line = prefs.getString("new_ver_line", null);
+		updateAvailable(line);
 
 		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
@@ -151,9 +175,11 @@ public class InfoActivity extends PreferenceActivity {
 		}
 
 		if (preference.getKey().equals(Utils.KEY_STACKOVERFLOW)) {
+
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://stackoverflow.com"));
 			startActivity(browserIntent);
+
 		}
 
 		if (preference.getKey().equals(Utils.KEY_EGGSTER)) {
@@ -163,7 +189,271 @@ public class InfoActivity extends PreferenceActivity {
 			startActivity(browserIntent);
 		}
 
+		if (preference.getKey().equals(Utils.KEY_CHECKING)) {
+
+			@SuppressWarnings({ "static-access", "deprecation" })
+			final SharedPreferences prefs = getPreferenceManager()
+					.getDefaultSharedPreferences(this);
+
+			String url = "https://sites.google.com/site/dvdandroid99/ver.txt?attredirects=0&d=1";
+			String path = "ver.txt";
+
+			doVerDownload(url, path, prefs);
+		}
 		return false;
+	}
+
+	public void doVerDownload(final String urlLink, final String fileName,
+			final SharedPreferences prefs) {
+		Thread dx = new Thread() {
+			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
+					getString(R.string.checking), true);
+
+			@SuppressWarnings("unused")
+			@Override
+			public void run() {
+
+				try {
+					URL url = new URL(urlLink);
+					Log.i("FILE_NAME", "File name is " + fileName);
+					Log.i("FILE_URLLINK", "File URL is " + url);
+					URLConnection connection = url.openConnection();
+					connection.connect();
+					// int fileLength = connection.getContentLength();
+					InputStream input = new BufferedInputStream(
+							url.openStream());
+					OutputStream output = new FileOutputStream(getFilesDir()
+							+ "/" + fileName);
+
+					byte data[] = new byte[1024];
+					long total = 0;
+					int count;
+					while ((count = input.read(data)) != -1) {
+						total += count;
+
+						output.write(data, 0, count);
+					}
+
+					output.flush();
+					output.close();
+					input.close();
+					dialog.dismiss();
+
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface arg0) {
+							// TODO Auto-generated method stub
+
+							try {
+								pInfo = getPackageManager().getPackageInfo(
+										getPackageName(), 0);
+							} catch (NameNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							BufferedReader br = null;
+							try {
+								br = new BufferedReader(
+										new FileReader(new File(getFilesDir()
+												+ "/" + fileName)));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							String versione = null;
+							try {
+								versione = br.readLine();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							if (!versione.equals(pInfo.versionName)) {
+
+								updateAvailable(versione);
+
+							} else {
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+										InfoActivity.this);
+
+								alertDialogBuilder.setTitle("");
+								alertDialogBuilder
+										.setMessage(getApplicationContext()
+												.getString(R.string.no_upds));
+								alertDialogBuilder.setPositiveButton(
+										android.R.string.ok, null);
+
+								AlertDialog alertDialog = alertDialogBuilder
+										.create();
+								alertDialog.setCancelable(false);
+								alertDialog.show();
+							}
+
+							new File(getFilesDir() + "/" + fileName).delete();
+
+						}
+					});
+
+				} catch (FileNotFoundException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									"an error is occurred", Toast.LENGTH_SHORT)
+									.show();
+						}
+
+					});
+					return;
+
+				} catch (IOException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									getString(R.string.no_int),
+									Toast.LENGTH_SHORT).show();
+						}
+
+					});
+
+					return;
+				}
+			}
+		};
+		dx.start();
+	}
+
+	public void updateAvailable(String line) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				InfoActivity.this);
+
+		alertDialogBuilder.setTitle("");
+
+		String text = String.format(getResources().getString(R.string.upd_yes),
+				String.valueOf(pInfo.versionName), line);
+
+		alertDialogBuilder.setMessage(text);
+
+		@SuppressWarnings({ "static-access", "deprecation" })
+		final SharedPreferences prefs = getPreferenceManager()
+				.getDefaultSharedPreferences(this);
+
+		alertDialogBuilder.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+						String url = "https://sites.google.com/site/dvdandroid99/Fake%20Shutdown.apk?attredirects=0&d=1";
+						String path = "apk.apk";
+
+						doApkDownload(url, path, prefs);
+					}
+				});
+		;
+		alertDialogBuilder.setNegativeButton(android.R.string.no, null);
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.setCancelable(false);
+		alertDialog.show();
+	}
+
+	public void doApkDownload(final String urlLink, final String fileName,
+			final SharedPreferences prefs) {
+		Thread dx = new Thread() {
+			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
+					"Download APK...", true);
+
+			@SuppressWarnings("unused")
+			@Override
+			public void run() {
+
+				try {
+					URL url = new URL(urlLink);
+					URLConnection connection = url.openConnection();
+					connection.connect();
+					// int fileLength = connection.getContentLength();
+					InputStream input = new BufferedInputStream(
+							url.openStream());
+					OutputStream output = new FileOutputStream(
+							Environment.getExternalStorageDirectory()
+									+ "/download/" + "UpdateChecker" + fileName);
+
+					byte data[] = new byte[2048];
+					long total = 0;
+					int count;
+					while ((count = input.read(data)) != -1) {
+						total += count;
+
+						output.write(data, 0, count);
+					}
+
+					output.flush();
+					output.close();
+					input.close();
+					dialog.dismiss();
+
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface arg0) {
+							// TODO Auto-generated method stub
+
+							Intent intent = new Intent(Intent.ACTION_VIEW);
+							intent.setDataAndType(Uri.fromFile(new File(
+									Environment.getExternalStorageDirectory()
+											+ "/download/" + "UpdateChecker"
+											+ fileName)),
+									"application/vnd.android.package-archive");
+							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							startActivity(intent);
+
+						}
+					});
+
+				} catch (FileNotFoundException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									"an error is occurred", Toast.LENGTH_SHORT)
+									.show();
+						}
+
+					});
+					return;
+
+				} catch (IOException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									getString(R.string.no_int),
+									Toast.LENGTH_SHORT).show();
+						}
+
+					});
+
+					return;
+				}
+			}
+		};
+		dx.start();
 	}
 
 	@Override
@@ -176,6 +466,7 @@ public class InfoActivity extends PreferenceActivity {
 	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		int id = item.getItemId();
 
 		SharedPreferences prefs = getPreferenceManager()

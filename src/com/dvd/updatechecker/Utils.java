@@ -25,6 +25,7 @@ public class Utils {
 	public static String KEY_ANDROID_OPENSOURCE = "android_opensource";
 	public static String KEY_STACKOVERFLOW = "stackoverflow";
 	public static String KEY_EGGSTER = "eggster";
+	public static String KEY_CHECKING = "checking";
 
 	public static String KEY_KK_LETTER = "kk_letter";
 	public static String KEY_KK_TEXT = "kk_text";
@@ -58,6 +59,10 @@ public class Utils {
 	public static String KEY_SYS_INFO_ROOT = "root";
 	public static String KEY_SYS_INFO_XPOSED = "xposed";
 	public static String KEY_SYS_INFO_BUSYBOX = "busybox";
+
+	// public static String KEY_NEW_V = "new_ver";
+	// public static String KEY_NEW_V_LINE = "new_ver_line";
+	public static String KEY_AUTO_UP = "no_auto_upd";
 
 	public static String TSB_1 = "com.mohammadag.colouredstatusbar";
 	public static String TSB_2 = "com.woalk.apps.xposed.ttsb";

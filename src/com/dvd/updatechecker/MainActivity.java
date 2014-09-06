@@ -1,12 +1,29 @@
 package com.dvd.updatechecker;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Random;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -19,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +49,8 @@ public class MainActivity extends PreferenceActivity implements
 	public static ListPreference mListPreferenceColor;
 
 	PackageInfo pInfo;
-	SharedPreferences prefs;
+	// SharedPreferences prefs;
+	ProgressDialog dialog;
 
 	@Override
 	public void onTrimMemory(int level) {
@@ -92,8 +111,12 @@ public class MainActivity extends PreferenceActivity implements
 
 				alertDialogBuilder.setTitle(getApplicationContext().getString(
 						R.string.warn));
-				alertDialogBuilder.setMessage(getApplicationContext()
-						.getString(R.string.module_ok));
+				alertDialogBuilder
+						.setMessage(getApplicationContext().getString(
+								R.string.warn)
+								+ " "
+								+ getApplicationContext().getString(
+										R.string.module_ok));
 				alertDialogBuilder.setPositiveButton(android.R.string.ok, null);
 				AlertDialog alertDialog = alertDialogBuilder.create();
 				alertDialog.setCancelable(false);
@@ -174,7 +197,170 @@ public class MainActivity extends PreferenceActivity implements
 		tv2.setText("by " + getApplicationContext().getString(R.string.my_name)
 				+ " ");
 
+		if (prefs.getBoolean(Utils.KEY_AUTO_UP, true)) {
+			dialog = ProgressDialog.show(MainActivity.this, "",
+					getString(R.string.checking), true);
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					String url = "https://sites.google.com/site/dvdandroid99/ver.txt?attredirects=0&d=1";
+					String path = "ver.txt";
+					try {
+						doVerDownload(url, path, prefs);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
+			}).start();
+		}
+
 		applyColor(mListPreferenceColor.getValue().toString());
+
+	}
+
+	public void doVerDownload(final String urlLink, final String fileName,
+			final SharedPreferences prefs) {
+		Thread dx = new Thread() {
+
+			@SuppressWarnings("unused")
+			@Override
+			public void run() {
+
+				try {
+					URL url = new URL(urlLink);
+					Log.i("FILE_NAME", "File name is " + fileName);
+					Log.i("FILE_URLLINK", "File URL is " + url);
+					URLConnection connection = url.openConnection();
+					connection.connect();
+					// int fileLength = connection.getContentLength();
+					InputStream input = new BufferedInputStream(
+							url.openStream());
+					OutputStream output = new FileOutputStream(getFilesDir()
+							+ "/" + fileName);
+
+					byte data[] = new byte[1024];
+					long total = 0;
+					int count;
+					while ((count = input.read(data)) != -1) {
+						total += count;
+
+						output.write(data, 0, count);
+					}
+
+					output.flush();
+					output.close();
+					input.close();
+					dialog.dismiss();
+
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface arg0) {
+							// TODO Auto-generated method stub
+
+							try {
+								pInfo = getPackageManager().getPackageInfo(
+										getPackageName(), 0);
+							} catch (NameNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
+							BufferedReader br = null;
+							try {
+								br = new BufferedReader(
+										new FileReader(new File(getFilesDir()
+												+ "/" + fileName)));
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							String line = "";
+							try {
+								line = br.readLine();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+							if (!line.equals(pInfo.versionName)) {
+
+								prefs.edit().putString("new_ver_line", line)
+										.commit();
+
+								long when = System.currentTimeMillis();
+								NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+								Intent intent = new Intent(
+										getApplicationContext(),
+										InfoActivity.class);
+								PendingIntent pending = PendingIntent
+										.getActivity(getApplicationContext(),
+												0, intent, 0);
+								Notification notification;
+
+								notification = new Notification.Builder(
+										getApplicationContext())
+										.setStyle(
+												new Notification.BigTextStyle()
+														.bigText(getString(R.string.yes_up_not)))
+										.setContentTitle(
+												getString(R.string.app_name))
+										.setContentText(
+												getString(R.string.yes_up_not))
+										.setSmallIcon(
+												R.drawable.ic_launcher_gsm)
+										.setContentIntent(pending)
+										.setWhen(when)
+
+										.setAutoCancel(true).build();
+
+								notification.flags |= Notification.FLAG_AUTO_CANCEL;
+								notification.defaults |= Notification.DEFAULT_SOUND;
+								nm.notify(0, notification);
+
+							}
+						}
+					});
+
+				} catch (FileNotFoundException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									"an error is occurred", Toast.LENGTH_SHORT)
+									.show();
+						}
+
+					});
+					return;
+
+				} catch (IOException e) {
+					dialog.dismiss();
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							// TODO Auto-generated method stub
+							Toast.makeText(getApplicationContext(),
+									getString(R.string.no_int),
+									Toast.LENGTH_SHORT).show();
+						}
+
+					});
+
+					return;
+				}
+			}
+		};
+		dx.start();
 	}
 
 	@Override

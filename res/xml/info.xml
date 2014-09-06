@@ -46,5 +46,10 @@
                 android:key="ver"
                 android:title="@string/vers"/>
             
-		</PreferenceCategory>   
+			<Preference
+			    android:selectable="true"
+			    android:key="checking"
+			    android:title="@string/title_checking" />
+        </PreferenceCategory>
+           
 </PreferenceScreen>     
