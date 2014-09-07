@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -56,6 +57,13 @@ public class InfoActivity extends PreferenceActivity {
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+			findViewById(android.R.id.content).setPadding(
+					config.getPixelInsetRight(), config.getPixelInsetTop(true),
+					config.getPixelInsetRight(), 0);
+		}
+
 		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 				Utils.KEY_ICON_JB)) {
 
@@ -78,9 +86,10 @@ public class InfoActivity extends PreferenceActivity {
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			findViewById(android.R.id.content).setPadding(0,
-					config.getPixelInsetTop(true), config.getPixelInsetRight(),
-					config.getPixelInsetBottom());
+
+			findViewById(android.R.id.content).setPadding(
+					config.getPixelInsetRight(), config.getPixelInsetTop(true),
+					config.getPixelInsetRight(), 0);
 		}
 
 		Preference ver = findPreference("ver");
@@ -104,6 +113,17 @@ public class InfoActivity extends PreferenceActivity {
 		String line = prefs.getString("new_ver_line", null);
 		if (!line.equals("NO"))
 			updateAvailable(line);
+
+		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+		if (Build.VERSION.SDK_INT < 19 | land) {
+			getPreferenceScreen().removePreference(findPreference("null"));
+
+			findViewById(android.R.id.content).setPadding(0,
+					config.getPixelInsetTop(true), config.getPixelInsetRight(),
+					config.getPixelInsetBottom());
+
+		}
 
 		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
@@ -185,6 +205,12 @@ public class InfoActivity extends PreferenceActivity {
 			startActivity(browserIntent);
 		}
 
+		if (preference.getKey().equals(Utils.KEY_GITHUB)) {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("https://github.com/dvdandroid/UpdateChecker"));
+			startActivity(browserIntent);
+		}
+
 		if (preference.getKey().equals(Utils.KEY_CHECKING)) {
 
 			@SuppressWarnings({ "static-access", "deprecation" })
@@ -200,7 +226,7 @@ public class InfoActivity extends PreferenceActivity {
 	}
 
 	public void doVerDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) {
+			final SharedPreferences prefs) throws IllegalArgumentException {
 		Thread dx = new Thread() {
 			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
 					getString(R.string.checking), true);
@@ -305,6 +331,9 @@ public class InfoActivity extends PreferenceActivity {
 					});
 					return;
 
+				} catch (IllegalArgumentException e) {
+					dialog.dismiss();
+
 				} catch (IOException e) {
 					dialog.dismiss();
 					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -321,6 +350,7 @@ public class InfoActivity extends PreferenceActivity {
 
 					return;
 				}
+
 			}
 		};
 		dx.start();
@@ -361,7 +391,7 @@ public class InfoActivity extends PreferenceActivity {
 	}
 
 	public void doApkDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) {
+			final SharedPreferences prefs) throws IllegalArgumentException {
 		Thread dx = new Thread() {
 			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
 					"Download APK...", true);
@@ -426,6 +456,9 @@ public class InfoActivity extends PreferenceActivity {
 
 					});
 					return;
+
+				} catch (IllegalArgumentException e) {
+					dialog.dismiss();
 
 				} catch (IOException e) {
 					dialog.dismiss();

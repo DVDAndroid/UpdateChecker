@@ -80,6 +80,7 @@ public class MainActivity extends PreferenceActivity implements
 			prefs.edit().putString(Utils.KEY_LIST_PREFERENCE_ICONS, "2")
 					.commit();
 
+			prefs.edit().putBoolean(Utils.KEY_AUTO_UP, true).commit();
 			prefs.edit().putBoolean(Utils.KEY_CHECK_BOX_NO_ADD, true).commit();
 			prefs.edit().putBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR, true)
 					.commit();
@@ -222,7 +223,7 @@ public class MainActivity extends PreferenceActivity implements
 	}
 
 	public void doVerDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) {
+			final SharedPreferences prefs) throws IllegalArgumentException {
 		Thread dx = new Thread() {
 
 			@SuppressWarnings("unused")
@@ -343,6 +344,9 @@ public class MainActivity extends PreferenceActivity implements
 
 					});
 					return;
+
+				} catch (IllegalArgumentException e) {
+					dialog.dismiss();
 
 				} catch (IOException e) {
 					dialog.dismiss();

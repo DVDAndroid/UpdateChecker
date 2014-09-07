@@ -25,7 +25,11 @@
                 android:selectable="true"
                 android:title="@string/sysbartint"
                 android:key="systembartint" />
-            <Preference android:key="eggster" android:summary="Xposed Module  - by jamaal areeb" android:title="Eggster"/>
+            
+            <Preference
+                android:key="eggster"
+                android:summary="Xposed Module  - by jamaal areeb"
+                android:title="Eggster"/>
             
 
 		</PreferenceCategory>
@@ -47,9 +51,21 @@
                 android:title="@string/vers"/>
             
 			<Preference
+				android:key="this_on_github"
+			    android:title="Github"
+			    android:summary="Github source"
+			    android:selectable="true"/>
+			
+			<Preference
 			    android:selectable="true"
 			    android:key="checking"
 			    android:title="@string/title_checking" />
+			
         </PreferenceCategory>
+        
+        <Preference
+            android:selectable="false"
+            android:key="null"
+            android:enabled="false"/>
            
 </PreferenceScreen>     
