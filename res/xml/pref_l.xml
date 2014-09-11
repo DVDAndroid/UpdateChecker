@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+	    android:title="ANDROID L">
+	    
+    <ListPreference
+        android:title="@string/sysui"
+        android:key="l_sysui"
+        android:defaultValue="@string/none"
+        android:dialogTitle="@string/sys_ui_mode_tit_l" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    </PreferenceCategory>
+    
+    <Preference
+            android:selectable="false"
+            android:key="null"
+            android:enabled="false"/>
+    
+</PreferenceScreen>

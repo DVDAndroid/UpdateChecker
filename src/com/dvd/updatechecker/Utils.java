@@ -34,6 +34,8 @@ public class Utils {
 	public static String KEY_KK_CLICKS = "kk_clicks";
 	public static String KEY_KK_SYSUI = "kk_sysui";
 
+	public static String KEY_L_SYSUI = "l_sysui";
+
 	public static String KEY_SYS_INFO_BOARD = "board";
 	public static String KEY_SYS_INFO_BOOTLOADER = "bootloader";
 	public static String KEY_SYS_INFO_CPU = "cpu";

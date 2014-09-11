@@ -1,5 +1,7 @@
 package com.dvd.updatechecker;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -22,8 +24,6 @@ import android.preference.PreferenceCategory;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 public class SettingsActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 
@@ -31,11 +31,13 @@ public class SettingsActivity extends PreferenceActivity implements
 	public static CheckBoxPreference mCheckBoxActionBar;
 	public static CheckBoxPreference mCheckBoxRandomColors;
 	public static CheckBoxPreference mCheckBoxRandomColorsAct;
+
 	public static EditTextPreference mKkLetter;
 	public static EditTextPreference mKkText;
 	public static ListPreference mKkInterpolator;
 	public static EditTextPreference mKkClicks;
 	public static ListPreference mKkSysUi;
+	public static ListPreference mLSysUi;
 
 	PackageInfo pInfo;
 
@@ -106,6 +108,12 @@ public class SettingsActivity extends PreferenceActivity implements
 			getPreferenceScreen().addPreference(fakeHeader);
 			addPreferencesFromResource(R.xml.pref_kk);
 
+		} else {
+			if (Build.VERSION.SDK_INT == 20) {
+				PreferenceCategory fakeHeader = new PreferenceCategory(this);
+				getPreferenceScreen().addPreference(fakeHeader);
+				addPreferencesFromResource(R.xml.pref_l);
+			}
 		}
 
 		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
@@ -132,29 +140,33 @@ public class SettingsActivity extends PreferenceActivity implements
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 
-		mKkLetter = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_LETTER);
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			mKkLetter = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_LETTER);
 
-		mKkText = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_TEXT);
+			mKkText = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_TEXT);
 
-		mKkInterpolator = (ListPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_KK_INTERPOLATOR);
+			mKkInterpolator = (ListPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_INTERPOLATOR);
 
-		mKkClicks = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_CLICKS);
+			mKkClicks = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_CLICKS);
 
-		mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_SYSUI);
+			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
+					Utils.KEY_KK_SYSUI);
 
-		mKkLetter.setSummary(mKkLetter.getText().toString());
-		mKkText.setSummary(mKkText.getText().toString());
-		mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
-		mKkClicks.setSummary(mKkClicks.getText().toString());
-		mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
-
+			mKkLetter.setSummary(mKkLetter.getText().toString());
+			mKkText.setSummary(mKkText.getText().toString());
+			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
+			mKkClicks.setSummary(mKkClicks.getText().toString());
+			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+		} else {
+			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
+					Utils.KEY_L_SYSUI);
+			mLSysUi.setSummary(mLSysUi.getEntry().toString());
+		}
 		mListPreferenceIcons.setSummary(getApplicationContext().getString(
 				R.string.curr_icon)
 				+ " " + mListPreferenceIcons.getEntry().toString());
@@ -229,7 +241,6 @@ public class SettingsActivity extends PreferenceActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		int id = item.getItemId();
 		if (id == android.R.id.home) {
 			finish();
@@ -259,26 +270,33 @@ public class SettingsActivity extends PreferenceActivity implements
 		mCheckBoxRandomColorsAct = (CheckBoxPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT);
 
-		mKkLetter = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_LETTER);
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			mKkLetter = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_LETTER);
 
-		mKkText = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_TEXT);
+			mKkText = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_TEXT);
 
-		mKkInterpolator = (ListPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_KK_INTERPOLATOR);
+			mKkInterpolator = (ListPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_INTERPOLATOR);
 
-		mKkClicks = (EditTextPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_CLICKS);
+			mKkClicks = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_CLICKS);
 
-		mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
-				Utils.KEY_KK_SYSUI);
+			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
+					Utils.KEY_KK_SYSUI);
 
-		mKkLetter.setSummary(mKkLetter.getText().toString());
-		mKkText.setSummary(mKkText.getText().toString());
-		mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
-		mKkClicks.setSummary(mKkClicks.getText().toString());
-		mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+			mKkLetter.setSummary(mKkLetter.getText().toString());
+			mKkText.setSummary(mKkText.getText().toString());
+			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
+			mKkClicks.setSummary(mKkClicks.getText().toString());
+			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+		} else {
+
+			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
+					Utils.KEY_L_SYSUI);
+			mLSysUi.setSummary(mLSysUi.getEntry().toString());
+		}
 
 		if (key.equals(Utils.KEY_CHECK_BOX_RAND_COLOR)) {
 

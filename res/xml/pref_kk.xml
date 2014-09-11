@@ -26,7 +26,7 @@
 	    <ListPreference
 	        android:title="@string/let_interpol"
 	        android:key="kk_interpolator"
-	        android:dialogTitle="Choose an interpolator for the rotating text"
+	        android:dialogTitle="@string/interpolator_ch"
 	        android:entryValues="@array/Interpolators"
 	        android:entries="@array/Interpolators"
 	        android:defaultValue="@string/def_anim" />
@@ -46,7 +46,7 @@
 	        android:title="@string/sysui_plat"
 	        android:key="kk_sysui"
 	        android:defaultValue="@string/none"
-	        android:dialogTitle="Choose System UI mode for the KitKat platlogo"
+	        android:dialogTitle="@string/sys_ui_mode_tit_kk"
 	        android:entryValues="@array/SysUImodes"
 	        android:entries="@array/SysUImodes" />
 	

@@ -16,29 +16,27 @@ public class UpdateActivity extends Activity {
 		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
 				| Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1 | Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2)) {
 			String ver = "JellyBean ";
-			Toast.makeText(
-					getApplicationContext(),
-					getApplicationContext().getString(R.string.curr_ver) + "\n"
-							+ "\n" + "Android " + ver + Build.VERSION.RELEASE
-							+ "\n" + "              API:"
-							+ Build.VERSION.SDK_INT, Utils.duration).show();
-			openActivity();
+			openActivity(ver);
 		} else {
 			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 				String ver = "KitKat ";
-				Toast.makeText(
-						getApplicationContext(),
-						getApplicationContext().getString(R.string.curr_ver)
-								+ "\n" + "\n" + "Android " + ver
-								+ Build.VERSION.RELEASE + "\n"
-								+ "              API:" + Build.VERSION.SDK_INT,
-						Utils.duration).show();
-				openActivity();
+				openActivity(ver);
+			} else {
+				String ver = "";
+				openActivity(ver);
 			}
 		}
 	}
 
-	private void openActivity() {
+	private void openActivity(String ver) {
+
+		Toast.makeText(
+				getApplicationContext(),
+				getApplicationContext().getString(R.string.curr_ver) + "\n"
+						+ "\n" + "Android " + ver + Build.VERSION.RELEASE
+						+ "\n" + "              API:" + Build.VERSION.SDK_INT,
+				Utils.duration).show();
+
 		try {
 			startActivity(new Intent(Intent.ACTION_MAIN).setClassName(
 					"com.google.android.gms",

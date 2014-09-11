@@ -40,17 +40,26 @@
             android:summary="@string/enable_random_color_summary"
             android:selectable="true"
             android:key="random_colors"
-            android:enabled="true" android:defaultValue="false"/>
+            android:enabled="true"
+            android:defaultValue="false"/>
         
         <CheckBoxPreference
             android:title="@string/enable_random_color_act"
             android:summary="@string/enable_random_color_act_summary"
             android:selectable="true"
             android:key="random_colors_act"
-            android:enabled="true" android:defaultValue="false"/>
+            android:enabled="true"
+            android:defaultValue="false"/>
         
-    </PreferenceCategory><PreferenceCategory android:title="@string/cat_up">
-        <CheckBoxPreference android:title="@string/no_auto_upd" android:key="no_auto_upd"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="@string/cat_up">
+        
+        <CheckBoxPreference
+            android:title="@string/no_auto_upd"
+            android:key="no_auto_upd"/>
+        
     </PreferenceCategory>
     
 </PreferenceScreen>

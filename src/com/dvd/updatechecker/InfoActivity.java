@@ -85,18 +85,10 @@ public class InfoActivity extends PreferenceActivity {
 
 		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-			findViewById(android.R.id.content).setPadding(
-					config.getPixelInsetRight(), config.getPixelInsetTop(true),
-					config.getPixelInsetRight(), 0);
-		}
-
 		Preference ver = findPreference("ver");
 		try {
 			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ver.setSummary(prefs.getString("ver", pInfo.versionName + " - "
@@ -263,13 +255,11 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface arg0) {
-							// TODO Auto-generated method stub
 
 							try {
 								pInfo = getPackageManager().getPackageInfo(
 										getPackageName(), 0);
 							} catch (NameNotFoundException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 
@@ -279,7 +269,6 @@ public class InfoActivity extends PreferenceActivity {
 										new FileReader(new File(getFilesDir()
 												+ "/" + fileName)));
 							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -287,7 +276,6 @@ public class InfoActivity extends PreferenceActivity {
 							try {
 								versione = br.readLine();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -322,7 +310,6 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									"an error is occurred", Toast.LENGTH_SHORT)
 									.show();
@@ -340,7 +327,6 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									getString(R.string.no_int),
 									Toast.LENGTH_SHORT).show();
@@ -356,7 +342,7 @@ public class InfoActivity extends PreferenceActivity {
 		dx.start();
 	}
 
-	public void updateAvailable(String line) {
+	public void updateAvailable(final String line) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				InfoActivity.this);
 
@@ -377,11 +363,39 @@ public class InfoActivity extends PreferenceActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
-						String path = "UpdateChecker_new_apk.apk";
+						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+								InfoActivity.this);
 
-						doApkDownload(url, path, prefs);
+						alertDialogBuilder.setTitle("");
+
+						String text = String.format(
+								getResources().getString(R.string.alpha_beta),
+								prefs.getString("st", null));
+
+						alertDialogBuilder.setMessage(text);
+
+						alertDialogBuilder.setPositiveButton(
+								android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+										String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
+										String path = "UpdateChecker_new_apk.apk";
+
+										doApkDownload(url, path, prefs);
+									}
+								});
+
+						alertDialogBuilder.setNegativeButton(
+								android.R.string.no, null);
+						AlertDialog alertDialog = alertDialogBuilder.create();
+						alertDialog.setCancelable(false);
+						alertDialog.show();
+
 					}
+
 				});
 		;
 		alertDialogBuilder.setNegativeButton(android.R.string.no, null);
@@ -429,7 +443,6 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface arg0) {
-							// TODO Auto-generated method stub
 
 							Intent intent = new Intent(Intent.ACTION_VIEW);
 							intent.setDataAndType(Uri.fromFile(new File(
@@ -448,7 +461,6 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									"an error is occurred", Toast.LENGTH_SHORT)
 									.show();
@@ -466,7 +478,6 @@ public class InfoActivity extends PreferenceActivity {
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									getString(R.string.no_int),
 									Toast.LENGTH_SHORT).show();

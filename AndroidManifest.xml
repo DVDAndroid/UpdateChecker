@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.updatechecker"
-    android:versionCode="245"
-    android:versionName="4.1.8 - stable" >
+    android:versionCode="251"
+    android:versionName="4.2.11 - RC" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="19"
         android:targetSdkVersion="20" />
     
 	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
@@ -120,6 +120,13 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.dvd.updatechecker.egg.l.PlatLogoActivity"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>         
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,8 +20,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 public class SysInfoActivity extends PreferenceActivity {
 
 	long[] mHits = new long[3];
@@ -33,8 +33,27 @@ public class SysInfoActivity extends PreferenceActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
+		Preference release = findPreference(Utils.KEY_SYS_INFO_RELEASE);
+
+		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
+				| Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1 | Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2)) {
+			String ver = "JellyBean ";
+			release.setSummary(ver + Build.VERSION.RELEASE);
+		} else {
+
+			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+				String ver = "KitKat ";
+				release.setSummary(ver + Build.VERSION.RELEASE);
+			} else {
+				release.setSummary(String.valueOf(Build.VERSION.CODENAME));
+			}
+		}
+
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
+
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
 		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 				Utils.KEY_ICON_JB)) {
@@ -59,10 +78,6 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
-			SystemBarTintManager tintManager = new SystemBarTintManager(this);
-			SystemBarTintManager.SystemBarConfig config = tintManager
-					.getConfig();
-
 			findViewById(android.R.id.content).setPadding(
 					config.getPixelInsetRight(), config.getPixelInsetTop(true),
 					config.getPixelInsetRight(), 0);
@@ -80,7 +95,6 @@ public class SysInfoActivity extends PreferenceActivity {
 		try {
 			setSummaries();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -108,7 +122,7 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference user = findPreference(Utils.KEY_SYS_INFO_USER);
 		Preference codename = findPreference(Utils.KEY_SYS_INFO_CODENAME);
 		Preference incremental = findPreference(Utils.KEY_SYS_INFO_INCREMENTAL);
-		Preference release = findPreference(Utils.KEY_SYS_INFO_RELEASE);
+
 		Preference api = findPreference(Utils.KEY_SYS_INFO_API);
 		Preference kernel = findPreference(Utils.KEY_SYS_INFO_KERNEL);
 		Preference root = findPreference(Utils.KEY_SYS_INFO_ROOT);
@@ -149,17 +163,6 @@ public class SysInfoActivity extends PreferenceActivity {
 				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
 						.exec("busybox").getInputStream())).readLine()
 						.toString());
-
-		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
-				| Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1 | Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-			String ver = "JellyBean ";
-			release.setSummary(ver + Build.VERSION.RELEASE);
-		} else {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-				String ver = "KitKat ";
-				release.setSummary(ver + Build.VERSION.RELEASE);
-			}
-		}
 
 		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
@@ -235,6 +238,13 @@ public class SysInfoActivity extends PreferenceActivity {
 				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 					startActivity(new Intent(this,
 							com.dvd.updatechecker.egg.kk.PlatLogoActivity.class));
+				} else {
+					if (Build.VERSION.SDK_INT == 20) {
+						// TODO: 20 <=> Build.VERSION_CODES.L
+						startActivity(new Intent(
+								this,
+								com.dvd.updatechecker.egg.l.PlatLogoActivity.class));
+					}
 				}
 			}
 		}

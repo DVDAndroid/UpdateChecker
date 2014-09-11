@@ -75,23 +75,26 @@
 	
 	<PreferenceCategory
 	    android:key="root_info"
-	    android:title="Root">
+	    android:title="ROOT">
 		
 		<Preference
 		    android:key="root"
 		    android:maxLines="1"
 		    android:title="Root"
-		    android:selectable="false"/>
+		    android:selectable="false"
+		    android:summary="@string/device_info_default"/>
 		
 		<Preference
 		    android:key="xposed"
 		    android:title="Xposed Framework"
-		    android:selectable="false"/>
+		    android:selectable="false"
+		    android:summary="@string/device_info_default"/>
 		
 		<Preference 
 		    android:title="Busybox"
 		    android:key="busybox"
-		    android:selectable="false"/>
+		    android:selectable="false"
+		    android:summary="@string/device_info_default"/>
 		
 	</PreferenceCategory>
 		

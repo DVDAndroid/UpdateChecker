@@ -34,6 +34,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.util.Log;
@@ -47,7 +48,6 @@ public class MainActivity extends PreferenceActivity implements
 		OnSharedPreferenceChangeListener {
 
 	public static ListPreference mListPreferenceColor;
-
 	PackageInfo pInfo;
 	ProgressDialog dialog;
 
@@ -99,6 +99,9 @@ public class MainActivity extends PreferenceActivity implements
 					.putString(Utils.KEY_KK_SYSUI, getString(R.string.none))
 					.commit();
 
+			prefs.edit().putString(Utils.KEY_L_SYSUI, getString(R.string.none))
+					.commit();
+
 			if (!Build.MODEL.equals("Nexus 5")) {
 				Toast.makeText(getApplicationContext(),
 						getString(R.string.noNexus5), Toast.LENGTH_LONG).show();
@@ -125,6 +128,13 @@ public class MainActivity extends PreferenceActivity implements
 			}
 
 			prefs.edit().putBoolean("welcome", false).commit();
+		}
+
+		File apk = new File(Environment.getExternalStorageDirectory()
+				+ "/download/" + "UpdateChecker_new_apk");
+
+		if (apk.exists()) {
+			apk.delete();
 		}
 
 		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
@@ -185,7 +195,6 @@ public class MainActivity extends PreferenceActivity implements
 		try {
 			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -209,7 +218,6 @@ public class MainActivity extends PreferenceActivity implements
 					try {
 						doVerDownload(url, path, prefs);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -260,13 +268,11 @@ public class MainActivity extends PreferenceActivity implements
 
 						@Override
 						public void onDismiss(DialogInterface arg0) {
-							// TODO Auto-generated method stub
 
 							try {
 								pInfo = getPackageManager().getPackageInfo(
 										getPackageName(), 0);
 							} catch (NameNotFoundException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 
@@ -276,7 +282,6 @@ public class MainActivity extends PreferenceActivity implements
 										new FileReader(new File(getFilesDir()
 												+ "/" + fileName)));
 							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -284,7 +289,6 @@ public class MainActivity extends PreferenceActivity implements
 							try {
 								line = br.readLine();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
@@ -293,36 +297,48 @@ public class MainActivity extends PreferenceActivity implements
 								prefs.edit().putString("new_ver_line", line)
 										.commit();
 
-								long when = System.currentTimeMillis();
-								NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-								Intent intent = new Intent(
-										getApplicationContext(),
-										InfoActivity.class);
-								PendingIntent pending = PendingIntent
-										.getActivity(getApplicationContext(),
-												0, intent, 0);
-								Notification notification;
+								if (line.contains("alpha")
+										|| line.contains("beta")) {
+									if (line.contains("alpha")) {
+										prefs.edit().putString("st", "alpha")
+												.commit();
+									}
+									if (line.contains("beta")) {
+										prefs.edit().putString("st", "beta")
+												.commit();
+									}
+								} else {
+									long when = System.currentTimeMillis();
+									NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+									Intent intent = new Intent(
+											getApplicationContext(),
+											InfoActivity.class);
+									PendingIntent pending = PendingIntent
+											.getActivity(
+													getApplicationContext(), 0,
+													intent, 0);
+									Notification notification;
 
-								notification = new Notification.Builder(
-										getApplicationContext())
-										.setStyle(
-												new Notification.BigTextStyle()
-														.bigText(getString(R.string.yes_up_not)))
-										.setContentTitle(
-												getString(R.string.app_name))
-										.setContentText(
-												getString(R.string.yes_up_not))
-										.setSmallIcon(
-												R.drawable.ic_launcher_gsm)
-										.setContentIntent(pending)
-										.setWhen(when)
+									notification = new Notification.Builder(
+											getApplicationContext())
+											.setStyle(
+													new Notification.BigTextStyle()
+															.bigText(getString(R.string.yes_up_not)))
+											.setContentTitle(
+													getString(R.string.app_name))
+											.setContentText(
+													getString(R.string.yes_up_not))
+											.setSmallIcon(
+													R.drawable.ic_launcher_gsm)
+											.setContentIntent(pending)
+											.setWhen(when)
 
-										.setAutoCancel(true).build();
+											.setAutoCancel(true).build();
 
-								notification.flags |= Notification.FLAG_AUTO_CANCEL;
-								notification.defaults |= Notification.DEFAULT_SOUND;
-								nm.notify(0, notification);
-
+									notification.flags |= Notification.FLAG_AUTO_CANCEL;
+									notification.defaults |= Notification.DEFAULT_SOUND;
+									nm.notify(0, notification);
+								}
 							} else {
 								prefs.edit().putString("new_ver_line", "NO")
 										.commit();
@@ -336,7 +352,6 @@ public class MainActivity extends PreferenceActivity implements
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									"an error is occurred", Toast.LENGTH_SHORT)
 									.show();
@@ -354,7 +369,6 @@ public class MainActivity extends PreferenceActivity implements
 
 						@Override
 						public void onDismiss(DialogInterface dialog) {
-							// TODO Auto-generated method stub
 							Toast.makeText(getApplicationContext(),
 									getString(R.string.no_int),
 									Toast.LENGTH_SHORT).show();
