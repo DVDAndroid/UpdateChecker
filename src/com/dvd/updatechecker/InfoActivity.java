@@ -363,39 +363,47 @@ public class InfoActivity extends PreferenceActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
 
-						AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-								InfoActivity.this);
+						if (prefs.getString("st", null).equals("null")) {
 
-						alertDialogBuilder.setTitle("");
+							String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
+							String path = "UpdateChecker_new_apk.apk";
 
-						String text = String.format(
-								getResources().getString(R.string.alpha_beta),
-								prefs.getString("st", null));
+							doApkDownload(url, path, prefs);
 
-						alertDialogBuilder.setMessage(text);
+						} else {
+							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+									InfoActivity.this);
 
-						alertDialogBuilder.setPositiveButton(
-								android.R.string.yes,
-								new DialogInterface.OnClickListener() {
+							alertDialogBuilder.setTitle("");
 
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-										String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
-										String path = "UpdateChecker_new_apk.apk";
+							String text = String.format(getResources()
+									.getString(R.string.alpha_beta), prefs
+									.getString("st", null));
 
-										doApkDownload(url, path, prefs);
-									}
-								});
+							alertDialogBuilder.setMessage(text);
 
-						alertDialogBuilder.setNegativeButton(
-								android.R.string.no, null);
-						AlertDialog alertDialog = alertDialogBuilder.create();
-						alertDialog.setCancelable(false);
-						alertDialog.show();
+							alertDialogBuilder.setPositiveButton(
+									android.R.string.yes,
+									new DialogInterface.OnClickListener() {
 
+										@Override
+										public void onClick(
+												DialogInterface dialog, int id) {
+											String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
+											String path = "UpdateChecker_new_apk.apk";
+
+											doApkDownload(url, path, prefs);
+										}
+									});
+
+							alertDialogBuilder.setNegativeButton(
+									android.R.string.no, null);
+							AlertDialog alertDialog = alertDialogBuilder
+									.create();
+							alertDialog.setCancelable(false);
+							alertDialog.show();
+						}
 					}
-
 				});
 		;
 		alertDialogBuilder.setNegativeButton(android.R.string.no, null);

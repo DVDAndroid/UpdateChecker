@@ -37,7 +37,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -240,11 +239,8 @@ public class MainActivity extends PreferenceActivity implements
 
 				try {
 					URL url = new URL(urlLink);
-					Log.i("FILE_NAME", "File name is " + fileName);
-					Log.i("FILE_URLLINK", "File URL is " + url);
 					URLConnection connection = url.openConnection();
 					connection.connect();
-					// int fileLength = connection.getContentLength();
 					InputStream input = new BufferedInputStream(
 							url.openStream());
 					OutputStream output = new FileOutputStream(getFilesDir()
@@ -308,6 +304,8 @@ public class MainActivity extends PreferenceActivity implements
 												.commit();
 									}
 								} else {
+									prefs.edit().putString("st", "null")
+											.commit();
 									long when = System.currentTimeMillis();
 									NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 									Intent intent = new Intent(
