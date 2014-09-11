@@ -103,10 +103,11 @@ public class PlatLogoActivity extends Activity {
 			public boolean onLongClick(View v) {
 				if (Build.VERSION.SDK_INT > 10) {
 					try {
-						startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
-								Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-								.setClassName("areeb.xposed.eggster",
-										"areeb.xposed.eggster.kk.DessertCase"));
+						startActivity(new Intent(Intent.ACTION_MAIN)
+								.setFlags(
+										Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+								.setClassName(" com.dvd.updatechecker",
+										" com.dvd.updatechecker.egg.kk.DessertCase"));
 
 					} catch (ActivityNotFoundException ex) {
 						android.util.Log.e("PlatLogoActivity",

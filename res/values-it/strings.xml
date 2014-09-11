@@ -107,5 +107,5 @@
     <string name="no_int">Per favore, accendi il Wi-Fi o la connessione dati.</string>
     <string name="cat_up">IMPOSTAZIONI AGGIORNAMENTI</string>
     
-    <string name="alpha_beta">WARNING!\nLa versione disponibile è in %1$s, la vuoi scaricare comunque?</string>
+    <string name="alpha_beta">ATTENZIONE!\nLa versione disponibile è in %1$s, la vuoi scaricare comunque?</string>
 </resources>

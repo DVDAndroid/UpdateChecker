@@ -332,11 +332,13 @@ public class MainActivity extends PreferenceActivity implements
 													R.drawable.ic_launcher_gsm)
 											.setContentIntent(pending)
 											.setWhen(when)
+											.setDefaults(
+													Notification.DEFAULT_SOUND
+															| Notification.DEFAULT_VIBRATE)
 
 											.setAutoCancel(true).build();
 
 									notification.flags |= Notification.FLAG_AUTO_CANCEL;
-									notification.defaults |= Notification.DEFAULT_SOUND;
 									nm.notify(0, notification);
 								}
 							} else {
