@@ -12,10 +12,10 @@
     <string name="verifica">Verifica!</string>
     <string name="action_info">Info</string>
     <string name="action_exit">Esci</string>    
-    <string name="opensources">Librerie Open Source</string>
+    <string name="opensources">LIBRERIE OPEN SOURCE</string>
     <string name="sysbartint">SystemBarTint</string>
     <string name="info_sysbartint">by jgilfelt</string>
-    <string name="credits">Crediti</string>
+    <string name="credits">CREDITI</string>
     <string name="made_by">Creata da</string>
     <string name="my_name">Davide Maggio</string>    
 	<string name="add_shortcut">Aggiungi collegamenti</string>
@@ -35,8 +35,8 @@
     <string name="time">Tempo</string>
     <string name="type">Tipo</string>
     <string name="user">Utente</string>
-    <string name="general_info">Info generali</string>
-    <string name="other_info">Altre info</string>
+    <string name="general_info">INFO GENERALI</string>
+    <string name="other_info">ALTRE INFO</string>
     <string name="radio">Radio - Versione banda di base</string>
     <string name="id">ID - Numero build</string>    
 	<string name="holo_blue_light">Holo blu chiaro</string>
@@ -52,7 +52,7 @@
     <string name="this_color">Il colore corrente è</string>
     <string name="nd">funzione non ancora disp.</string>    
     <string name="welcome">Benvenuto!</string>    
-    <string name="set_ver_icon">Preferenze icona verifica</string>
+    <string name="set_ver_icon">PREFERENZE ICONA VERIFICA</string>
     <string name="curr_icon">L\'icona corrente è di</string>
     <string name="hide_icon">Nascondi icona sul launcher</string>
     <string name="no_add">Aggiungi collegamento sulla homescreen</string>
@@ -60,10 +60,10 @@
     <string name="hide_icon_toast_false">L\'icona non è visibile nel launcher</string>
     <string name="no_add_toast_true">L\'icona verrà aggiunta sulla homescreen</string>
     <string name="no_add_toast_false">L\'icona non verrà aggiunta sulla homescreen</string>   
-    <string name="cat_sel_icon">Impostazioni icone</string>
+    <string name="cat_sel_icon">IMPOSTAZIONI ICONE</string>
     <string name="select_icon" tools:ignore="TypographyEllipsis">Seleziona icona...</string>   
     <string name="prev">Anteprima:</string>    
-    <string name="color_sett">Impostazioni colori</string>
+    <string name="color_sett">IMPOSTAZIONI COLORI</string>
     <string name="o_act_bar">Applica colori solo sulla ActionBar</string>
 	<string name="enable_random_color">Abilita colori casuali</string>
 	<string name="enable_random_color_summary">Abilita colori casuali a ogni avvio dell\'app</string>
