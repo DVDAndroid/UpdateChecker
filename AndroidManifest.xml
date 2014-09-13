@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.updatechecker"
     android:versionCode="253"
-    android:versionName="4.2.13 - RC" >
+    android:versionName="4.2.13.1 - RC" >
 
     <uses-sdk
         android:minSdkVersion="19"

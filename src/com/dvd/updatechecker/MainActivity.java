@@ -389,7 +389,7 @@ public class MainActivity extends PreferenceActivity implements
 		super.onResume();
 
 		mListPreferenceColor.setSummary(getApplicationContext().getString(
-				R.string.curr_icon)
+				R.string.this_color)
 				+ " " + mListPreferenceColor.getEntry().toString());
 
 		getPreferenceScreen().getSharedPreferences()
