@@ -106,8 +106,8 @@ public class PlatLogoActivity extends Activity {
 						startActivity(new Intent(Intent.ACTION_MAIN)
 								.setFlags(
 										Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-								.setClassName(" com.dvd.updatechecker",
-										" com.dvd.updatechecker.egg.kk.DessertCase"));
+								.setClassName("com.dvd.updatechecker",
+										"com.dvd.updatechecker.egg.kk.DessertCase"));
 
 					} catch (ActivityNotFoundException ex) {
 						android.util.Log.e("PlatLogoActivity",

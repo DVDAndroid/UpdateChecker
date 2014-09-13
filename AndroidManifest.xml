@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.updatechecker"
-    android:versionCode="252"
-    android:versionName="4.2.11.3 - RC" >
+    android:versionCode="253"
+    android:versionName="4.2.13 - RC" >
 
     <uses-sdk
         android:minSdkVersion="19"
