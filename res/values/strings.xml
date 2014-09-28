@@ -114,5 +114,6 @@
     <string name="cat_up">UPDATE SETTINGS</string>
     
     <string name="alpha_beta">WARNING!\nThe available version is in %1$s, would you download it?</string>
+    <string name="old_ver">WARNING!\nAn old version of the app is installed. Removal is required.</string>
     
 </resources>

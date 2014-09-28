@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

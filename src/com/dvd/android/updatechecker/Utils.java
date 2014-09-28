@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import java.io.File;
 

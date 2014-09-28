@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-package com.dvd.updatechecker.egg.kk;
+package com.dvd.android.updatechecker.egg.kk;
+
+import com.dvd.android.updatechecker.R;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -46,10 +50,6 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dvd.updatechecker.R;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
-
 public class PlatLogoActivity extends Activity {
 	FrameLayout mContent;
 	int mCount;
@@ -74,7 +74,8 @@ public class PlatLogoActivity extends Activity {
 		Typeface light = Typeface.createFromAsset(getAssets(),
 				"Roboto-Light.ttf");
 		SharedPreferences pref = getSharedPreferences(
-				"com.dvd.updatechecker_preferences", Context.MODE_PRIVATE);
+				"com.dvd.android.updatechecker_preferences",
+				Context.MODE_PRIVATE);
 		String kkLetter = pref.getString("kk_letter", null);
 		String kkText = pref.getString("kk_text", null);
 		final String interpol = pref.getString("kk_interpolator", null);
@@ -282,8 +283,8 @@ public class PlatLogoActivity extends Activity {
 								.setFlags(
 										Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
 								// .addCategory("com.android.internal.category.PLATLOGO"));
-								.setClassName("com.dvd.updatechecker",
-										"com.dvd.updatechecker.egg.kk.DessertCase"));
+								.setClassName("com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.egg.kk.DessertCase"));
 					} catch (ActivityNotFoundException ex) {
 						android.util.Log.e("PlatLogoActivity",
 								"Couldn't catch a break.");

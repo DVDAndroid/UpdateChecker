@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dvd.updatechecker.egg.kk;
+package com.dvd.android.updatechecker.egg.kk;
 
 
 import android.annotation.SuppressLint;

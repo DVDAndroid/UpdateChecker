@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -314,21 +314,25 @@ public class SettingsActivity extends PreferenceActivity implements
 
 			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_HIDE_ICON, true)) {
 
-				getPackageManager().setComponentEnabledSetting(
-						new ComponentName("com.dvd.updatechecker",
-								"com.dvd.updatechecker.UpdateActivity-sh"),
-						PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-						PackageManager.DONT_KILL_APP);
+				getPackageManager()
+						.setComponentEnabledSetting(
+								new ComponentName(
+										"com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.UpdateActivity-sh"),
+								PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+								PackageManager.DONT_KILL_APP);
 
 				restart();
 
 			} else {
 
-				getPackageManager().setComponentEnabledSetting(
-						new ComponentName("com.dvd.updatechecker",
-								"com.dvd.updatechecker.UpdateActivity-sh"),
-						PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-						PackageManager.DONT_KILL_APP);
+				getPackageManager()
+						.setComponentEnabledSetting(
+								new ComponentName(
+										"com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.UpdateActivity-sh"),
+								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+								PackageManager.DONT_KILL_APP);
 
 				restart();
 
@@ -343,31 +347,33 @@ public class SettingsActivity extends PreferenceActivity implements
 					+ " " + mListPreferenceIcons.getEntry().toString());
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.updatechecker",
-							"com.dvd.updatechecker.MainActivity-JB"),
+					new ComponentName("com.dvd.android.updatechecker",
+							"com.dvd.android.updatechecker.MainActivity-JB"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.updatechecker",
-							"com.dvd.updatechecker.MainActivity-KK"),
+					new ComponentName("com.dvd.android.updatechecker",
+							"com.dvd.android.updatechecker.MainActivity-KK"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.updatechecker",
-							"com.dvd.updatechecker.MainActivity-L"),
+					new ComponentName("com.dvd.android.updatechecker",
+							"com.dvd.android.updatechecker.MainActivity-L"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
 			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 					"1")) {
 
-				getPackageManager().setComponentEnabledSetting(
-						new ComponentName("com.dvd.updatechecker",
-								"com.dvd.updatechecker.MainActivity-JB"),
-						PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-						PackageManager.DONT_KILL_APP);
+				getPackageManager()
+						.setComponentEnabledSetting(
+								new ComponentName(
+										"com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.MainActivity-JB"),
+								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+								PackageManager.DONT_KILL_APP);
 
 				restart();
 
@@ -376,11 +382,13 @@ public class SettingsActivity extends PreferenceActivity implements
 			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 					"2")) {
 
-				getPackageManager().setComponentEnabledSetting(
-						new ComponentName("com.dvd.updatechecker",
-								"com.dvd.updatechecker.MainActivity-KK"),
-						PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-						PackageManager.DONT_KILL_APP);
+				getPackageManager()
+						.setComponentEnabledSetting(
+								new ComponentName(
+										"com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.MainActivity-KK"),
+								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+								PackageManager.DONT_KILL_APP);
 
 				restart();
 
@@ -389,11 +397,13 @@ public class SettingsActivity extends PreferenceActivity implements
 			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 					"3")) {
 
-				getPackageManager().setComponentEnabledSetting(
-						new ComponentName("com.dvd.updatechecker",
-								"com.dvd.updatechecker.MainActivity-L"),
-						PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-						PackageManager.DONT_KILL_APP);
+				getPackageManager()
+						.setComponentEnabledSetting(
+								new ComponentName(
+										"com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.MainActivity-L"),
+								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+								PackageManager.DONT_KILL_APP);
 
 				restart();
 

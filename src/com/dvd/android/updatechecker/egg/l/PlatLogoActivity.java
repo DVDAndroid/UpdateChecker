@@ -1,10 +1,10 @@
 // Copyright: Giupy 99. DO NOT KANG.
 
-package com.dvd.updatechecker.egg.l;
+package com.dvd.android.updatechecker.egg.l;
 
 import java.util.Random;
 
-import com.dvd.updatechecker.R;
+import com.dvd.android.updatechecker.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,7 +36,8 @@ public class PlatLogoActivity extends Activity {
 		final View rct1 = new View(this), rct2 = new View(this);
 		TextView build = new TextView(this);
 		final Random r = new Random();
-		String sui = getSharedPreferences("com.dvd.updatechecker_preferences",
+		String sui = getSharedPreferences(
+				"com.dvd.android.updatechecker_preferences",
 				Context.MODE_PRIVATE).getString("l_sysui",
 				getString(R.string.none));
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -106,8 +107,8 @@ public class PlatLogoActivity extends Activity {
 						startActivity(new Intent(Intent.ACTION_MAIN)
 								.setFlags(
 										Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-								.setClassName("com.dvd.updatechecker",
-										"com.dvd.updatechecker.egg.kk.DessertCase"));
+								.setClassName("com.dvd.android.updatechecker",
+										"com.dvd.android.updatechecker.egg.kk.DessertCase"));
 
 					} catch (ActivityNotFoundException ex) {
 						android.util.Log.e("PlatLogoActivity",

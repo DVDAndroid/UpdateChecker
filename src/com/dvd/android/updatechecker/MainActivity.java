@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -32,6 +32,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -134,6 +135,33 @@ public class MainActivity extends PreferenceActivity implements
 
 		if (apk.exists()) {
 			apk.delete();
+		}
+
+		if (isPackageInstalled("com.dvd.updatechecker")) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+					MainActivity.this);
+
+			alertDialogBuilder.setTitle(getApplicationContext().getString(
+					R.string.warn));
+			alertDialogBuilder.setMessage(getString(R.string.old_ver));
+			alertDialogBuilder.setPositiveButton(android.R.string.ok,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+
+							Uri packageURI = Uri.parse("package:"
+									+ "com.dvd.updatechecker");
+							Intent uninstallIntent = new Intent(
+									Intent.ACTION_DELETE, packageURI);
+							startActivity(uninstallIntent);
+
+						}
+					});
+
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.setCancelable(false);
+			alertDialog.show();
 		}
 
 		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
@@ -509,8 +537,9 @@ public class MainActivity extends PreferenceActivity implements
 		int id = item.getItemId();
 		if (id == R.id.action_info) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setComponent(new ComponentName("com.dvd.updatechecker",
-					"com.dvd.updatechecker.InfoActivity"));
+			intent.setComponent(new ComponentName(
+					"com.dvd.android.updatechecker",
+					"com.dvd.android.updatechecker.InfoActivity"));
 			startActivity(intent);
 			;
 			return true;

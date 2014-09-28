@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dvd.updatechecker"
-    android:versionCode="253"
-    android:versionName="4.2.13.2 - RC" >
+    package="com.dvd.android.updatechecker"
+    android:versionCode="255"
+    android:versionName="4.2.13.5 - RC" >
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -21,7 +21,7 @@
         android:noHistory="true"
         android:theme="@style/Theme.Transparent" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.dvd.android.updatechecker.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="fullSensor" >
             <intent-filter>
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UpdateActivity"
+            android:name="com.dvd.android.updatechecker.UpdateActivity"
             android:label="@string/title_activity_update"
             android:noHistory="true">
             <intent-filter>
@@ -41,7 +41,7 @@
 		    android:icon="@drawable/ic_launcher_settings_kk" 
 		    android:name=".MainActivity-KK"
 		    android:enabled="true"
-		    android:targetActivity=".MainActivity">
+		    android:targetActivity="com.dvd.android.updatechecker.MainActivity">
 		    <intent-filter>
 		        <action android:name="android.intent.action.MAIN" />
 		        
@@ -54,7 +54,7 @@
             android:label="@string/title_activity_update"
             android:noHistory="true"
 		    android:enabled="true"
-		    android:targetActivity=".UpdateActivity">
+		    android:targetActivity="com.dvd.android.updatechecker.UpdateActivity">
 		    <intent-filter>
 		        <action android:name="android.intent.action.MAIN" />
 		        
@@ -66,7 +66,7 @@
 		    android:icon="@drawable/ic_launcher_settings_jb" 
 		    android:name=".MainActivity-JB"
 		    android:enabled="false"
-		    android:targetActivity=".MainActivity">
+		    android:targetActivity="com.dvd.android.updatechecker.MainActivity">
 		    <intent-filter>
 		        <action android:name="android.intent.action.MAIN" />
 		        
@@ -78,55 +78,55 @@
 		    android:icon="@drawable/ic_launcher_settings_l" 
 		    android:name=".MainActivity-L"
 		    android:enabled="false"
-		    android:targetActivity=".MainActivity">
+		    android:targetActivity="com.dvd.android.updatechecker.MainActivity">
 		    <intent-filter>
 		        <action android:name="android.intent.action.MAIN" />
 		        
 		        <category android:name="android.intent.category.LAUNCHER" />
 		    </intent-filter>   
 		</activity-alias>
-        <receiver android:name=".CallReceiver"> 
+        <receiver android:name="com.dvd.android.updatechecker.CallReceiver"> 
 			<intent-filter> 
 				<action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
 			</intent-filter> 
 		</receiver>
         <activity
-            android:name=".InfoActivity"
+            android:name="com.dvd.android.updatechecker.InfoActivity"
             android:label="@string/title_activity_info"
             android:screenOrientation="fullSensor" >
         </activity>
         <activity
-            android:name=".SysInfoActivity"
+            android:name="com.dvd.android.updatechecker.SysInfoActivity"
             android:label="@string/title_activity_sys_info"
             android:screenOrientation="fullSensor" >
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
+		</activity>
+       <activity 
+            android:name="com.dvd.android.updatechecker.SettingsActivity"
+            android:label="@string/title_activity_sys_info"
             android:screenOrientation="fullSensor" >
-        </activity>
-        
-		<activity
-            android:name="com.dvd.updatechecker.egg.kk.PlatLogoActivity"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.dvd.updatechecker.egg.kk.DessertCase"
+	   </activity>	
+	   <activity
+            android:name="com.dvd.android.updatechecker.egg.kk.DessertCase"
             android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.dvd.updatechecker.egg.l.PlatLogoActivity"
+       </activity>   
+	   <activity
+            android:name="com.dvd.android.updatechecker.egg.kk.PlatLogoActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+       </activity>
+       <activity
+            android:name="com.dvd.android.updatechecker.egg.l.PlatLogoActivity"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-        </activity>         
+       </activity>  
+		       
     </application>
 
 </manifest>

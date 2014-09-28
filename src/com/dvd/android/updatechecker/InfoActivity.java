@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -518,8 +518,9 @@ public class InfoActivity extends PreferenceActivity {
 
 		if (id == R.id.sett) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setComponent(new ComponentName("com.dvd.updatechecker",
-					"com.dvd.updatechecker.SettingsActivity"));
+			intent.setComponent(new ComponentName(
+					"com.dvd.android.updatechecker",
+					"com.dvd.android.updatechecker.SettingsActivity"));
 			startActivity(intent);
 			;
 		}
@@ -638,8 +639,9 @@ public class InfoActivity extends PreferenceActivity {
 
 		if (id == R.id.sys_info) {
 			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setComponent(new ComponentName("com.dvd.updatechecker",
-					"com.dvd.updatechecker.SysInfoActivity"));
+			intent.setComponent(new ComponentName(
+					"com.dvd.android.updatechecker",
+					"com.dvd.android.updatechecker.SysInfoActivity"));
 			startActivity(intent);
 			;
 		}

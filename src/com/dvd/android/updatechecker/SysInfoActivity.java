@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -236,14 +236,15 @@ public class SysInfoActivity extends PreferenceActivity {
 			if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
 
 				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-					startActivity(new Intent(this,
-							com.dvd.updatechecker.egg.kk.PlatLogoActivity.class));
+					startActivity(new Intent(
+							this,
+							com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class));
 				} else {
 					if (Build.VERSION.SDK_INT == 20) {
 						// TODO: 20 <=> Build.VERSION_CODES.L
 						startActivity(new Intent(
 								this,
-								com.dvd.updatechecker.egg.l.PlatLogoActivity.class));
+								com.dvd.android.updatechecker.egg.l.PlatLogoActivity.class));
 					}
 				}
 			}

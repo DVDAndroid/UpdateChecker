@@ -1,4 +1,4 @@
-package com.dvd.updatechecker;
+package com.dvd.android.updatechecker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

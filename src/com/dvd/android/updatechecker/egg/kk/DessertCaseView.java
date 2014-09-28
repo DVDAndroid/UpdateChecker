@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.dvd.updatechecker.egg.kk;
+package com.dvd.android.updatechecker.egg.kk;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
+import com.dvd.android.updatechecker.R;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -48,8 +50,6 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
-import com.dvd.updatechecker.R;
 
 @SuppressLint("DrawAllocation")
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
