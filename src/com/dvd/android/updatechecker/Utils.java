@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 public class Utils {
 
+	public static int NOTIFICATION_ID = 21;
 	public static String KEY_LIST_PREFERENCE_COLOR = "listPrefcolor";
 	public static String KEY_LIST_PREFERENCE_ICONS = "select_icons";
 	public static String KEY_CHECK_BOX_NO_ADD = "no_add";

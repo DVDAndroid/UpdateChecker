@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class SysInfoActivity extends PreferenceActivity {
 
@@ -45,61 +47,66 @@ public class SysInfoActivity extends PreferenceActivity {
 				String ver = "KitKat ";
 				release.setSummary(ver + Build.VERSION.RELEASE);
 			} else {
-				release.setSummary(String.valueOf(Build.VERSION.CODENAME));
+				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+					String ver = "Lollipop ";
+					release.setSummary(ver + Build.VERSION.RELEASE);
+				}
 			}
-		}
 
-		SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
+			SharedPreferences prefs = getPreferenceManager()
+					.getDefaultSharedPreferences(this);
 
-		SystemBarTintManager tintManager = new SystemBarTintManager(this);
-		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+			SystemBarTintManager tintManager = new SystemBarTintManager(this);
+			SystemBarTintManager.SystemBarConfig config = tintManager
+					.getConfig();
 
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_JB)) {
+			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
+					Utils.KEY_ICON_JB)) {
 
-			actionBar.setIcon(R.drawable.ic_launcher_settings_jb);
+				actionBar.setIcon(R.drawable.ic_launcher_settings_jb);
 
-		}
+			}
 
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_KK)) {
+			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
+					Utils.KEY_ICON_KK)) {
 
-			actionBar.setIcon(R.drawable.ic_launcher_settings_kk);
+				actionBar.setIcon(R.drawable.ic_launcher_settings_kk);
 
-		}
+			}
 
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_L)) {
+			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
+					Utils.KEY_ICON_L)) {
 
-			actionBar.setIcon(R.drawable.ic_launcher_settings_l);
+				actionBar.setIcon(R.drawable.ic_launcher_settings_l);
 
-		}
+			}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
-			findViewById(android.R.id.content).setPadding(
-					config.getPixelInsetRight(), config.getPixelInsetTop(true),
-					config.getPixelInsetRight(), 0);
-		}
+				findViewById(android.R.id.content).setPadding(
+						config.getPixelInsetRight(),
+						config.getPixelInsetTop(true),
+						config.getPixelInsetRight(), 0);
+			}
 
-		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
+			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
 
-			prefs.edit()
-					.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-							prefs.getString("colorSysInfo", null)).commit();
-		}
+				prefs.edit()
+						.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
+								prefs.getString("colorSysInfo", null)).commit();
+			}
 
-		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+			applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
-		try {
-			setSummaries();
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				setSummaries();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	@SuppressWarnings({ "deprecation" })
+	@SuppressLint("NewApi")
 	public void setSummaries() throws IOException {
 
 		Preference board = findPreference(Utils.KEY_SYS_INFO_BOARD);
@@ -132,7 +139,12 @@ public class SysInfoActivity extends PreferenceActivity {
 		kernel.setSummary((System.getProperty("os.version")));
 		board.setSummary(Build.BOARD);
 		bootloader.setSummary(Build.BOOTLOADER);
-		cpu.setSummary(Build.CPU_ABI + ", " + Build.CPU_ABI2);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			cpu.setSummary(Build.CPU_ABI + ", " + Build.CPU_ABI2);
+		} else {
+			cpu.setSummary(Build.SUPPORTED_ABIS.toString());
+		}
+
 		device.setSummary(Build.DEVICE);
 		display.setSummary(Build.DISPLAY);
 		fingerprint.setSummary(Build.FINGERPRINT);
@@ -240,11 +252,21 @@ public class SysInfoActivity extends PreferenceActivity {
 							this,
 							com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class));
 				} else {
-					if (Build.VERSION.SDK_INT == 20) {
-						// TODO: 20 <=> Build.VERSION_CODES.L
+					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.L) {
+
 						startActivity(new Intent(
 								this,
-								com.dvd.android.updatechecker.egg.l.PlatLogoActivity.class));
+								com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
+					} else {
+						if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+
+							Toast.makeText(getApplicationContext(),
+									"test-android-l-plat-logo", Utils.duration)
+									.show();
+							startActivity(new Intent(
+									this,
+									com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
+						}
 					}
 				}
 			}

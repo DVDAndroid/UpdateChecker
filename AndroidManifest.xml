@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.android.updatechecker"
-    android:versionCode="255"
-    android:versionName="4.2.13.5 - RC" >
+    android:versionCode="287"
+    android:versionName="4.2.13.5 - PRE_FINAL" >
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="20" />
+        android:targetSdkVersion="21" />
     
 	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <uses-permission android:name="android.permission.INTERNET"/>    
@@ -107,20 +107,20 @@
 	   </activity>	
 	   <activity
             android:name="com.dvd.android.updatechecker.egg.kk.DessertCase"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
        </activity>   
 	   <activity
             android:name="com.dvd.android.updatechecker.egg.kk.PlatLogoActivity"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
        </activity>
        <activity
-            android:name="com.dvd.android.updatechecker.egg.l.PlatLogoActivity"
+            android:name="com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

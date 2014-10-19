@@ -9,12 +9,12 @@
     <string name="title_activity_info">Info</string>
     <string name="title_activity_sys_info">System info</string>
     <string name="vers">Version</string>
-    <string name="verifica">Check!</string>
+    <string name="verifica">CHECK!</string>
     <string name="action_exit">Exit</string>
-    <string name="opensources">OPEN SOURCE LIBRARIES</string>
+    <string name="opensources">Open Source Libraries</string>
     <string name="sysbartint">SystemBarTint</string>
     <string name="info_sysbartint">by jgilfelt</string>
-    <string name="credits">CREDITS</string>
+    <string name="credits">Credits</string>
     <string name="made_by">Created by</string>
     <string name="my_name">Davide Maggio</string>
     <string name="add_shortcut">Add shortcuts</string>
@@ -34,8 +34,8 @@
     <string name="time">Time</string>
     <string name="type">Type</string>
     <string name="user">User</string>
-    <string name="general_info">GENERAL INFOS</string>
-    <string name="other_info">MORE INFO</string>
+    <string name="general_info">General infos</string>
+    <string name="other_info">More infos</string>
     <string name="radio">Radio - Baseband version</string>
     <string name="id">ID - build number</string>
     <string name="holo_blue_light">Holo blue light</string>
@@ -59,12 +59,12 @@
     <string name="hide_icon_toast_false">The icon is not in the launcher</string>
     <string name="no_add_toast_true">The icon will be added on homescreen</string>
     <string name="no_add_toast_false">The icon will not be added on homescreen</string>
-    <string name="cat_sel_icon">ICONS SETTINGS</string>
+    <string name="cat_sel_icon">Icons Settings</string>
     <string name="select_icon" tools:ignore="TypographyEllipsis">Select icon...</string>
     <string name="prev">Preview:</string>
     <string name="hello_world">Hello world!</string>
     <string-array name="empty_array"/>
-    <string name="color_sett">COLORS SETTINGS</string>
+    <string name="color_sett">Colors Settings</string>
     <string name="o_act_bar">Apply color only on action bar</string>
     <string name="enable_random_color">Enable random colors</string>
     <string name="enable_random_color_summary">Enable random colors at every startup of the app</string>
@@ -111,7 +111,7 @@
     <string name="upd_yes">Update available!\n\nCurrent code version is %1$s, available %2$s.\n\n\nDownload it now?</string>
     <string name="no_int">Please turn on Wi-Fi or mobile data.</string>
     <string name="no_auto_upd">Enable auto updates</string>
-    <string name="cat_up">UPDATE SETTINGS</string>
+    <string name="cat_up">Update settings</string>
     
     <string name="alpha_beta">WARNING!\nThe available version is in %1$s, would you download it?</string>
     <string name="old_ver">WARNING!\nAn old version of the app is installed. Removal is required.</string>

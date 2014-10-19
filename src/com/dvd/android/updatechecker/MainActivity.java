@@ -20,7 +20,6 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,14 +32,17 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +51,6 @@ public class MainActivity extends PreferenceActivity implements
 
 	public static ListPreference mListPreferenceColor;
 	PackageInfo pInfo;
-	ProgressDialog dialog;
 
 	@Override
 	public void onTrimMemory(int level) {
@@ -63,6 +64,7 @@ public class MainActivity extends PreferenceActivity implements
 	@SuppressLint("CutPasteId")
 	@SuppressWarnings({ "deprecation", "static-access" })
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.main);
 		setContentView(R.layout.activity_main);
@@ -81,6 +83,7 @@ public class MainActivity extends PreferenceActivity implements
 					.commit();
 
 			prefs.edit().putBoolean(Utils.KEY_AUTO_UP, true).commit();
+			prefs.edit().putString("new_ver_line", "NO").commit();
 			prefs.edit().putBoolean(Utils.KEY_CHECK_BOX_NO_ADD, true).commit();
 			prefs.edit().putBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR, true)
 					.commit();
@@ -234,181 +237,16 @@ public class MainActivity extends PreferenceActivity implements
 				+ " ");
 
 		if (prefs.getBoolean(Utils.KEY_AUTO_UP, true)) {
-			dialog = ProgressDialog.show(MainActivity.this, "",
-					getString(R.string.checking), true);
 
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					String url = "https://sites.google.com/site/dvdandroid99/ver.txt?attredirects=0&d=1";
-					String path = "ver.txt";
-					try {
-						doVerDownload(url, path, prefs);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			setProgressBarIndeterminateVisibility(true);
 
-				}
+			DownloadFilesTask task = new DownloadFilesTask();
+			task.execute("test");
 
-			}).start();
 		}
 
 		applyColor(mListPreferenceColor.getValue().toString());
 
-	}
-
-	public void doVerDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) throws IllegalArgumentException {
-		Thread dx = new Thread() {
-
-			@SuppressWarnings("unused")
-			@Override
-			public void run() {
-
-				try {
-					URL url = new URL(urlLink);
-					URLConnection connection = url.openConnection();
-					connection.connect();
-					InputStream input = new BufferedInputStream(
-							url.openStream());
-					OutputStream output = new FileOutputStream(getFilesDir()
-							+ "/" + fileName);
-
-					byte data[] = new byte[1024];
-					long total = 0;
-					int count;
-					while ((count = input.read(data)) != -1) {
-						total += count;
-
-						output.write(data, 0, count);
-					}
-
-					output.flush();
-					output.close();
-					input.close();
-					dialog.dismiss();
-
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface arg0) {
-
-							try {
-								pInfo = getPackageManager().getPackageInfo(
-										getPackageName(), 0);
-							} catch (NameNotFoundException e1) {
-								e1.printStackTrace();
-							}
-
-							BufferedReader br = null;
-							try {
-								br = new BufferedReader(
-										new FileReader(new File(getFilesDir()
-												+ "/" + fileName)));
-							} catch (FileNotFoundException e) {
-								e.printStackTrace();
-							}
-
-							String line = "";
-							try {
-								line = br.readLine();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-
-							if (!line.equals(pInfo.versionName)) {
-
-								prefs.edit().putString("new_ver_line", line)
-										.commit();
-
-								if (line.contains("alpha")
-										|| line.contains("beta")) {
-									if (line.contains("alpha")) {
-										prefs.edit().putString("st", "alpha")
-												.commit();
-									}
-									if (line.contains("beta")) {
-										prefs.edit().putString("st", "beta")
-												.commit();
-									}
-								} else {
-									prefs.edit().putString("st", "null")
-											.commit();
-									long when = System.currentTimeMillis();
-									NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-									Intent intent = new Intent(
-											getApplicationContext(),
-											InfoActivity.class);
-									PendingIntent pending = PendingIntent
-											.getActivity(
-													getApplicationContext(), 0,
-													intent, 0);
-									Notification notification;
-
-									notification = new Notification.Builder(
-											getApplicationContext())
-											.setStyle(
-													new Notification.BigTextStyle()
-															.bigText(getString(R.string.yes_up_not)))
-											.setContentTitle(
-													getString(R.string.app_name))
-											.setContentText(
-													getString(R.string.yes_up_not))
-											.setSmallIcon(
-													R.drawable.ic_launcher_gsm)
-											.setContentIntent(pending)
-											.setWhen(when)
-											.setDefaults(
-													Notification.DEFAULT_SOUND
-															| Notification.DEFAULT_VIBRATE)
-
-											.setAutoCancel(true).build();
-
-									notification.flags |= Notification.FLAG_AUTO_CANCEL;
-									nm.notify(0, notification);
-								}
-							} else {
-								prefs.edit().putString("new_ver_line", "NO")
-										.commit();
-							}
-						}
-					});
-
-				} catch (FileNotFoundException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									"an error is occurred", Toast.LENGTH_SHORT)
-									.show();
-						}
-
-					});
-					return;
-
-				} catch (IllegalArgumentException e) {
-					dialog.dismiss();
-
-				} catch (IOException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.no_int),
-									Toast.LENGTH_SHORT).show();
-						}
-
-					});
-
-					return;
-				}
-			}
-		};
-		dx.start();
 	}
 
 	@Override
@@ -548,5 +386,122 @@ public class MainActivity extends PreferenceActivity implements
 			finish();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
+
+		@Override
+		protected Long doInBackground(String... params) {
+			final String urlLink = "https://sites.google.com/site/dvdandroid99/ver.txt?attredirects=0&d=1";
+			final String fileName = "ver.txt";
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(MainActivity.this);
+			try {
+
+				try {
+					URL url = new URL(urlLink);
+					URLConnection connection = url.openConnection();
+					connection.connect();
+					InputStream input = new BufferedInputStream(
+							url.openStream());
+					OutputStream output = new FileOutputStream(getFilesDir()
+							+ "/" + fileName);
+
+					byte data[] = new byte[1024];
+					int count;
+					while ((count = input.read(data)) != -1) {
+						output.write(data, 0, count);
+					}
+
+					output.flush();
+					output.close();
+					input.close();
+
+				} catch (IOException e1) {
+					deleteFile(getFilesDir() + "/" + fileName);
+				}
+
+				try {
+					pInfo = getPackageManager().getPackageInfo(
+							getPackageName(), 0);
+				} catch (NameNotFoundException e1) {
+					e1.printStackTrace();
+				}
+
+				BufferedReader br = null;
+				try {
+					br = new BufferedReader(new FileReader(new File(
+							getFilesDir() + "/" + fileName)));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+
+				String line = "";
+				try {
+					line = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				if (!line.equals(pInfo.versionName)) {
+
+					prefs.edit().putString("new_ver_line", line).commit();
+
+					if (line.contains("alpha") || line.contains("beta")) {
+						if (line.contains("alpha")) {
+							prefs.edit().putString("st", "alpha").commit();
+						}
+						if (line.contains("beta")) {
+							prefs.edit().putString("st", "beta").commit();
+						}
+					} else {
+						prefs.edit().putString("st", "null").commit();
+						long when = System.currentTimeMillis();
+						NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+						Intent intent = new Intent(getApplicationContext(),
+								InfoActivity.class);
+						PendingIntent pending = PendingIntent.getActivity(
+								getApplicationContext(), Utils.NOTIFICATION_ID,
+								intent, 0);
+						Notification notification;
+
+						notification = new Notification.Builder(
+								getApplicationContext())
+								.setStyle(
+										new Notification.BigTextStyle()
+												.bigText(getString(R.string.yes_up_not)))
+								.setContentTitle(getString(R.string.app_name))
+								.setContentText(getString(R.string.yes_up_not))
+								.setSmallIcon(R.drawable.ic_launcher_gsm)
+								.setContentIntent(pending)
+								.setWhen(when)
+								.setPriority(2)
+								.setDefaults(
+										Notification.DEFAULT_SOUND
+												| Notification.DEFAULT_VIBRATE)
+
+								.setAutoCancel(true).build();
+
+						notification.flags |= Notification.FLAG_AUTO_CANCEL;
+						nm.notify(Utils.NOTIFICATION_ID, notification);
+					}
+				} else {
+					prefs.edit().putString("new_ver_line", "NO").commit();
+				}
+
+			} catch (IllegalArgumentException e) {
+
+			} catch (RuntimeException e) {
+				Toast.makeText(MainActivity.this.getApplicationContext(),
+						getString(R.string.no_int), Toast.LENGTH_SHORT).show();
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Long result) {
+			MainActivity.this.setProgressBarIndeterminateVisibility(false);
+		}
 	}
 }

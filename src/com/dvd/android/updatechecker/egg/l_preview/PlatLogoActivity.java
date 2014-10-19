@@ -1,6 +1,6 @@
 // Copyright: Giupy 99. DO NOT KANG.
 
-package com.dvd.android.updatechecker.egg.l;
+package com.dvd.android.updatechecker.egg.l_preview;
 
 import java.util.Random;
 

@@ -22,8 +22,10 @@ public class UpdateActivity extends Activity {
 				String ver = "KitKat ";
 				openActivity(ver);
 			} else {
-				String ver = "";
-				openActivity(ver);
+				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+					String ver = "Lollipop ";
+					openActivity(ver);
+				}
 			}
 		}
 	}

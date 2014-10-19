@@ -16,8 +16,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,13 +51,16 @@ public class InfoActivity extends PreferenceActivity {
 
 		ActionBar actionBar = getActionBar();
 
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
+
+		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		nm.cancel(Utils.NOTIFICATION_ID);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 

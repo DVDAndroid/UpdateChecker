@@ -109,7 +109,7 @@ public class SettingsActivity extends PreferenceActivity implements
 			addPreferencesFromResource(R.xml.pref_kk);
 
 		} else {
-			if (Build.VERSION.SDK_INT == 20) {
+			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
 				PreferenceCategory fakeHeader = new PreferenceCategory(this);
 				getPreferenceScreen().addPreference(fakeHeader);
 				addPreferencesFromResource(R.xml.pref_l);

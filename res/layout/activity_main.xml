@@ -19,6 +19,7 @@
 	    android:layout_height="fill_parent" />
     
     <Button
+        android:textAllCaps="true"
         android:id="@+id/check_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         tools:ignore="SpUsage,RtlHardcoded" />
 
     <TextView
+        android:textAllCaps="true"
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
