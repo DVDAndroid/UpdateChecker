@@ -107,6 +107,7 @@ public class SysInfoActivity extends PreferenceActivity {
 	}
 
 	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public void setSummaries() throws IOException {
 
 		Preference board = findPreference(Utils.KEY_SYS_INFO_BOARD);
@@ -142,7 +143,11 @@ public class SysInfoActivity extends PreferenceActivity {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			cpu.setSummary(Build.CPU_ABI + ", " + Build.CPU_ABI2);
 		} else {
-			cpu.setSummary(Build.SUPPORTED_ABIS.toString());
+			StringBuilder builder = new StringBuilder();
+			for (String s : Build.SUPPORTED_ABIS) {
+				builder.append(s + "  ");
+			}
+			cpu.setSummary(builder);
 		}
 
 		device.setSummary(Build.DEVICE);
@@ -252,7 +257,7 @@ public class SysInfoActivity extends PreferenceActivity {
 							this,
 							com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class));
 				} else {
-					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.L) {
+					if (Build.VERSION.RELEASE == "L") {
 
 						startActivity(new Intent(
 								this,

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dvd.android.updatechecker"
-    android:versionCode="287"
-    android:versionName="4.2.13.5 - PRE_FINAL" >
+    android:versionCode="288"
+    android:versionName="4.2.13.6 - PRE_FINAL" >
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -85,7 +85,7 @@
 		        <category android:name="android.intent.category.LAUNCHER" />
 		    </intent-filter>   
 		</activity-alias>
-        <receiver android:name="com.dvd.android.updatechecker.CallReceiver"> 
+        <receiver android:name="com.dvd.android.updatechecker.Receiver"> 
 			<intent-filter> 
 				<action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
 			</intent-filter> 

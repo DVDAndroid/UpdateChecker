@@ -262,6 +262,13 @@ public class MainActivity extends PreferenceActivity implements
 				.registerOnSharedPreferenceChangeListener(this);
 	}
 
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		setProgressBarIndeterminateVisibility(false);
+
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPause() {
@@ -465,6 +472,11 @@ public class MainActivity extends PreferenceActivity implements
 								intent, 0);
 						Notification notification;
 
+						int priority = 0;
+						if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+							priority = 2;
+						}
+
 						notification = new Notification.Builder(
 								getApplicationContext())
 								.setStyle(
@@ -475,7 +487,8 @@ public class MainActivity extends PreferenceActivity implements
 								.setSmallIcon(R.drawable.ic_launcher_gsm)
 								.setContentIntent(pending)
 								.setWhen(when)
-								.setPriority(2)
+								.setPriority(priority)
+
 								.setDefaults(
 										Notification.DEFAULT_SOUND
 												| Notification.DEFAULT_VIBRATE)
@@ -501,7 +514,9 @@ public class MainActivity extends PreferenceActivity implements
 
 		@Override
 		protected void onPostExecute(Long result) {
+
 			MainActivity.this.setProgressBarIndeterminateVisibility(false);
+
 		}
 	}
 }
