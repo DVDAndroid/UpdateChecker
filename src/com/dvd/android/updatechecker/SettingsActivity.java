@@ -136,8 +136,9 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		}
 
-		findPreference(Utils.KEY_L_SYSUI).setEnabled(
-				!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+			findPreference(Utils.KEY_L_SYSUI).setEnabled(
+					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
 
 	}
 
@@ -270,8 +271,9 @@ public class SettingsActivity extends PreferenceActivity implements
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
 
-		findPreference(Utils.KEY_L_SYSUI).setEnabled(
-				!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+			findPreference(Utils.KEY_L_SYSUI).setEnabled(
+					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
 
 		mListPreferenceIcons = (ListPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_LIST_PREFERENCE_ICONS);
