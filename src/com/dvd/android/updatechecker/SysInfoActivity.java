@@ -20,7 +20,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class SysInfoActivity extends PreferenceActivity {
 
@@ -244,9 +243,14 @@ public class SysInfoActivity extends PreferenceActivity {
 
 	}
 
+	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
+
+		SharedPreferences prefs = getPreferenceManager()
+				.getDefaultSharedPreferences(this);
+
 		if (preference.getKey().equals(Utils.KEY_SYS_INFO_RELEASE)) {
 			System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
 			mHits[mHits.length - 1] = SystemClock.uptimeMillis();
@@ -265,12 +269,15 @@ public class SysInfoActivity extends PreferenceActivity {
 					} else {
 						if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
 
-							Toast.makeText(getApplicationContext(),
-									"test-android-l-plat-logo", Utils.duration)
-									.show();
-							startActivity(new Intent(
-									this,
-									com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
+							if (prefs.getString(Utils.KEY_CHOOSE_PLAT, null)
+									.equals("2"))
+								startActivity(new Intent(
+										this,
+										com.dvd.android.updatechecker.egg.ll.PlatLogoActivity.class));
+							else
+								startActivity(new Intent(
+										this,
+										com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
 						}
 					}
 				}

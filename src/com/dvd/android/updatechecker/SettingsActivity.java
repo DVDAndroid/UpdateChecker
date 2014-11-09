@@ -38,6 +38,7 @@ public class SettingsActivity extends PreferenceActivity implements
 	public static EditTextPreference mKkClicks;
 	public static ListPreference mKkSysUi;
 	public static ListPreference mLSysUi;
+	public static ListPreference mLLollipopChooser;
 
 	PackageInfo pInfo;
 
@@ -135,6 +136,9 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		}
 
+		findPreference(Utils.KEY_L_SYSUI).setEnabled(
+				!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -166,6 +170,11 @@ public class SettingsActivity extends PreferenceActivity implements
 			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
 					Utils.KEY_L_SYSUI);
 			mLSysUi.setSummary(mLSysUi.getEntry().toString());
+
+			mLLollipopChooser = (ListPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_CHOOSE_PLAT);
+			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
+					.toString());
 		}
 		mListPreferenceIcons.setSummary(getApplicationContext().getString(
 				R.string.curr_icon)
@@ -261,6 +270,9 @@ public class SettingsActivity extends PreferenceActivity implements
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
 
+		findPreference(Utils.KEY_L_SYSUI).setEnabled(
+				!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
+
 		mListPreferenceIcons = (ListPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_LIST_PREFERENCE_ICONS);
 
@@ -269,6 +281,9 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		mCheckBoxRandomColorsAct = (CheckBoxPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT);
+
+		mLLollipopChooser = (ListPreference) getPreferenceScreen()
+				.findPreference(Utils.KEY_CHOOSE_PLAT);
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 			mKkLetter = (EditTextPreference) getPreferenceScreen()
@@ -296,6 +311,9 @@ public class SettingsActivity extends PreferenceActivity implements
 			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
 					Utils.KEY_L_SYSUI);
 			mLSysUi.setSummary(mLSysUi.getEntry().toString());
+
+			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
+					.toString());
 		}
 
 		if (key.equals(Utils.KEY_CHECK_BOX_RAND_COLOR)) {

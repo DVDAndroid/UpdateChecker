@@ -82,6 +82,7 @@ public class MainActivity extends PreferenceActivity implements
 			prefs.edit().putString(Utils.KEY_LIST_PREFERENCE_ICONS, "2")
 					.commit();
 
+			prefs.edit().putString(Utils.KEY_CHOOSE_PLAT, "2").commit();
 			prefs.edit().putBoolean(Utils.KEY_AUTO_UP, true).commit();
 			prefs.edit().putString("new_ver_line", "NO").commit();
 			prefs.edit().putBoolean(Utils.KEY_CHECK_BOX_NO_ADD, true).commit();

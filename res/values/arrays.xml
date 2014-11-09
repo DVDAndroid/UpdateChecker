@@ -62,6 +62,15 @@
 	    <item>3</item>        
     </string-array>
     
+    <string-array name="android_eggs">
+        <item>Android L Preview</item>
+        <item>Android Lollipop</item>
+    </string-array>
+    <string-array name="android_eggs_id">
+        <item >1</item>
+        <item >2</item>
+    </string-array>
+    
     
 
 </resources>

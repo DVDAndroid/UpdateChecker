@@ -37,6 +37,8 @@ public class Utils {
 
 	public static String KEY_L_SYSUI = "l_sysui";
 
+	public static String KEY_CHOOSE_PLAT = "platlogo";
+
 	public static String KEY_SYS_INFO_BOARD = "board";
 	public static String KEY_SYS_INFO_BOOTLOADER = "bootloader";
 	public static String KEY_SYS_INFO_CPU = "cpu";
