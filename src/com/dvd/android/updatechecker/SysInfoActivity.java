@@ -182,12 +182,11 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-		if (Build.VERSION.SDK_INT < 19 | land) {
-			getPreferenceScreen().removePreference(findPreference("null"));
+		SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-			SystemBarTintManager tintManager = new SystemBarTintManager(this);
-			SystemBarTintManager.SystemBarConfig config = tintManager
-					.getConfig();
+		if (Build.VERSION.SDK_INT < 19 | land | config.hasNavigtionBar()) {
+			getPreferenceScreen().removePreference(findPreference("null"));
 
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),

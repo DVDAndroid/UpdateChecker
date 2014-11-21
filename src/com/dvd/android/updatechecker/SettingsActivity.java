@@ -127,7 +127,8 @@ public class SettingsActivity extends PreferenceActivity implements
 		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
 		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-		if (Build.VERSION.SDK_INT < 19 | land) {
+
+		if (Build.VERSION.SDK_INT < 19 | land | config.hasNavigtionBar()) {
 			getPreferenceScreen().removePreference(findPreference("null"));
 
 			findViewById(android.R.id.content).setPadding(0,
