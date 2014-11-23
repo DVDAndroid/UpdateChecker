@@ -79,7 +79,7 @@ public class MainActivity extends PreferenceActivity implements
 			Toast.makeText(getApplicationContext(),
 					getString(R.string.welcome), Utils.duration).show();
 
-			prefs.edit().putString(Utils.KEY_LIST_PREFERENCE_ICONS, "2")
+			prefs.edit().putString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")
 					.commit();
 
 			prefs.edit().putString(Utils.KEY_CHOOSE_PLAT, "2").commit();

@@ -8,6 +8,8 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -19,7 +21,9 @@ import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class SysInfoActivity extends PreferenceActivity {
 
@@ -185,7 +189,7 @@ public class SysInfoActivity extends PreferenceActivity {
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		if (Build.VERSION.SDK_INT < 19 | land | config.hasNavigtionBar()) {
+		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
 			getPreferenceScreen().removePreference(findPreference("null"));
 
 			findViewById(android.R.id.content).setPadding(0,
@@ -250,6 +254,11 @@ public class SysInfoActivity extends PreferenceActivity {
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
 
+		ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+		ClipData clip = ClipData.newPlainText("Clipoard", preference.getTitle()
+				+ ": " + preference.getSummary());
+		clipboard.setPrimaryClip(clip);
+
 		if (preference.getKey().equals(Utils.KEY_SYS_INFO_RELEASE)) {
 			System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
 			mHits[mHits.length - 1] = SystemClock.uptimeMillis();
@@ -282,19 +291,62 @@ public class SysInfoActivity extends PreferenceActivity {
 				}
 			}
 		}
+
 		return false;
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+
+		getMenuInflater().inflate(R.menu.sysinfos, menu);
+		return true;
+	}
+
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		@SuppressWarnings("static-access")
+		SharedPreferences prefs = getPreferenceManager()
+				.getDefaultSharedPreferences(this);
+
 		int id = item.getItemId();
-		if (id == android.R.id.home) {
+		if (id == android.R.id.home)
 			finish();
+
+		if (id == R.id.copy_mod) {
+			if (prefs.getBoolean("copy_mod", true)) {
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
+						.show();
+				prefs.edit().putBoolean("copy_mod", false).commit();
+			}
+
+			item.setChecked(!item.isChecked());
+			for (String p : sysinfolist_pref) {
+				findPreference(p).setSelectable(item.isChecked());
+			}
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
+
+	private static final String[] sysinfolist_pref = new String[] {
+			Utils.KEY_SYS_INFO_BOARD, Utils.KEY_SYS_INFO_BOOTLOADER,
+			Utils.KEY_SYS_INFO_CPU, Utils.KEY_SYS_INFO_DEVICE,
+			Utils.KEY_SYS_INFO_DISPLAY, Utils.KEY_SYS_INFO_FINGERPRINT,
+			Utils.KEY_SYS_INFO_HARDWARE, Utils.KEY_SYS_INFO_HOST,
+			Utils.KEY_SYS_INFO_ID, Utils.KEY_SYS_INFO_MANUFACTURER,
+			Utils.KEY_SYS_INFO_MODEL, Utils.KEY_SYS_INFO_PRODUCT,
+			Utils.KEY_SYS_INFO_RADIO, Utils.KEY_SYS_INFO_SERIAL,
+			Utils.KEY_SYS_INFO_TAGS, Utils.KEY_SYS_INFO_TIME,
+			Utils.KEY_SYS_INFO_TYPE, Utils.KEY_SYS_INFO_USER,
+			Utils.KEY_SYS_INFO_CODENAME, Utils.KEY_SYS_INFO_INCREMENTAL,
+			Utils.KEY_SYS_INFO_RELEASE, Utils.KEY_SYS_INFO_API,
+			Utils.KEY_SYS_INFO_KERNEL, Utils.KEY_SYS_INFO_ROOT,
+			Utils.KEY_SYS_INFO_XPOSED, Utils.KEY_SYS_INFO_BUSYBOX };
 
 }

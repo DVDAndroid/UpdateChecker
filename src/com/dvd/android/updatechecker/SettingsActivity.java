@@ -128,7 +128,7 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-		if (Build.VERSION.SDK_INT < 19 | land | config.hasNavigtionBar()) {
+		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
 			getPreferenceScreen().removePreference(findPreference("null"));
 
 			findViewById(android.R.id.content).setPadding(0,
@@ -246,7 +246,7 @@ public class SettingsActivity extends PreferenceActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 
-		getMenuInflater().inflate(R.menu.sysinfo, menu);
+		getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
 

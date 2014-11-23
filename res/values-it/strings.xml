@@ -110,4 +110,6 @@
     <string name="alpha_beta">ATTENZIONE!\nLa versione disponibile è in %1$s, la vuoi scaricare comunque?</string>
     <string name="old_ver">ATTENZIONE!\nUna vecchia versione dell\'applicazione è installata. La rimozione è richiesta.</string>
     <string name="choose_platlogo">Scegli Android L/Lollipop Platlogo</string>
+    <string name="mod_copy">Modalità copiatore</string>
+    <string name="what_mod_copy">Clicca su una informazione per copiare il contenuto negli appunti</string>
 </resources>

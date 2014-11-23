@@ -116,5 +116,6 @@
     <string name="alpha_beta">WARNING!\nThe available version is in %1$s, would you download it?</string>
     <string name="old_ver">WARNING!\nAn old version of the app is installed. Removal is required.</string>
     <string name="choose_platlogo">Choose Android L/Lollipop Platlogo</string>
-    
+    <string name="mod_copy">Copying Mode</string>
+    <string name="what_mod_copy">Click on an information to copy the contents in clipboard</string>
 </resources>

@@ -113,7 +113,7 @@ public class InfoActivity extends PreferenceActivity {
 
 		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-		if (Build.VERSION.SDK_INT < 19 | land | config.hasNavigtionBar()) {
+		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
 			getPreferenceScreen().removePreference(findPreference("null"));
 
 			findViewById(android.R.id.content).setPadding(0,

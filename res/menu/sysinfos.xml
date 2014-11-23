@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/copy_mod"
+        android:title="@string/mod_copy"        
+        android:showAsAction="always|withText"
+        android:checkable="true">        
+    </item>    
+
+</menu>
