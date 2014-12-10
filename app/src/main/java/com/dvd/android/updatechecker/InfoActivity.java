@@ -103,7 +103,7 @@ public class InfoActivity extends PreferenceActivity {
 
 			prefs.edit()
 					.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-							prefs.getString("colorInfo", null)).commit();
+							prefs.getString("colorInfo", null)).apply();
 
 		}
 
@@ -527,7 +527,6 @@ public class InfoActivity extends PreferenceActivity {
 					"com.dvd.android.updatechecker",
 					"com.dvd.android.updatechecker.SettingsActivity"));
 			startActivity(intent);
-			;
 		}
 
 		if (id == R.id.action_add) {
@@ -648,7 +647,6 @@ public class InfoActivity extends PreferenceActivity {
 					"com.dvd.android.updatechecker",
 					"com.dvd.android.updatechecker.SysInfoActivity"));
 			startActivity(intent);
-			;
 		}
 
 		if (id == android.R.id.home) {
