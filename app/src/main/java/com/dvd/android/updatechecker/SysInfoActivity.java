@@ -14,11 +14,12 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
@@ -27,7 +28,36 @@ import java.io.InputStreamReader;
 
 public class SysInfoActivity extends PreferenceActivity {
 
+    private static final String[] sysinfolist_pref = new String[]{
+            Utils.KEY_SYS_INFO_BOARD,
+            Utils.KEY_SYS_INFO_BOOTLOADER,
+            Utils.KEY_SYS_INFO_CPU,
+            Utils.KEY_SYS_INFO_DEVICE,
+            Utils.KEY_SYS_INFO_DISPLAY,
+            Utils.KEY_SYS_INFO_FINGERPRINT,
+            Utils.KEY_SYS_INFO_HARDWARE,
+            Utils.KEY_SYS_INFO_HOST,
+            Utils.KEY_SYS_INFO_ID,
+            Utils.KEY_SYS_INFO_MANUFACTURER,
+            Utils.KEY_SYS_INFO_MODEL,
+            Utils.KEY_SYS_INFO_PRODUCT,
+            Utils.KEY_SYS_INFO_RADIO,
+            Utils.KEY_SYS_INFO_SERIAL,
+            Utils.KEY_SYS_INFO_TAGS,
+            Utils.KEY_SYS_INFO_TIME,
+            Utils.KEY_SYS_INFO_TYPE,
+            Utils.KEY_SYS_INFO_USER,
+            Utils.KEY_SYS_INFO_CODENAME,
+            Utils.KEY_SYS_INFO_INCREMENTAL,
+            Utils.KEY_SYS_INFO_RELEASE,
+            Utils.KEY_SYS_INFO_API,
+            Utils.KEY_SYS_INFO_KERNEL,
+            Utils.KEY_SYS_INFO_ROOT,
+            Utils.KEY_SYS_INFO_XPOSED,
+            Utils.KEY_SYS_INFO_BUSYBOX
+    };
     long[] mHits = new long[3];
+    int on = 0;
 
     @SuppressWarnings({
             "deprecation",
@@ -37,6 +67,7 @@ public class SysInfoActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.sys_info);
+        setContentView(R.layout.sysui);
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -90,8 +121,7 @@ public class SysInfoActivity extends PreferenceActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
                 findViewById(android.R.id.content).setPadding(
-                        config.getPixelInsetRight(),
-                        config.getPixelInsetTop(true),
+                        config.getPixelInsetRight(), config.getPixelInsetTop(true),
                         config.getPixelInsetRight(), 0);
             }
 
@@ -191,6 +221,13 @@ public class SysInfoActivity extends PreferenceActivity {
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            findViewById(android.R.id.content).setPadding(
+                    config.getPixelInsetRight(), config.getPixelInsetTop(true),
+                    config.getPixelInsetRight(), 0);
+
+        }
+
         if (Build.VERSION.SDK_INT < 19 | land | ! config.hasNavigtionBar()) {
             getPreferenceScreen().removePreference(findPreference("null"));
 
@@ -199,6 +236,48 @@ public class SysInfoActivity extends PreferenceActivity {
                     config.getPixelInsetBottom());
 
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                @SuppressWarnings("static-access")
+                SharedPreferences prefs;
+                getPreferenceManager();
+                prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext());
+
+                if (prefs.getBoolean("copy_mod", true)) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
+                            .show();
+                    prefs.edit().putBoolean("copy_mod", false).apply();
+                }
+
+                if (on == 0) {
+                    on--;
+                    for (String p : sysinfolist_pref) {
+                        findPreference(p).setSelectable(true);
+                    }
+                } else {
+                    on++;
+                    for (String p : sysinfolist_pref) {
+                        findPreference(p).setSelectable(false);
+                    }
+                }
+            }
+        });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
+                        .show();
+                return false;
+            }
+        });
 
     }
 
@@ -300,72 +379,5 @@ public class SysInfoActivity extends PreferenceActivity {
 
         return false;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.sysinfos, menu);
-        return true;
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        @SuppressWarnings("static-access")
-        SharedPreferences prefs = getPreferenceManager()
-                .getDefaultSharedPreferences(this);
-
-        int id = item.getItemId();
-        if (id == android.R.id.home) { finish(); }
-
-        if (id == R.id.copy_mod) {
-            if (prefs.getBoolean("copy_mod", true)) {
-                Toast.makeText(getApplicationContext(),
-                        getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
-                        .show();
-                prefs.edit().putBoolean("copy_mod", false).apply();
-            }
-
-            item.setChecked(! item.isChecked());
-            for (String p : sysinfolist_pref) {
-                findPreference(p).setSelectable(item.isChecked());
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private static final String[] sysinfolist_pref = new String[]{
-            Utils.KEY_SYS_INFO_BOARD,
-            Utils.KEY_SYS_INFO_BOOTLOADER,
-            Utils.KEY_SYS_INFO_CPU,
-            Utils.KEY_SYS_INFO_DEVICE,
-            Utils.KEY_SYS_INFO_DISPLAY,
-            Utils.KEY_SYS_INFO_FINGERPRINT,
-            Utils.KEY_SYS_INFO_HARDWARE,
-            Utils.KEY_SYS_INFO_HOST,
-            Utils.KEY_SYS_INFO_ID,
-            Utils.KEY_SYS_INFO_MANUFACTURER,
-            Utils.KEY_SYS_INFO_MODEL,
-            Utils.KEY_SYS_INFO_PRODUCT,
-            Utils.KEY_SYS_INFO_RADIO,
-            Utils.KEY_SYS_INFO_SERIAL,
-            Utils.KEY_SYS_INFO_TAGS,
-            Utils.KEY_SYS_INFO_TIME,
-            Utils.KEY_SYS_INFO_TYPE,
-            Utils.KEY_SYS_INFO_USER,
-            Utils.KEY_SYS_INFO_CODENAME,
-            Utils.KEY_SYS_INFO_INCREMENTAL,
-            Utils.KEY_SYS_INFO_RELEASE,
-            Utils.KEY_SYS_INFO_API,
-            Utils.KEY_SYS_INFO_KERNEL,
-            Utils.KEY_SYS_INFO_ROOT,
-            Utils.KEY_SYS_INFO_XPOSED,
-            Utils.KEY_SYS_INFO_BUSYBOX
-    };
 
 }

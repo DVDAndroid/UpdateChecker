@@ -1,180 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    
-		<PreferenceCategory
-		    android:title="@string/general_info"
-		    android:key="general_info" >
-		    
-			<Preference
-		    	android:title="@string/model"
-		   	 	android:summary="@string/device_info_default"
-		    	android:key="model"
-				android:selectable="false"/>
-		
-			<Preference
-			    android:title="@string/manufacturer"
-		    	android:summary="@string/device_info_default"
-		    	android:key="manufacturer"
-				android:selectable="false"/>
-		
-			<Preference
-		    	android:title="Hardware"
-		    	android:summary="@string/device_info_default"
-		    	android:key="hardware"
-		    	android:selectable="false"/>
-		    
-			<Preference
-		    	android:title="@string/device"
-		    	android:summary="@string/device_info_default"
-		    	android:key="device"
-		    	android:selectable="false"/>
-		
-			<Preference
-		    	android:title="@string/product"
-		    	android:summary="@string/device_info_default"
-		    	android:key="product"
-		    	android:selectable="false"/>
-		
-			<Preference
-		    	android:title="@string/ver_rel"
-		    	android:summary="@string/device_info_default"
-		    	android:key="release"
-		    	android:selectable="true"/>
-		
-			<Preference
-			    android:title="@string/id"
-			    android:summary="@string/device_info_default"
-			    android:key="id"
-			    android:selectable="false" />
-			
-			<Preference
-		    	android:title="API"
-		    	android:summary="@string/device_info_default"
-			    android:key="api"
-			    android:selectable="false"/>
-		
-			<Preference
-		    	android:title="@string/ver_codename"
-		    	android:summary="@string/device_info_default"
-		    	android:key="codename"
-		    	android:selectable="false"/>
-		
-			<Preference
-		    	android:title="@string/ver_incr"
-		    	android:summary="@string/device_info_default"
-			    android:key="incremental"
-			    android:selectable="false"/>
-		
-			<Preference
-		    	android:title="Fingerprint"
-		    	android:summary="@string/device_info_default"
-		    	android:key="fingerprint"
-		    	android:selectable="false"/>
-		
-	</PreferenceCategory>
-	
-	<PreferenceCategory
-	    android:key="root_info"
-	    android:title="ROOT">
-		
-		<Preference
-		    android:key="root"
-		    android:maxLines="1"
-		    android:title="Root"
-		    android:selectable="false"
-		    android:summary="@string/device_info_default"/>
-		
-		<Preference
-		    android:key="xposed"
-		    android:title="Xposed Framework"
-		    android:selectable="false"
-		    android:summary="@string/device_info_default"/>
-		
-		<Preference 
-		    android:title="Busybox"
-		    android:key="busybox"
-		    android:selectable="false"
-		    android:summary="@string/device_info_default"/>
-		
-	</PreferenceCategory>
-		
-	<PreferenceCategory
-	    android:title="@string/other_info"
-	    android:key="other_info">
-		
-		<Preference
-		    android:title="Bootloader"
-		    android:key="bootloader"
-		    android:summary="@string/device_info_default"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:summary="@string/device_info_default"
-		    android:title="Board"
-		    android:key="board"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="CPU" 
-		    android:key="cpu"
-		    android:summary="@string/device_info_default"
-		    android:selectable="false"/>
-		
-		<Preference android:title="Display"
-		    android:summary="@string/device_info_default"
-		    android:key="display"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="Kernel"
-		    android:key="kernel"
-		    android:summary="@string/device_info_default"/>
-		
-		<Preference
-		    android:title="Host"
-		    android:summary="@string/device_info_default"
-		    android:key="host"
-		    android:selectable="false"/>
-		    
-		
-		<Preference
-		    android:title="@string/radio"
-		    android:summary="@string/device_info_default"
-		    android:key="radio"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="@string/serial"
-		    android:summary="@string/device_info_default"
-		    android:key="serial"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="Tags"
-		    android:summary="@string/device_info_default"
-		    android:key="tags"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="@string/time"
-		    android:summary="@string/device_info_default"
-		    android:key="time"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="@string/type"
-		    android:summary="@string/device_info_default"
-		    android:key="type"
-		    android:selectable="false"/>
-		
-		<Preference
-		    android:title="@string/user"
-		    android:summary="@string/device_info_default"
-		    android:key="user"
-		    android:selectable="false"/>
-				
-		
-	</PreferenceCategory><Preference android:enabled="false" android:selectable="false" android:key="null" />
-	
-	
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <!--
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"/>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/pink_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_menu_copy_material"
+            fab:fab_colorNormal="#2196f3"
+            fab:fab_colorPressed="#1976d2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"/>
+
+
+        <com.getbase.floatingactionbutton.AddFloatingActionButton
+            android:id="@+id/normal_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            fab:fab_icon="@drawable/ic_menu_copy_material"
+            fab:fab_plusIconColor="@android:color/holo_green_dark"
+            fab:fab_colorNormal="@android:color/white"
+            fab:fab_colorPressed="@android:color/holo_red_dark"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"/>
+    -->
+
+    <PreferenceCategory
+        android:key="general_info"
+        android:title="@string/general_info">
+
+        <Preference
+            android:key="model"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/model"/>
+
+        <Preference
+            android:key="manufacturer"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/manufacturer"/>
+
+        <Preference
+            android:key="hardware"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Hardware"/>
+
+        <Preference
+            android:key="device"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/device"/>
+
+        <Preference
+            android:key="product"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/product"/>
+
+        <Preference
+            android:key="release"
+            android:selectable="true"
+            android:summary="@string/device_info_default"
+            android:title="@string/ver_rel"/>
+
+        <Preference
+            android:key="id"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/id"/>
+
+        <Preference
+            android:key="api"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="API"/>
+
+        <Preference
+            android:key="codename"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/ver_codename"/>
+
+        <Preference
+            android:key="incremental"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/ver_incr"/>
+
+        <Preference
+            android:key="fingerprint"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Fingerprint"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="root_info"
+        android:title="ROOT">
+
+        <Preference
+            android:key="root"
+            android:maxLines="1"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Root"/>
+
+        <Preference
+            android:key="xposed"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Xposed Framework"/>
+
+        <Preference
+            android:key="busybox"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Busybox"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="other_info"
+        android:title="@string/other_info">
+
+        <Preference
+            android:key="bootloader"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Bootloader"/>
+
+        <Preference
+            android:key="board"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Board"/>
+
+        <Preference
+            android:key="cpu"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="CPU"/>
+
+        <Preference
+            android:key="display"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Display"/>
+
+        <Preference
+            android:key="kernel"
+            android:summary="@string/device_info_default"
+            android:title="Kernel"/>
+
+        <Preference
+            android:key="host"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Host"/>
+
+
+        <Preference
+            android:key="radio"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/radio"/>
+
+        <Preference
+            android:key="serial"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/serial"/>
+
+        <Preference
+            android:key="tags"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="Tags"/>
+
+        <Preference
+            android:key="time"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/time"/>
+
+        <Preference
+            android:key="type"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/type"/>
+
+        <Preference
+            android:key="user"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/user"/>
+
+
+    </PreferenceCategory>
+    <Preference
+        android:enabled="false"
+        android:key="null"
+        android:selectable="false"/>
+
+
 </PreferenceScreen>
