@@ -4,8 +4,6 @@ package com.dvd.android.updatechecker.egg.l_preview;
 
 import java.util.Random;
 
-import com.dvd.android.updatechecker.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -23,6 +21,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.dvd.android.updatechecker.R;
 
 public class PlatLogoActivity extends Activity {
 

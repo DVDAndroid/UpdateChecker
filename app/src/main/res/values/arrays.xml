@@ -2,7 +2,7 @@
 
 <resources>
 
-    <string-array name="listArraycolors">
+    <string-array name="listArraycolors" translatable="false">
         <item>@string/holo_blue_light</item>
         <item>@string/holo_blue_bright</item>
         <item>@string/holo_blue_dark</item>
@@ -13,11 +13,11 @@
         <item>@string/holo_purple</item>
         <item>@string/holo_orange_light</item>
         <item>@string/holo_orange_dark</item>
-        <item>Material Dark</item>        
+        <item>Material Dark</item>
         <item>Material Light</item>
     </string-array>
 
-    <string-array name="listValuescolors">
+    <string-array name="listValuescolors" translatable="false">
         <item>17170450</item>
         <item>17170459</item>
         <item>17170451</item>
@@ -30,10 +30,10 @@
         <item>17170457</item>
         <item>17170460</item>
         <item>17170461</item>
-        
+
     </string-array>
-    
-	<string-array name="Interpolators">
+
+    <string-array name="Interpolators" translatable="false">
         <item>@string/anim_acc</item>
         <item>@string/def_anim</item>
         <item>@string/anim_acc_dec</item>
@@ -43,34 +43,33 @@
         <item>@string/anim_lin</item>
         <item>@string/anim_bounce</item>
     </string-array>
-        
-    <string-array name="SysUImodes">
+
+    <string-array name="SysUImodes" translatable="false">
         <item>@string/none</item>
         <item>@string/immerge</item>
         <item>@string/translucent</item>
     </string-array>
-    
-	<string-array name="listArrayicons">
-	    <item>Android JELLYBEAN</item>
-	    <item>Android KITKAT</item>
-	    <item>Android L</item>
-	</string-array>
-    
-    <string-array name="listValuesicons">
-        <item>1</item>
-	    <item>2</item>
-	    <item>3</item>        
+
+    <string-array name="listArrayicons" translatable="false">
+        <item>Android JELLYBEAN</item>
+        <item>Android KITKAT</item>
+        <item>Android L</item>
     </string-array>
-    
-    <string-array name="android_eggs">
+
+    <string-array name="listValuesicons" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="android_eggs" translatable="false">
         <item>Android L Preview</item>
         <item>Android Lollipop</item>
     </string-array>
-    <string-array name="android_eggs_id">
-        <item >1</item>
-        <item >2</item>
+    <string-array name="android_eggs_id" translatable="false">
+        <item>1</item>
+        <item>2</item>
     </string-array>
-    
-    
+
 
 </resources>

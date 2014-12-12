@@ -16,12 +16,12 @@
 
 package com.dvd.android.updatechecker.egg.ll;
 
-import com.dvd.android.updatechecker.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.dvd.android.updatechecker.R;
 
 public class LLandActivity extends Activity {
 

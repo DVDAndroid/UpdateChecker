@@ -2,13 +2,13 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <ListPreference
-            android:title="@string/choose_color"
-            android:key="listPrefcolor"
-            android:defaultValue=""
-            android:entries="@array/listArraycolors"
-            android:entryValues="@array/listValuescolors"
-            android:dialogIcon="@android:drawable/android:ic_menu_manage"
-            android:dialogLayout="@layout/color_sel"/>
-        
+    <ListPreference
+        android:defaultValue=""
+        android:dialogIcon="@android:drawable/android:ic_menu_manage"
+        android:dialogLayout="@layout/color_sel"
+        android:entries="@array/listArraycolors"
+        android:entryValues="@array/listValuescolors"
+        android:key="listPrefcolor"
+        android:title="@string/choose_color"/>
+
 </PreferenceScreen>

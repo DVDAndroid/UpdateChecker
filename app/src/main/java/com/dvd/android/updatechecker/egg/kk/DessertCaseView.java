@@ -20,8 +20,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import com.dvd.android.updatechecker.R;
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -51,17 +49,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.dvd.android.updatechecker.R;
+
 @SuppressLint("DrawAllocation")
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class DessertCaseView extends FrameLayout {
-	private static final String TAG = DessertCaseView.class.getSimpleName();
-
-	private static final boolean DEBUG = false;
-
+	public static final float SCALE = 0.25f; // natural display size will be
 	static final int START_DELAY = 5000;
 	static final int DELAY = 2000;
-	static int DURATION = 500;
-
+	private static final String TAG = DessertCaseView.class.getSimpleName();
+	private static final boolean DEBUG = false;
 	private static final int TAG_POS = 0x2000001;
 	private static final int TAG_SPAN = 0x2000002;
 
@@ -109,43 +106,20 @@ public class DessertCaseView extends FrameLayout {
 
 	private static final float[] ALPHA_MASK = { 0f, 0f, 0f, 0f, 255f, 0f, 0f,
 			0f, 0f, 255f, 0f, 0f, 0f, 0f, 255f, 0f, 0f, 0f, 1f, 0f };
-
-	public static final float SCALE = 0.25f; // natural display size will be
-												// SCALE*mCellSize
-
 	private static final float PROB_2X = 0.33f;
+	// SCALE*mCellSize
 	private static final float PROB_3X = 0.1f;
 	private static final float PROB_4X = 0.01f;
-
-	private boolean mStarted;
-
+	static int DURATION = 500;
 	private final int mCellSize;
+	private final Set<Point> mFreeList = new HashSet<Point>();
+	private final Handler mHandler = new Handler();
+	private final HashSet<View> tmpSet = new HashSet<View>();
+	float[] hsv = new float[] { 0, 1f, .85f };
+	private boolean mStarted;
 	private int mWidth, mHeight;
 	private int mRows, mColumns;
 	private View[] mCells;
-
-	private final Set<Point> mFreeList = new HashSet<Point>();
-
-	private final Handler mHandler = new Handler();
-
-	private final Runnable mJuggle = new Runnable() {
-		@Override
-		public void run() {
-			final int N = getChildCount();
-
-			final int K = 1; // irand(1,3);
-			for (int i = 0; i < K; i++) {
-				final View child = getChildAt((int) (Math.random() * N));
-				place(child, true);
-			}
-
-			fillFreeList();
-
-			if (mStarted) {
-				mHandler.postDelayed(mJuggle, DELAY);
-			}
-		}
-	};
 
 	public DessertCaseView(Context context) {
 		this(context, null);
@@ -175,6 +149,25 @@ public class DessertCaseView extends FrameLayout {
 	public DessertCaseView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
+
+	private final Runnable mJuggle = new Runnable() {
+		@Override
+		public void run() {
+			final int N = getChildCount();
+
+			final int K = 1; // irand(1,3);
+			for (int i = 0; i < K; i++) {
+				final View child = getChildAt((int) (Math.random() * N));
+				place(child, true);
+			}
+
+			fillFreeList();
+
+			if (mStarted) {
+				mHandler.postDelayed(mJuggle, DELAY);
+			}
+		}
+	};
 
 	public DessertCaseView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -212,6 +205,18 @@ public class DessertCaseView extends FrameLayout {
 		return a;
 	}
 
+	static float frand() {
+		return (float) (Math.random());
+	}
+
+	static float frand(float a, float b) {
+		return (frand() * (b - a) + a);
+	}
+
+	static int irand(int a, int b) {
+		return (int) (frand(a, b));
+	}
+
 	public void start() {
 		if (!mStarted) {
 			mStarted = true;
@@ -236,8 +241,6 @@ public class DessertCaseView extends FrameLayout {
 	<T> T pick(SparseArray<T> sa) {
 		return sa.valueAt((int) (Math.random() * sa.size()));
 	}
-
-	float[] hsv = new float[] { 0, 1f, .85f };
 
 	int random_color() {
 		// return 0xFF000000 | (int) (Math.random() * (float) 0xFFFFFF); //
@@ -371,8 +374,6 @@ public class DessertCaseView extends FrameLayout {
 		place(v, new Point(irand(0, mColumns), irand(0, mRows)), animate);
 	}
 
-	private final HashSet<View> tmpSet = new HashSet<View>();
-
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@SuppressLint("InlinedApi")
 	public synchronized void place(View v, Point pt, boolean animate) {
@@ -500,18 +501,6 @@ public class DessertCaseView extends FrameLayout {
 		return result;
 	}
 
-	static float frand() {
-		return (float) (Math.random());
-	}
-
-	static float frand(float a, float b) {
-		return (frand() * (b - a) + a);
-	}
-
-	static int irand(int a, int b) {
-		return (int) (frand(a, b));
-	}
-
 	@SuppressLint("DrawAllocation")
 	@Override
 	public void onDraw(Canvas c) {
@@ -573,15 +562,16 @@ public class DessertCaseView extends FrameLayout {
 			mView.layout(cx - w2, cy - h2, cx + w2, cy + h2);
 		}
 
+		public float getDarkness() {
+			return mDarkness;
+		}
+
 		public void setDarkness(float p) {
 			mDarkness = p;
 			getDarkness();
 			final int x = (int) (p * 0xff);
 			setBackgroundColor(x << 24 & 0xFF000000);
 		}
-
-		public float getDarkness() {
-			return mDarkness;
-		}
 	}
+
 }

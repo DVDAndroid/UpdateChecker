@@ -1,91 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="10dp"
-    android:scrollbarStyle="outsideInset"
-    tools:ignore="ContentDescription" >
+                      xmlns:tools="http://schemas.android.com/tools"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="20dp"
+                      android:paddingRight="20dp"
+                      android:paddingTop="10dp"
+                      android:scrollbarStyle="outsideInset"
+                      tools:ignore="ContentDescription">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="RtlHardcoded" 
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_blue_light" />
+            android:background="@android:color/holo_blue_light"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_blue_bright" />
+            android:background="@android:color/holo_blue_bright"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_blue_dark" />
+            android:background="@android:color/holo_blue_dark"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_red_light" />
+            android:background="@android:color/holo_red_light"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_green_light" />
+            android:background="@android:color/holo_green_light"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_green_dark" />
+            android:background="@android:color/holo_green_dark"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_red_dark" />
+            android:background="@android:color/holo_red_dark"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_purple" />
+            android:background="@android:color/holo_purple"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_orange_light" />
+            android:background="@android:color/holo_orange_light"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="@android:color/holo_orange_dark" />
+            android:background="@android:color/holo_orange_dark"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="#ff37464E" />
+            android:background="#ff37464E"/>
 
         <ImageView
             android:layout_width="@dimen/layout_width_height"
             android:layout_height="@dimen/layout_width_height"
             android:layout_marginRight="@dimen/layout_marginRight"
-            android:background="#ff78909C" />
+            android:background="#ff78909C"/>
     </LinearLayout>
-    
+
 </HorizontalScrollView>

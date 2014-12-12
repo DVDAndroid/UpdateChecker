@@ -16,7 +16,6 @@
 
 package com.dvd.android.updatechecker.egg.kk;
 
-import com.dvd.android.updatechecker.R;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -50,15 +49,17 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dvd.android.updatechecker.R;
+
 public class PlatLogoActivity extends Activity {
+	static final int BGCOLOR = 0xffed1d24;
+	final Handler mHandler = new Handler();
 	FrameLayout mContent;
 	int mCount;
 	int MAX_CLICKS = 6;
 	int LETTER_SIZE = 300;
 	int TEXT_SIZE = 30;
 	Interpolator whichinterp;
-	final Handler mHandler = new Handler();
-	static final int BGCOLOR = 0xffed1d24;
 
 	@SuppressLint({ "NewApi", "InlinedApi" })
 	@Override
@@ -236,7 +237,7 @@ public class PlatLogoActivity extends Activity {
 			@Override
 			public boolean onLongClick(View v) {
 				boolean check = true;
-				if (logo.getVisibility() != 0) {
+				if (logo.getVisibility() != View.VISIBLE) {
 					ViewHelper.setScaleX(bg, 0.01F);
 					ViewPropertyAnimator.animate(bg).alpha(1.0F).scaleX(1.0F)
 							.setStartDelay(500L).start();
@@ -245,7 +246,7 @@ public class PlatLogoActivity extends Activity {
 							.setInterpolator(new AccelerateInterpolator())
 							.setDuration(1000L).start();
 					ViewHelper.setAlpha(logo, 0.0F);
-					logo.setVisibility(0);
+					logo.setVisibility(View.VISIBLE);
 					ViewHelper.setScaleX(logo, 0.5F);
 					ViewHelper.setScaleY(logo, 0.5F);
 					ViewPropertyAnimator

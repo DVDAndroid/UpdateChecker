@@ -1,18 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.dvd.android.updatechecker.MainActivity" >
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.dvd.android.updatechecker.MainActivity">
 
     <item
         android:id="@+id/action_info"
+        android:icon="@android:drawable/android:ic_menu_info_details"
         android:orderInCategory="1"
         android:showAsAction="always|withText"
-        android:icon="@android:drawable/android:ic_menu_info_details"
         android:title="@string/action_info"/>
-    
+
     <item
         android:id="@+id/action_exit"
-        android:title="@string/action_exit"
+        android:orderInCategory="2"
         android:showAsAction="always|withText"
-        android:orderInCategory="2"/>
+        android:title="@string/action_exit"/>
 
 </menu>

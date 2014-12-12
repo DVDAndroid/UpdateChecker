@@ -1,28 +1,29 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Android L/Lollipop Egg">
         <ListPreference
-            android:entryValues="@array/android_eggs_id"
             android:entries="@array/android_eggs"
-            android:title="@string/choose_platlogo"
-            android:key="platlogo"/>
+            android:entryValues="@array/android_eggs_id"
+            android:key="platlogo"
+            android:title="@string/choose_platlogo"/>
     </PreferenceCategory>
-    
+
     <PreferenceCategory
-	    android:title="ANDROID L PREVIEW" android:key="cat_l_prev">
-	    
-    <ListPreference
-        android:title="@string/sysui"
-        android:key="l_sysui"
-        android:defaultValue="@string/none"
-        android:dialogTitle="@string/sys_ui_mode_tit_l" 
-        android:entryValues="@array/SysUImodes"
-        android:entries="@array/SysUImodes"/>
+        android:key="cat_l_prev"
+        android:title="ANDROID L PREVIEW">
+
+        <ListPreference
+            android:defaultValue="@string/none"
+            android:dialogTitle="@string/sys_ui_mode_tit_l"
+            android:entries="@array/SysUImodes"
+            android:entryValues="@array/SysUImodes"
+            android:key="l_sysui"
+            android:title="@string/sysui"/>
     </PreferenceCategory>
-    
+
     <Preference
-            android:selectable="false"
-            android:key="null"
-            android:enabled="false"/>
-    
-    
+        android:enabled="false"
+        android:key="null"
+        android:selectable="false"/>
+
+
 </PreferenceScreen>

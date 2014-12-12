@@ -13,7 +13,7 @@
     <string name="action_exit">Exit</string>
     <string name="opensources">Open Source Libraries</string>
     <string name="sysbartint">SystemBarTint</string>
-    <string name="info_sysbartint">by jgilfelt</string>
+    <string name="info_sysbartint" translatable="false">by jgilfelt</string>
     <string name="credits">Credits</string>
     <string name="made_by">Created by</string>
     <string name="my_name">Davide Maggio</string>
@@ -52,7 +52,7 @@
     <string name="nd">not yet avaible</string>
     <string name="welcome">Benvenuto!</string>
     <string name="set_ver_icon">Check icon preferences</string>
-	<string name="curr_icon">Current icon is</string>
+    <string name="curr_icon">Current icon is</string>
     <string name="hide_icon">Icon on launcher visible</string>
     <string name="no_add">Add shorcut on homescreen</string>
     <string name="hide_icon_toast_true">The icon is in the launcher</string>
@@ -62,7 +62,6 @@
     <string name="cat_sel_icon">Icons Settings</string>
     <string name="select_icon" tools:ignore="TypographyEllipsis">Select icon...</string>
     <string name="prev">Preview:</string>
-    <string name="hello_world">Hello world!</string>
     <string-array name="empty_array"/>
     <string name="color_sett">Colors Settings</string>
     <string name="o_act_bar">Apply color only on action bar</string>
@@ -70,8 +69,8 @@
     <string name="enable_random_color_summary">Enable random colors at every startup of the app</string>
     <string name="enable_random_color_act">Enable random colors in activities</string>
     <string name="enable_random_color_act_summary">Enable random colors in every activity</string>
-    
-       
+
+
     <string name="title_version_text">Version Name</string>
     <string name="title_version_num">Version Number</string>
     <string name="title_version_letter">Version Letter</string>
@@ -91,10 +90,10 @@
     <string name="sys_ui_mode_tit_kk">Choose System UI mode for the Android KitKat platlogo</string>
     <string name="sys_ui_mode_tit_l">Choose System UI mode for the Android L platlogo</string>
 
-    
-    <string name="default_jb_text_1">Android 4.3</string>
-    <string name="default_jb_text_2">JELLY BEAN</string>
-    
+
+    <string name="default_jb_text_1" translatable="false">Android 4.3</string>
+    <string name="default_jb_text_2" translatable="false">JELLY BEAN</string>
+
     <string name="none">Normal</string>
     <string name="immerge">Immersive Mode</string>
     <string name="translucent">Translucent Mode</string>
@@ -103,7 +102,7 @@
     <string name="restart">Restart</string>
     <string name="warn">WARNING!</string>
     <string name="module_ok">HAVE BEEN DETECTED SOME XPOSED MODULES WHICH MODIFY THE COLOR OF THE STATUS BAR. THESE CAN JOIN IN CONFLICT WITH THIS APP.</string>
-    
+
     <string name="title_checking">Check updates for this app!</string>
     <string name="checking">Checking...</string>
     <string name="no_upds">No updates available!</string>
@@ -112,10 +111,13 @@
     <string name="no_int">Please turn on Wi-Fi or mobile data.</string>
     <string name="no_auto_upd">Enable auto updates</string>
     <string name="cat_up">Update settings</string>
-    
+
     <string name="alpha_beta">WARNING!\nThe available version is in %1$s, would you download it?</string>
     <string name="old_ver">WARNING!\nAn old version of the app is installed. Removal is required.</string>
     <string name="choose_platlogo">Choose Android L/Lollipop Platlogo</string>
     <string name="mod_copy">Copying Mode</string>
     <string name="what_mod_copy">Click on an information to copy the contents in clipboard</string>
+    <string name="action_info">Info</string>
+    <string name="title_jb_int">Number of Beans</string>
+    <string name="clipboard_message">Copied to clipboard:</string>
 </resources>

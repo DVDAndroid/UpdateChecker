@@ -8,17 +8,16 @@
     <string name="title_activity_update" tools:ignore="TypographyEllipsis">Verifica...</string>
     <string name="title_activity_info">Info</string>
     <string name="title_activity_sys_info">Info sistema</string>
-    <string name="vers">Versione</string>    
+    <string name="vers">Versione</string>
     <string name="verifica">Verifica!</string>
     <string name="action_info">Info</string>
-    <string name="action_exit">Esci</string>    
+    <string name="action_exit">Esci</string>
     <string name="opensources">Librerie Open Source</string>
     <string name="sysbartint">SystemBarTint</string>
-    <string name="info_sysbartint">by jgilfelt</string>
     <string name="credits">Crediti</string>
     <string name="made_by">Creata da</string>
-    <string name="my_name">Davide Maggio</string>    
-	<string name="add_shortcut">Aggiungi collegamenti</string>
+    <string name="my_name">Davide Maggio</string>
+    <string name="add_shortcut">Aggiungi collegamenti</string>
     <string name="remove_shortcut">Rimuovi collegamenti</string>
     <string name="settings">Impostazioni</string>
     <string name="add_short_text">La scorciatoia %1$s è stata aggiunta</string>
@@ -38,20 +37,20 @@
     <string name="general_info">Info generali</string>
     <string name="other_info">Altre info</string>
     <string name="radio">Radio - Versione banda di base</string>
-    <string name="id">ID - Numero build</string>    
-	<string name="holo_blue_light">Holo blu chiaro</string>
+    <string name="id">ID - Numero build</string>
+    <string name="holo_blue_light">Holo blu chiaro</string>
     <string name="holo_blue_bright">Holo blu acceso</string>
-    <string name="holo_blue_dark">Holo blu scuro</string>    
+    <string name="holo_blue_dark">Holo blu scuro</string>
     <string name="holo_green_light">Holo verde chiaro</string>
-    <string name="holo_green_dark">Holo verde scuro</string>    
+    <string name="holo_green_dark">Holo verde scuro</string>
     <string name="holo_red_light">Holo rosso chiaro</string>
-    <string name="holo_red_dark">Holo rosso scuro</string>    
-    <string name="holo_purple">Holo porpora</string>    
+    <string name="holo_red_dark">Holo rosso scuro</string>
+    <string name="holo_purple">Holo porpora</string>
     <string name="holo_orange_light">Holo arancione chiaro</string>
-    <string name="holo_orange_dark">Holo arancione scuro</string>    
+    <string name="holo_orange_dark">Holo arancione scuro</string>
     <string name="this_color">Il colore corrente è</string>
-    <string name="nd">funzione non ancora disp.</string>    
-    <string name="welcome">Benvenuto!</string>    
+    <string name="nd">funzione non ancora disp.</string>
+    <string name="welcome">Benvenuto!</string>
     <string name="set_ver_icon">Preferenze icona verifica</string>
     <string name="curr_icon">L\'icona corrente è di</string>
     <string name="hide_icon">Nascondi icona sul launcher</string>
@@ -59,18 +58,18 @@
     <string name="hide_icon_toast_true">L\'icona è visibile nel launcher</string>
     <string name="hide_icon_toast_false">L\'icona non è visibile nel launcher</string>
     <string name="no_add_toast_true">L\'icona verrà aggiunta sulla homescreen</string>
-    <string name="no_add_toast_false">L\'icona non verrà aggiunta sulla homescreen</string>   
+    <string name="no_add_toast_false">L\'icona non verrà aggiunta sulla homescreen</string>
     <string name="cat_sel_icon">Impostazioni icone</string>
-    <string name="select_icon" tools:ignore="TypographyEllipsis">Seleziona icona...</string>   
-    <string name="prev">Anteprima:</string>    
+    <string name="select_icon" tools:ignore="TypographyEllipsis">Seleziona icona...</string>
+    <string name="prev">Anteprima:</string>
     <string name="color_sett">Impostazioni colori</string>
     <string name="o_act_bar">Applica colori solo sulla ActionBar</string>
-	<string name="enable_random_color">Abilita colori casuali</string>
-	<string name="enable_random_color_summary">Abilita colori casuali a ogni avvio dell\'app</string>
+    <string name="enable_random_color">Abilita colori casuali</string>
+    <string name="enable_random_color_summary">Abilita colori casuali a ogni avvio dell\'app</string>
     <string name="enable_random_color_act">Abilita colori casuali nelle attività</string>
     <string name="enable_random_color_act_summary">Abilita colori casuali a ogni attività</string>
-    
-	<string name="title_version_text">Nome versione</string>
+
+    <string name="title_version_text">Nome versione</string>
     <string name="title_version_num">Numero versione</string>
     <string name="title_version_letter">Lettera della versione</string>
     <string name="title_jb_int">Numero di Beans</string>
@@ -84,10 +83,12 @@
     <string name="anim_ove">Overshoot</string>
     <string name="anim_ant_ov">Anticipa + Overshoot</string>
     <string name="anim_lin">Lineare</string>
-    <string name="anim_bounce">Rimbalza</string>    
+    <string name="anim_bounce">Rimbalza</string>
     <string name="interpolator_ch">Scegli una animazione per la rotazione del testo</string>
     <string name="sys_ui_mode_tit_kk">Scegli un modo system ui per Android KitKat platlogo</string>
-	<string name="sys_ui_mode_tit_l">Scegli un modo system ui per Android L platlogo</string>
+    <string name="sys_ui_mode_tit_l">Scegli un modo system ui per Android L platlogo</string>
+
+    <string name="title_freq">Frequenza di speciali pasticcini</string>
 
     <string name="none">Normale</string>
     <string name="immerge">Immersive Mode</string>
@@ -97,7 +98,7 @@
     <string name="restart">Riavvia</string>
     <string name="warn"><b>ATTENZIONE!</b></string>
     <string name="module_ok">SONO STATI RILEVATI DEI MODULI XPOSED I QUALI MODIFICANO IL COLORE DELLA STATUS BAR. QUESTI POSSONO ENTRARE IN CONFLITTO CON QUESTA APP.</string>
-    
+
     <string name="title_checking">Controlla aggiornamenti per questa app!</string>
     <string name="checking" tools:ignore="TypographyEllipsis">Controllo...</string>
     <string name="no_upds">Nessun aggiornamento disponibile!</string>
@@ -106,10 +107,11 @@
     <string name="upd_yes">Aggiornamento disponibile!\n\nCodice versione corrente è %1$s, disponibile %2$s.\n\n\nScaricarlo adesso?</string>
     <string name="no_int">Per favore, accendi il Wi-Fi o la connessione dati.</string>
     <string name="cat_up">Impostazioni aggiornamenti</string>
-    
+
     <string name="alpha_beta">ATTENZIONE!\nLa versione disponibile è in %1$s, la vuoi scaricare comunque?</string>
     <string name="old_ver">ATTENZIONE!\nUna vecchia versione dell\'applicazione è installata. La rimozione è richiesta.</string>
     <string name="choose_platlogo">Scegli Android L/Lollipop Platlogo</string>
     <string name="mod_copy">Modalità copiatore</string>
     <string name="what_mod_copy">Clicca su una informazione per copiare il contenuto negli appunti</string>
+    <string name="clipboard_message">Copiato nella clipboard:</string>
 </resources>

@@ -4,68 +4,68 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:enabled="true"
     android:title="@string/action_info">
-    
-        <PreferenceCategory
-            android:selectable="false"
-            android:title="@string/opensources"
-            android:key="OpenSourceInfo">
-           
-            <Preference
-                android:selectable="true"
-                android:title="Android Open Source Project"
-                android:key="android_opensource"/>
-                        
-            <Preference
-                android:title="stackoverflow.com"
-                android:key="stackoverflow"
-                android:selectable="true"/>
-            
-            <Preference
-                android:summary="@string/info_sysbartint"
-                android:selectable="true"
-                android:title="@string/sysbartint"
-                android:key="systembartint" />
-            
-            <Preference
-                android:key="eggster"
-                android:summary="Xposed Module  - by jamaal areeb"
-                android:title="Eggster"/>
-            
 
-		</PreferenceCategory>
-		
-        <PreferenceCategory
-            android:title="@string/credits"
-            android:key="Credits">
-            
-            <Preference
-                android:summary="@string/my_name"
-                android:title="@string/made_by"
-                android:selectable="false"
-                android:key="made_by"/>
-            
-            <Preference
-                android:selectable="false"
-                android:summary="@string/device_info_default"
-                android:key="ver"
-                android:title="@string/vers"/>
-            
-			<Preference
-				android:key="this_on_github"
-			    android:title="Github"
-			    android:summary="Github source"
-			    android:selectable="true"/>
-			
-			<Preference
-			    android:selectable="true"
-			    android:key="checking"
-			    android:title="@string/title_checking" />
-			
-        </PreferenceCategory>
-        
+    <PreferenceCategory
+        android:key="OpenSourceInfo"
+        android:selectable="false"
+        android:title="@string/opensources">
+
         <Preference
+            android:key="android_opensource"
+            android:selectable="true"
+            android:title="Android Open Source Project"/>
+
+        <Preference
+            android:key="stackoverflow"
+            android:selectable="true"
+            android:title="stackoverflow.com"/>
+
+        <Preference
+            android:key="systembartint"
+            android:selectable="true"
+            android:summary="@string/info_sysbartint"
+            android:title="@string/sysbartint"/>
+
+        <Preference
+            android:key="eggster"
+            android:summary="Xposed Module  - by jamaal areeb"
+            android:title="Eggster"/>
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="Credits"
+        android:title="@string/credits">
+
+        <Preference
+            android:key="made_by"
             android:selectable="false"
-            android:key="null"
-            android:enabled="false"/>
-           
+            android:summary="@string/my_name"
+            android:title="@string/made_by"/>
+
+        <Preference
+            android:key="ver"
+            android:selectable="false"
+            android:summary="@string/device_info_default"
+            android:title="@string/vers"/>
+
+        <Preference
+            android:key="this_on_github"
+            android:selectable="true"
+            android:summary="Github source"
+            android:title="Github"/>
+
+        <Preference
+            android:key="checking"
+            android:selectable="true"
+            android:title="@string/title_checking"/>
+
+    </PreferenceCategory>
+
+    <Preference
+        android:enabled="false"
+        android:key="null"
+        android:selectable="false"/>
+
 </PreferenceScreen>     

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
     <!-- Name of the L Land easter egg. DO NOT TRANSLATE -->
-    <string name="lland">L Land</string>
+    <string name="lland" translatable="false">L Land</string>
 </resources>

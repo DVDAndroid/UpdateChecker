@@ -15,8 +15,6 @@
  */
 package com.dvd.android.updatechecker.egg.ll;
 
-import com.dvd.android.updatechecker.R;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -45,6 +43,8 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.PathInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.dvd.android.updatechecker.R;
 
 @SuppressLint("DrawAllocation")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)

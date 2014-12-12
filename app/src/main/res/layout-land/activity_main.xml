@@ -1,31 +1,31 @@
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="true"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.dvd.android.updatechecker.MainActivity$PlaceholderFragment" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:clipToPadding="false"
+                android:fitsSystemWindows="true"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.dvd.android.updatechecker.MainActivity$PlaceholderFragment">
 
     <ListView
         android:id="@android:id/list"
-        android:paddingTop="160dp"
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" />
-    
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="160dp"/>
+
     <TextView
-        android:textAllCaps="true"
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@android:id/list"
         android:layout_alignParentBottom="true"
-        android:textStyle="bold|italic" />
+        android:textAllCaps="true"
+        android:textStyle="bold|italic"/>
 
     <TextView
         android:id="@+id/credit"
@@ -33,10 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@android:id/list"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"/>
 
     <Button
-        android:textAllCaps="true"
         android:id="@+id/check_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,9 +45,10 @@
         android:layout_marginTop="50dp"
         android:onClick="check"
         android:text="@string/verifica"
+        android:textAllCaps="true"
         android:textColor="#FF0000"
         android:textSize="30dp"
         android:textStyle="bold"
-        tools:ignore="SpUsage" />
+        tools:ignore="SpUsage"/>
 
 </RelativeLayout>

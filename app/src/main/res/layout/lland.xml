@@ -15,15 +15,15 @@
      limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
 
     <com.dvd.android.updatechecker.egg.ll.LLand
         android:id="@+id/world"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     </com.dvd.android.updatechecker.egg.ll.LLand>
 
     <TextView
@@ -40,7 +40,7 @@
         android:paddingTop="8dp"
         android:textColor="#FFAAAAAA"
         android:textSize="32sp"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"/>
 
     <TextView
         android:id="@+id/welcome"
@@ -50,6 +50,6 @@
         android:layout_marginTop="70dp"
         android:textColor="#FFFFFFFF"
         android:textSize="30sp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </FrameLayout>

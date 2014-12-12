@@ -8,7 +8,7 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
     </style>
-    
+
     <style name="Theme.Transparent" parent="@android:style/Theme.Holo.Light"/>
 
 </resources>

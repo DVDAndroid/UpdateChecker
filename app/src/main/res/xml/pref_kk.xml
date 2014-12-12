@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-      
-	<PreferenceCategory
-	    android:title="ANDROID KITKAT">
-	    
-	    <EditTextPreference
-	        android:defaultValue="K"
-	        android:inputType="text"
-	        android:key="kk_letter"
-	        android:maxLength="1"
-	        android:maxLines="1"
-	        android:selectAllOnFocus="true"
-	        android:singleLine="true"
-	        android:title="@string/title_version_letter" />
-	    
-	    <EditTextPreference
-	        android:defaultValue="ANDROID"
-	        android:inputType="text"
-	        android:key="kk_text"
-	        android:maxLines="1"
-	        android:selectAllOnFocus="true"
-	        android:singleLine="true"
-	        android:title="@string/title_version_num" />
-	    
-	    <ListPreference
-	        android:title="@string/let_interpol"
-	        android:key="kk_interpolator"
-	        android:dialogTitle="@string/interpolator_ch"
-	        android:entryValues="@array/Interpolators"
-	        android:entries="@array/Interpolators"
-	        android:defaultValue="@string/def_anim" />
-	    
-	    <EditTextPreference
-	        android:defaultValue="6"
-	        android:inputType="phone"
-	        android:digits="0123456789"
-	        android:key="kk_clicks"
-	        android:maxLength="8"
-	        android:maxLines="1"
-	        android:selectAllOnFocus="true"
-	        android:singleLine="true"
-	        android:title="@string/title_clicks_int" />
-	    
-	    <ListPreference
-	        android:title="@string/sysui_plat"
-	        android:key="kk_sysui"
-	        android:defaultValue="@string/none"
-	        android:dialogTitle="@string/sys_ui_mode_tit_kk"
-	        android:entryValues="@array/SysUImodes"
-	        android:entries="@array/SysUImodes" />
-	
-	</PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
- <Preference android:enabled="false" android:selectable="false" android:key="null" />
-    
-    
+    <PreferenceCategory
+        android:title="ANDROID KITKAT">
+
+        <EditTextPreference
+            android:defaultValue="K"
+            android:inputType="text"
+            android:key="kk_letter"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_version_letter"/>
+
+        <EditTextPreference
+            android:defaultValue="ANDROID"
+            android:inputType="text"
+            android:key="kk_text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_version_num"/>
+
+        <ListPreference
+            android:defaultValue="@string/def_anim"
+            android:dialogTitle="@string/interpolator_ch"
+            android:entries="@array/Interpolators"
+            android:entryValues="@array/Interpolators"
+            android:key="kk_interpolator"
+            android:title="@string/let_interpol"/>
+
+        <EditTextPreference
+            android:defaultValue="6"
+            android:digits="0123456789"
+            android:inputType="phone"
+            android:key="kk_clicks"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_clicks_int"/>
+
+        <ListPreference
+            android:defaultValue="@string/none"
+            android:dialogTitle="@string/sys_ui_mode_tit_kk"
+            android:entries="@array/SysUImodes"
+            android:entryValues="@array/SysUImodes"
+            android:key="kk_sysui"
+            android:title="@string/sysui_plat"/>
+
+    </PreferenceCategory>
+
+    <Preference
+        android:enabled="false"
+        android:key="null"
+        android:selectable="false"/>
+
+
 </PreferenceScreen>

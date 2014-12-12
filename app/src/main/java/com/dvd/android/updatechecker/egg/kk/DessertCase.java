@@ -16,7 +16,6 @@
 
 package com.dvd.android.updatechecker.egg.kk;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
@@ -25,49 +24,49 @@ import android.view.View;
 import android.view.WindowManager;
 
 public class DessertCase extends Activity {
-    DessertCaseView mView;
+	DessertCaseView mView;
 
-    @SuppressLint("NewApi")
+	@SuppressLint("NewApi")
 	@Override
-    public void onStart() {
-        super.onStart();
+	public void onStart() {
+		super.onStart();
 
-        mView = new DessertCaseView(this);
+		mView = new DessertCaseView(this);
 
-        DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(this);
+		DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(
+				this);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        } else{
-     
-            mView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            ); }
-        container.setView(mView);
-        container.setBackgroundColor(Color.parseColor("#EA000000"));
-        setContentView(container);
-    }
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mView.postDelayed(new Runnable() {
-            public void run() {
-                mView.start();
-            }
-        }, 1000);
-    }
+		} else {
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mView.stop();
-    }
+			mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+					| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		}
+		container.setView(mView);
+		container.setBackgroundColor(Color.parseColor("#EA000000"));
+		setContentView(container);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mView.postDelayed(new Runnable() {
+			public void run() {
+				mView.start();
+			}
+		}, 1000);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		mView.stop();
+	}
 }
