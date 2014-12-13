@@ -683,8 +683,8 @@ public class LLand extends FrameLayout {
 	}
 
 	private class Player extends ImageView implements GameView {
-		public final float[] corners = new float[sHull.length];
-		private final float[] sHull = new float[] { 0.3f, 0f, // left antenna
+
+		public final float[] sHull = new float[] { 0.3f, 0f, // left antenna
 				0.7f, 0f, // right antenna
 				0.92f, 0.33f, // off the right shoulder of Orion
 				0.92f, 0.75f, // right hand (our right, not his right)
@@ -693,6 +693,7 @@ public class LLand extends FrameLayout {
 				0.08f, 0.75f, // sinistram
 				0.08f, 0.33f, // cold shoulder
 		};
+		public final float[] corners = new float[sHull.length];
 		public float dv;
 		private boolean mBoosting;
 

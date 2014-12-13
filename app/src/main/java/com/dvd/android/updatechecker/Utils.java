@@ -25,6 +25,9 @@ public class Utils {
 	public static String KEY_SYSTEMBARTINT = "systembartint";
 	public static String KEY_ANDROID_OPENSOURCE = "android_opensource";
 	public static String KEY_STACKOVERFLOW = "stackoverflow";
+	public static String KEY_NINEOLDANDROIDS = "nineoldandroids";
+	public static String KEY_SNACK_BAR = "snack_bar";
+	public static String KEY_FAB = "android-floating-action-button";
 	public static String KEY_EGGSTER = "eggster";
 	public static String KEY_CHECKING = "checking";
 	public static String KEY_GITHUB = "this_on_github";

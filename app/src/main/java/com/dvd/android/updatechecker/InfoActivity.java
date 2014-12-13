@@ -189,11 +189,28 @@ public class InfoActivity extends PreferenceActivity {
 		}
 
 		if (preference.getKey().equals(Utils.KEY_STACKOVERFLOW)) {
-
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://stackoverflow.com"));
 			startActivity(browserIntent);
+		}
 
+		if (preference.getKey().equals(Utils.KEY_NINEOLDANDROIDS)) {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("https://github.com/JakeWharton/NineOldAndroids"));
+			startActivity(browserIntent);
+		}
+
+		if (preference.getKey().equals(Utils.KEY_SNACK_BAR)) {
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("https://github.com/MrEngineer13/SnackBar"));
+			startActivity(browserIntent);
+		}
+
+		if (preference.getKey().equals(Utils.KEY_FAB)) {
+			Intent browserIntent = new Intent(
+					Intent.ACTION_VIEW,
+					Uri.parse("https://github.com/futuresimple/android-floating-action-button"));
+			startActivity(browserIntent);
 		}
 
 		if (preference.getKey().equals(Utils.KEY_EGGSTER)) {

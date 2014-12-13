@@ -27,8 +27,26 @@
             android:title="@string/sysbartint"/>
 
         <Preference
+            android:key="nineoldandroids"
+            android:selectable="true"
+            android:summary="@string/nineoldandroids_by"
+            android:title="@string/nineoldandroids"/>
+
+        <Preference
+            android:key="android-floating-action-button"
+            android:selectable="true"
+            android:summary="@string/fab_by"
+            android:title="@string/fab"/>
+
+        <Preference
+            android:key="snack_bar"
+            android:selectable="true"
+            android:summary="@string/snack_bar_by"
+            android:title="@string/snack_bar"/>
+
+        <Preference
             android:key="eggster"
-            android:summary="Xposed Module  - by jamaal areeb"
+            android:summary="@string/xposed_eggster"
             android:title="Eggster"/>
 
 

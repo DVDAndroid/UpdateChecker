@@ -219,6 +219,12 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
 
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+				|| Build.VERSION.RELEASE.equals("L"))
+			fab.setIcon(R.drawable.ic_menu_copy_material);
+		else
+			fab.setIcon(R.drawable.ic_menu_copy);
+
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -19,7 +19,6 @@
         android:layout_marginBottom="50dp"
         android:layout_marginRight="16dp"
         fab:fab_colorNormal="#2196f3"
-        fab:fab_colorPressed="#1976d2"
-        fab:fab_icon="@drawable/ic_menu_copy_material"/>
+        fab:fab_colorPressed="#1976d2"/>
 
 </RelativeLayout>

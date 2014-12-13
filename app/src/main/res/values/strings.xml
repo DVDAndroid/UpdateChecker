@@ -120,4 +120,11 @@
     <string name="action_info">Info</string>
     <string name="title_jb_int">Number of Beans</string>
     <string name="clipboard_message">Copied to clipboard:</string>
+    <string name="nineoldandroids_by">by JakeWharton</string>
+    <string name="nineoldandroids">NineOldAndroids</string>
+    <string name="fab_by">by futuresimple</string>
+    <string name="fab">Android-Floating-Action-Button</string>
+    <string name="snack_bar">SnackBar</string>
+    <string name="snack_bar_by">by MrEngineer13</string>
+    <string name="xposed_eggster">Xposed Module - by jamaal areeb</string>
 </resources>
