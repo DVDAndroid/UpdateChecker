@@ -150,25 +150,6 @@ public class DessertCaseView extends FrameLayout {
 		this(context, attrs, 0);
 	}
 
-	private final Runnable mJuggle = new Runnable() {
-		@Override
-		public void run() {
-			final int N = getChildCount();
-
-			final int K = 1; // irand(1,3);
-			for (int i = 0; i < K; i++) {
-				final View child = getChildAt((int) (Math.random() * N));
-				place(child, true);
-			}
-
-			fillFreeList();
-
-			if (mStarted) {
-				mHandler.postDelayed(mJuggle, DELAY);
-			}
-		}
-	};
-
 	public DessertCaseView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 
@@ -204,6 +185,25 @@ public class DessertCaseView extends FrameLayout {
 		c.drawBitmap(b, 0.0f, 0.0f, pt);
 		return a;
 	}
+
+	private final Runnable mJuggle = new Runnable() {
+		@Override
+		public void run() {
+			final int N = getChildCount();
+
+			final int K = 1; // irand(1,3);
+			for (int i = 0; i < K; i++) {
+				final View child = getChildAt((int) (Math.random() * N));
+				place(child, true);
+			}
+
+			fillFreeList();
+
+			if (mStarted) {
+				mHandler.postDelayed(mJuggle, DELAY);
+			}
+		}
+	};
 
 	static float frand() {
 		return (float) (Math.random());

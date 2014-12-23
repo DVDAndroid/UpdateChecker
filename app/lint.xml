@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
     <issue id="HardcodedText">
-        <ignore path="res/layout/activity_main.xml" />
+        <ignore path="res/layout/activity_main.xml"/>
     </issue>
     <issue id="SpUsage">
-        <ignore path="res/layout/activity_main.xml" />
+        <ignore path="res/layout/activity_main.xml"/>
     </issue>
     <issue id="TypographyEllipsis">
-        <ignore path="res/values/strings.xml" />
+        <ignore path="res/values/strings.xml"/>
     </issue>
     <issue id="ValidFragment">
-        <ignore path="src/com/dvd/updatechecker/InfoActivity.java" />
+        <ignore path="src/com/dvd/updatechecker/InfoActivity.java"/>
     </issue>
 </lint>
