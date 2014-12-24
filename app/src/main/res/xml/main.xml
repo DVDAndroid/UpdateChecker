@@ -5,9 +5,8 @@
     <ListPreference
         android:defaultValue=""
         android:dialogIcon="@android:drawable/android:ic_menu_manage"
-        android:dialogLayout="@layout/color_sel"
         android:entries="@array/listArraycolors"
-        android:entryValues="@array/listValuescolors"
+        android:entryValues="@array/listValuescolors_material"
         android:key="listPrefcolor"
         android:title="@string/choose_color"/>
 

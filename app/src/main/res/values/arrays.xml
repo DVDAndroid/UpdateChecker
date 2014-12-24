@@ -3,34 +3,47 @@
 <resources>
 
     <string-array name="listArraycolors" translatable="false">
-        <item>@string/holo_blue_light</item>
-        <item>@string/holo_blue_bright</item>
-        <item>@string/holo_blue_dark</item>
-        <item>@string/holo_green_light</item>
-        <item>@string/holo_green_dark</item>
-        <item>@string/holo_red_light</item>
-        <item>@string/holo_red_dark</item>
-        <item>@string/holo_purple</item>
-        <item>@string/holo_orange_light</item>
-        <item>@string/holo_orange_dark</item>
-        <item>Material Dark</item>
-        <item>Material Light</item>
+        <item>Red</item>
+        <item>Pink</item>
+        <item>Purple</item>
+        <item>Deep purple</item>
+        <item>Indigo</item>
+        <item>Blue</item>
+        <item>Light blue</item>
+        <item>Cyan</item>
+        <item>Teal</item>
+        <item>Green</item>
+        <item>Light green</item>
+        <item>Lime</item>
+        <item>Yellow</item>
+        <item>Amber</item>
+        <item>Orange</item>
+        <item>Deep orange</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>Blue grey</item>
     </string-array>
 
-    <string-array name="listValuescolors" translatable="false">
-        <item>17170450</item>
-        <item>17170459</item>
-        <item>17170451</item>
-        <item>17170452</item>
-        <item>17170453</item>
-        <item>17170454</item>
-        <item>17170455</item>
-        <item>17170458</item>
-        <item>17170456</item>
-        <item>17170457</item>
-        <item>17170460</item>
-        <item>17170461</item>
-
+    <string-array name="listValuescolors_material" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
     </string-array>
 
     <string-array name="Interpolators" translatable="false">

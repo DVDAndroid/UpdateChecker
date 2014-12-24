@@ -25,9 +25,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,7 +48,7 @@ public class InfoActivity extends PreferenceActivity {
 
 		ActionBar actionBar = getActionBar();
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
@@ -61,13 +58,6 @@ public class InfoActivity extends PreferenceActivity {
 
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.cancel(Utils.NOTIFICATION_ID);
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-			findViewById(android.R.id.content).setPadding(
-					config.getPixelInsetRight(), config.getPixelInsetTop(true),
-					config.getPixelInsetRight(), 0);
-		}
 
 		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
 				Utils.KEY_ICON_JB)) {
@@ -112,64 +102,14 @@ public class InfoActivity extends PreferenceActivity {
 			updateAvailable(line);
 		}
 
-		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
-			getPreferenceScreen().removePreference(findPreference("null"));
-
+		if (Build.VERSION.SDK_INT == 19) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
-
 		}
 
-		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
-
-	}
-
-	public void applyColor(String color) {
-
-		if (color.equals(Utils.KEY_MATERIAL_DARK)) {
-			int actionBarColor = Color.parseColor("#ff37464E");
-
-			this.getActionBar().setBackgroundDrawable(
-					new ColorDrawable(actionBarColor));
-
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-				SystemBarTintManager tintManager = new SystemBarTintManager(
-						this);
-				tintManager.setStatusBarTintEnabled(true);
-				tintManager.setStatusBarTintColor(actionBarColor);
-			}
-
-		} else {
-			if (color.equals(Utils.KEY_MATERIAL_LIGHT)) {
-				int actionBarColor = Color.parseColor("#ff78909C");
-
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-
-			} else {
-				int actionBarColor = this.getResources().getColor(
-						Integer.valueOf(color));
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-			}
-		}
+		Utils.applyColor(InfoActivity.this,
+				prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
 	}
 

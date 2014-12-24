@@ -14,9 +14,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -47,6 +44,7 @@ public class SysInfoActivity extends PreferenceActivity {
 
 	long[] mHits = new long[3];
 	boolean copy_mod = true;
+	private String l;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -104,14 +102,6 @@ public class SysInfoActivity extends PreferenceActivity {
 
 			}
 
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-				findViewById(android.R.id.content).setPadding(
-						config.getPixelInsetRight(),
-						config.getPixelInsetTop(true),
-						config.getPixelInsetRight(), 0);
-			}
-
 			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
 
 				prefs.edit()
@@ -119,7 +109,8 @@ public class SysInfoActivity extends PreferenceActivity {
 								prefs.getString("colorSysInfo", null)).apply();
 			}
 
-			applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+			Utils.applyColor(SysInfoActivity.this,
+					prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
 			try {
 				setSummaries();
@@ -203,27 +194,25 @@ public class SysInfoActivity extends PreferenceActivity {
 				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
 						.exec("busybox").getInputStream())).readLine());
 
-		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
-			getPreferenceScreen().removePreference(findPreference("null"));
-
+		if (Build.VERSION.SDK_INT == 19) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
-
 		}
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
+		l = "";
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
 				|| Build.VERSION.RELEASE.equals("L"))
 			fab.setIcon(R.drawable.ic_menu_copy_material);
-		else
+		else {
+			l = "\n\n\n\n";
 			fab.setIcon(R.drawable.ic_menu_copy);
+		}
 
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -262,52 +251,6 @@ public class SysInfoActivity extends PreferenceActivity {
 
 	}
 
-	public void applyColor(String color) {
-
-		if (color.equals(Utils.KEY_MATERIAL_DARK)) {
-			int actionBarColor = Color.parseColor("#ff37464E");
-
-			this.getActionBar().setBackgroundDrawable(
-					new ColorDrawable(actionBarColor));
-
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-				SystemBarTintManager tintManager = new SystemBarTintManager(
-						this);
-				tintManager.setStatusBarTintEnabled(true);
-				tintManager.setStatusBarTintColor(actionBarColor);
-			}
-
-		} else {
-			if (color.equals(Utils.KEY_MATERIAL_LIGHT)) {
-				int actionBarColor = Color.parseColor("#ff78909C");
-
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-
-			} else {
-				int actionBarColor = this.getResources().getColor(
-						Integer.valueOf(color));
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-			}
-		}
-
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -330,7 +273,8 @@ public class SysInfoActivity extends PreferenceActivity {
 			SnackBar.Builder snb = new SnackBar.Builder(this);
 			snb.withMessage(getString(R.string.clipboard_message) + "\n"
 					+ preference.getTitle() + ": " + preference.getSummary()
-					+ "\n\n\n\n"); // "Copied to clipboard:"
+					+ l);
+
 			snb.withActionMessageId(android.R.string.ok);
 			snb.withStyle(SnackBar.Style.INFO);
 			snb.withTextColorId(android.R.color.holo_green_dark);
@@ -379,5 +323,4 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		return false;
 	}
-
 }

@@ -2,7 +2,13 @@ package com.dvd.android.updatechecker;
 
 import java.io.File;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.widget.Toast;
 
 public class Utils {
@@ -97,6 +103,83 @@ public class Utils {
 		return new File("/system/xbin/busybox").exists()
 				|| new File("/system/bin/busybox").exists();
 
+	}
+
+	public static void applyColor(Activity a, String color) {
+
+		int actionBarColor = 0;
+
+		switch (color) {
+		case "1":
+			actionBarColor = Color.parseColor("#f44336");
+			break;
+		case "2":
+			actionBarColor = Color.parseColor("#e91e63");
+			break;
+		case "3":
+			actionBarColor = Color.parseColor("#9c27b0");
+			break;
+		case "4":
+			actionBarColor = Color.parseColor("#673ab7");
+			break;
+		case "5":
+			actionBarColor = Color.parseColor("#3f51b5");
+			break;
+		case "6":
+			actionBarColor = Color.parseColor("#2196f3");
+			break;
+		case "7":
+			actionBarColor = Color.parseColor("#03a9f4");
+			break;
+		case "8":
+			actionBarColor = Color.parseColor("#00bcd4");
+			break;
+		case "9":
+			actionBarColor = Color.parseColor("#009688");
+			break;
+		case "10":
+			actionBarColor = Color.parseColor("#4caf50");
+			break;
+		case "11":
+			actionBarColor = Color.parseColor("#8bc34a");
+			break;
+		case "12":
+			actionBarColor = Color.parseColor("#cddc39");
+			break;
+		case "13":
+			actionBarColor = Color.parseColor("#ffeb3b");
+			break;
+		case "14":
+			actionBarColor = Color.parseColor("#ffc107");
+			break;
+		case "15":
+			actionBarColor = Color.parseColor("#ff9800");
+			break;
+		case "16":
+			actionBarColor = Color.parseColor("#ff5722");
+			break;
+		case "17":
+			actionBarColor = Color.parseColor("#795548");
+			break;
+		case "18":
+			actionBarColor = Color.parseColor("#9e9e9e");
+			break;
+		case "19":
+			actionBarColor = Color.parseColor("#607d8b");
+			break;
+		}
+
+		a.getActionBar().setBackgroundDrawable(
+				new ColorDrawable(actionBarColor));
+
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+			a.getWindow().setStatusBarColor(actionBarColor);
+			a.getWindow().setNavigationBarColor(Color.parseColor("#4d000000"));
+		} else {
+			SystemBarTintManager tintManager = new SystemBarTintManager(a);
+			tintManager.setStatusBarTintEnabled(true);
+			tintManager.setStatusBarTintColor(actionBarColor);
+		}
 	}
 
 }

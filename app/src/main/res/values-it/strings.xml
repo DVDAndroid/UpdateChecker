@@ -38,16 +38,6 @@
     <string name="other_info">Altre info</string>
     <string name="radio">Radio - Versione banda di base</string>
     <string name="id">ID - Numero build</string>
-    <string name="holo_blue_light">Holo blu chiaro</string>
-    <string name="holo_blue_bright">Holo blu acceso</string>
-    <string name="holo_blue_dark">Holo blu scuro</string>
-    <string name="holo_green_light">Holo verde chiaro</string>
-    <string name="holo_green_dark">Holo verde scuro</string>
-    <string name="holo_red_light">Holo rosso chiaro</string>
-    <string name="holo_red_dark">Holo rosso scuro</string>
-    <string name="holo_purple">Holo porpora</string>
-    <string name="holo_orange_light">Holo arancione chiaro</string>
-    <string name="holo_orange_dark">Holo arancione scuro</string>
     <string name="this_color">Il colore corrente è</string>
     <string name="nd">funzione non ancora disp.</string>
     <string name="welcome">Benvenuto!</string>

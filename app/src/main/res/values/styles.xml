@@ -2,7 +2,4 @@
 
     <style name="Theme.Transparent" parent="android:Theme.Light"/>
 
-    <style name="MySnackBar" parent="SnackBar.SnackBar">
-        <item name="android:paddingBottom">50dp</item>
-    </style>
 </resources>

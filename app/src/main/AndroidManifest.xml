@@ -2,8 +2,8 @@
 <manifest
     package="com.dvd.android.updatechecker"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="300"
-    android:versionName="5.0.1 - FINAL">
+    android:versionCode="310"
+    android:versionName="5.1 - FINAL">
 
     <uses-sdk
         android:minSdkVersion="19"

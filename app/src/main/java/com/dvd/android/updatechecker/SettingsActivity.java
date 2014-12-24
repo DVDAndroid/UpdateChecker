@@ -10,9 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -94,13 +91,6 @@ public class SettingsActivity extends PreferenceActivity implements
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			findViewById(android.R.id.content).setPadding(
-					config.getPixelInsetRight(), config.getPixelInsetTop(true),
-					config.getPixelInsetRight(), 0);
-
-		}
-
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
 			PreferenceCategory fakeHeader = new PreferenceCategory(this);
 			getPreferenceScreen().addPreference(fakeHeader);
@@ -121,17 +111,13 @@ public class SettingsActivity extends PreferenceActivity implements
 							prefs.getString("colorSettings", null)).commit();
 		}
 
-		applyColor(prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+		Utils.applyColor(SettingsActivity.this,
+				prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
 
-		boolean land = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-
-		if (Build.VERSION.SDK_INT < 19 | land | !config.hasNavigtionBar()) {
-			getPreferenceScreen().removePreference(findPreference("null"));
-
+		if (Build.VERSION.SDK_INT == 19) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
-
 		}
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
@@ -192,52 +178,6 @@ public class SettingsActivity extends PreferenceActivity implements
 		// Unregister the listener whenever a key changes
 		getPreferenceScreen().getSharedPreferences()
 				.unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	public void applyColor(String color) {
-
-		if (color.equals(Utils.KEY_MATERIAL_DARK)) {
-			int actionBarColor = Color.parseColor("#ff37464E");
-
-			this.getActionBar().setBackgroundDrawable(
-					new ColorDrawable(actionBarColor));
-
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-				SystemBarTintManager tintManager = new SystemBarTintManager(
-						this);
-				tintManager.setStatusBarTintEnabled(true);
-				tintManager.setStatusBarTintColor(actionBarColor);
-			}
-
-		} else {
-			if (color.equals(Utils.KEY_MATERIAL_LIGHT)) {
-				int actionBarColor = Color.parseColor("#ff78909C");
-
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-
-			} else {
-				int actionBarColor = this.getResources().getColor(
-						Integer.valueOf(color));
-				this.getActionBar().setBackgroundDrawable(
-						new ColorDrawable(actionBarColor));
-
-				if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)) {
-					SystemBarTintManager tintManager = new SystemBarTintManager(
-							this);
-					tintManager.setStatusBarTintEnabled(true);
-					tintManager.setStatusBarTintColor(actionBarColor);
-				}
-			}
-		}
-
 	}
 
 	@Override

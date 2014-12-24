@@ -81,9 +81,4 @@
 
     </PreferenceCategory>
 
-    <Preference
-        android:enabled="false"
-        android:key="null"
-        android:selectable="false"/>
-
 </PreferenceScreen>     

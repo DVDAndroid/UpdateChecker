@@ -186,6 +186,14 @@ public class DessertCaseView extends FrameLayout {
 		return a;
 	}
 
+	static float frand() {
+		return (float) (Math.random());
+	}
+
+	static float frand(float a, float b) {
+		return (frand() * (b - a) + a);
+	}
+
 	private final Runnable mJuggle = new Runnable() {
 		@Override
 		public void run() {
@@ -204,14 +212,6 @@ public class DessertCaseView extends FrameLayout {
 			}
 		}
 	};
-
-	static float frand() {
-		return (float) (Math.random());
-	}
-
-	static float frand(float a, float b) {
-		return (frand() * (b - a) + a);
-	}
 
 	static int irand(int a, int b) {
 		return (int) (frand(a, b));

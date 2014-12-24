@@ -38,16 +38,6 @@
     <string name="other_info">More infos</string>
     <string name="radio">Radio - Baseband version</string>
     <string name="id">ID - build number</string>
-    <string name="holo_blue_light">Holo blue light</string>
-    <string name="holo_blue_bright">Holo blue bright</string>
-    <string name="holo_blue_dark">Holo blue dark</string>
-    <string name="holo_green_light">Holo green light</string>
-    <string name="holo_green_dark">Holo green dark</string>
-    <string name="holo_red_light">Holo red light</string>
-    <string name="holo_red_dark">Holo red dark</string>
-    <string name="holo_purple">Holo purple</string>
-    <string name="holo_orange_light">Holo orange light</string>
-    <string name="holo_orange_dark">Holo orange dark</string>
     <string name="this_color">Current color is</string>
     <string name="nd">not yet avaible</string>
     <string name="welcome">Benvenuto!</string>
@@ -120,11 +110,11 @@
     <string name="action_info">Info</string>
     <string name="title_jb_int">Number of Beans</string>
     <string name="clipboard_message">Copied to clipboard:</string>
-    <string name="nineoldandroids_by">by JakeWharton</string>
-    <string name="nineoldandroids">NineOldAndroids</string>
-    <string name="fab_by">by futuresimple</string>
-    <string name="fab">Android-Floating-Action-Button</string>
-    <string name="snack_bar">SnackBar</string>
-    <string name="snack_bar_by">by MrEngineer13</string>
-    <string name="xposed_eggster">Xposed Module - by jamaal areeb</string>
+    <string name="nineoldandroids_by" translatable="false">by JakeWharton</string>
+    <string name="nineoldandroids" translatable="false">NineOldAndroids</string>
+    <string name="fab_by" translatable="false">by futuresimple</string>
+    <string name="fab" translatable="false">Android-Floating-Action-Button</string>
+    <string name="snack_bar" translatable="false">SnackBar</string>
+    <string name="snack_bar_by" translatable="false">by MrEngineer13</string>
+    <string name="xposed_eggster" translatable="false">Xposed Module - by jamaal areeb</string>
 </resources>
