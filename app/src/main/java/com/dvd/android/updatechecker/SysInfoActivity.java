@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.mrengineer13.snackbar.SnackBar;
+import com.melnykov.fab.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.annotation.SuppressLint;
@@ -204,14 +204,15 @@ public class SysInfoActivity extends PreferenceActivity {
 		}
 
 		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
+		fab.attachToListView(getListView());
 		l = "";
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
 				|| Build.VERSION.RELEASE.equals("L"))
-			fab.setIcon(R.drawable.ic_menu_copy_material);
+			fab.setImageDrawable(getDrawable(R.drawable.ic_menu_copy_material));
 		else {
 			l = "\n\n\n\n";
-			fab.setIcon(R.drawable.ic_menu_copy);
+			fab.setImageDrawable(getDrawable(R.drawable.ic_menu_copy));
 		}
 
 		fab.setOnClickListener(new View.OnClickListener() {

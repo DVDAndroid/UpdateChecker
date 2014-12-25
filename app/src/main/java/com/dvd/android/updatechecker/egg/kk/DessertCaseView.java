@@ -194,6 +194,10 @@ public class DessertCaseView extends FrameLayout {
 		return (frand() * (b - a) + a);
 	}
 
+	static int irand(int a, int b) {
+		return (int) (frand(a, b));
+	}
+
 	private final Runnable mJuggle = new Runnable() {
 		@Override
 		public void run() {
@@ -212,10 +216,6 @@ public class DessertCaseView extends FrameLayout {
 			}
 		}
 	};
-
-	static int irand(int a, int b) {
-		return (int) (frand(a, b));
-	}
 
 	public void start() {
 		if (!mStarted) {
