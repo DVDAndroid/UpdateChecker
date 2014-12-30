@@ -209,10 +209,10 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
 				|| Build.VERSION.RELEASE.equals("L"))
-			fab.setImageDrawable(getDrawable(R.drawable.ic_menu_copy_material));
+			fab.setImageResource(R.drawable.ic_menu_copy_material);
 		else {
 			l = "\n\n\n\n";
-			fab.setImageDrawable(getDrawable(R.drawable.ic_menu_copy));
+			fab.setImageResource(R.drawable.ic_menu_copy);
 		}
 
 		fab.setOnClickListener(new View.OnClickListener() {
