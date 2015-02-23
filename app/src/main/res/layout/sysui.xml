@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:fab="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
@@ -12,13 +13,14 @@
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/floatingactionbutton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="30dp"
         android:layout_marginRight="16dp"
         fab:fab_colorNormal="#2196f3"
-        fab:fab_colorPressed="#1976d2"/>
+        fab:fab_colorPressed="#1976d2"
+        tools:ignore="RtlHardcoded"/>
 
 </RelativeLayout>

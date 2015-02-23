@@ -36,6 +36,7 @@ public class PlatLogoActivity extends Activity {
 		final View rct1 = new View(this), rct2 = new View(this);
 		TextView build = new TextView(this);
 		final Random r = new Random();
+
 		String sui = getSharedPreferences(
 				"com.dvd.android.updatechecker_preferences",
 				Context.MODE_PRIVATE).getString("l_sysui",

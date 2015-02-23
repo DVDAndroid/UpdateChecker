@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        android:defaultValue=""
-        android:dialogIcon="@android:drawable/android:ic_menu_manage"
-        android:entries="@array/listArraycolors"
-        android:entryValues="@array/listValuescolors_material"
+    <com.dvd.android.library.colorlistpreference.ColorListPreference
+        android:defaultValue="5"
+        android:dialogIcon="@drawable/ic_menu_manage"
+        android:entries="@array/listNames"
+        android:entryValues="@array/listValues"
         android:key="listPrefcolor"
-        android:title="@string/choose_color"/>
+        android:title="@string/choose_color"
+        app:entryColors="@array/colorsValues"/>
 
 </PreferenceScreen>

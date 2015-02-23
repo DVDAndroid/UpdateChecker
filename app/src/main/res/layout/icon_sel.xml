@@ -3,7 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              tools:ignore="RtlHardcoded,RtlSymmetry,ContentDescription,HardcodedText">
 
     <TextView
         android:id="@+id/textView1"
@@ -23,24 +24,21 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_settings_jb"
-            tools:ignore="ContentDescription"/>
+            android:src="@mipmap/ic_launcher_settings_jb"/>
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:src="@drawable/ic_launcher_settings_kk"
-            tools:ignore="ContentDescription"/>
+            android:src="@mipmap/ic_launcher_settings_kk"/>
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:src="@drawable/ic_launcher_settings_l"
-            tools:ignore="ContentDescription"/>
+            android:src="@mipmap/ic_launcher_settings_l"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,24 +51,21 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JB"
-            tools:ignore="HardcodedText"/>
+            android:text="JB"/>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="82dp"
-            android:text="KK"
-            tools:ignore="HardcodedText"/>
+            android:text="KK"/>
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="85dp"
-            android:text="L"
-            tools:ignore="HardcodedText"/>
+            android:text="L"/>
     </LinearLayout>
 
 </LinearLayout>

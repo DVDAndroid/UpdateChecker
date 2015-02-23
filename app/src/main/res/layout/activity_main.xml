@@ -4,11 +4,9 @@
                 android:layout_height="fill_parent"
                 android:clipToPadding="false"
                 android:fitsSystemWindows="true"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.dvd.android.updatechecker.MainActivity$PlaceholderFragment">
+                android:padding="16dp"
+                tools:context="com.dvd.android.updatechecker.MainActivity$PlaceholderFragment"
+                tools:ignore="SpUsage,RtlHardcoded">
 
     <ListView
         android:id="@android:id/list"
@@ -31,8 +29,7 @@
         android:textAllCaps="true"
         android:textColor="#FF0000"
         android:textSize="30dp"
-        android:textStyle="bold"
-        tools:ignore="SpUsage,RtlHardcoded"/>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/version"
@@ -41,8 +38,7 @@
         android:layout_alignLeft="@android:id/list"
         android:layout_alignParentBottom="true"
         android:textAllCaps="true"
-        android:textStyle="bold|italic"
-        tools:ignore="RtlHardcoded"/>
+        android:textStyle="bold|italic"/>
 
     <TextView
         android:id="@+id/credit"
@@ -50,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@android:id/list"
-        android:textStyle="bold|italic"
-        tools:ignore="RtlHardcoded"/>
+        android:textStyle="bold|italic"/>
 
 </RelativeLayout>

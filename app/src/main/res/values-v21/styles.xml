@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Transparent" parent="@android:style/Theme.Material.Light">
-    </style>
+    <style name="Theme" parent="android:Theme.Material.Light"/>
 
     <style name="noactionbar_theme" parent="android:Theme.Material.Light.NoActionBar"/>
 

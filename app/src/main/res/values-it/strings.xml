@@ -22,7 +22,6 @@
     <string name="settings">Impostazioni</string>
     <string name="add_short_text">La scorciatoia %1$s è stata aggiunta</string>
     <string name="curr_ver">Versione corrente:</string>
-    <string name="device_info_default">Sconosciuto</string>
     <string name="model">Numero modello</string>
     <string name="device">Nome in codice telefono</string>
     <string name="manufacturer">Produttore</string>
@@ -90,18 +89,15 @@
     <string name="module_ok">SONO STATI RILEVATI DEI MODULI XPOSED I QUALI MODIFICANO IL COLORE DELLA STATUS BAR. QUESTI POSSONO ENTRARE IN CONFLITTO CON QUESTA APP.</string>
 
     <string name="title_checking">Controlla aggiornamenti per questa app!</string>
-    <string name="checking" tools:ignore="TypographyEllipsis">Controllo...</string>
-    <string name="no_upds">Nessun aggiornamento disponibile!</string>
-    <string name="no_auto_upd">Abilita aggiornamenti automatici</string>
-    <string name="yes_up_not">Aggiornamento disponibile!\nClicca qui per scaricare!</string>
-    <string name="upd_yes">Aggiornamento disponibile!\n\nCodice versione corrente è %1$s, disponibile %2$s.\n\n\nScaricarlo adesso?</string>
     <string name="no_int">Per favore, accendi il Wi-Fi o la connessione dati.</string>
-    <string name="cat_up">Impostazioni aggiornamenti</string>
 
-    <string name="alpha_beta">ATTENZIONE!\nLa versione disponibile è in %1$s, la vuoi scaricare comunque?</string>
-    <string name="old_ver">ATTENZIONE!\nUna vecchia versione dell\'applicazione è installata. La rimozione è richiesta.</string>
     <string name="choose_platlogo">Scegli Android L/Lollipop Platlogo</string>
     <string name="mod_copy">Modalità copiatore</string>
     <string name="what_mod_copy">Clicca su una informazione per copiare il contenuto negli appunti</string>
     <string name="clipboard_message">Copiato nella clipboard:</string>
+    <string name="descr_myappsupdater">Per verificare la presenza di aggiornamenti, è necessario %1$s My Apps Updater.</string>
+    <string name="open">aprire</string>
+    <string name="install">installare</string>
+    <string name="old_ver">ATTENZIONE!\nUna vecchia versione dell\'applicazione è installata. La rimozione è richiesta.</string>
+
 </resources>

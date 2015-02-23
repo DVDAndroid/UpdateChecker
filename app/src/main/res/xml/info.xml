@@ -65,7 +65,7 @@
         <Preference
             android:key="ver"
             android:selectable="false"
-            android:summary="@string/device_info_default"
+            android:summary="@android:string/unknownName"
             android:title="@string/vers"/>
 
         <Preference

@@ -74,9 +74,11 @@ public class PlatLogoActivity extends Activity {
 				.createFromAsset(getAssets(), "Roboto-Bold.ttf");
 		Typeface light = Typeface.createFromAsset(getAssets(),
 				"Roboto-Light.ttf");
+
 		SharedPreferences pref = getSharedPreferences(
 				"com.dvd.android.updatechecker_preferences",
 				Context.MODE_PRIVATE);
+
 		String kkLetter = pref.getString("kk_letter", null);
 		String kkText = pref.getString("kk_text", null);
 		final String interpol = pref.getString("kk_interpolator", null);

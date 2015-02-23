@@ -13,21 +13,16 @@ public class UpdateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
-				| Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1 | Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-			String ver = "JellyBean ";
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			String ver = "KitKat ";
 			openActivity(ver);
 		} else {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-				String ver = "KitKat ";
+			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+				String ver = "Lollipop ";
 				openActivity(ver);
-			} else {
-				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-					String ver = "Lollipop ";
-					openActivity(ver);
-				}
 			}
 		}
+
 	}
 
 	private void openActivity(String ver) {

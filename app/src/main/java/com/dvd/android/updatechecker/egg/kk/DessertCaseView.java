@@ -63,8 +63,8 @@ public class DessertCaseView extends FrameLayout {
 	private static final int TAG_SPAN = 0x2000002;
 
 	private static final int[] PASTRIES = { R.drawable.dessert_kitkat, // used
-																		// with
-																		// permission
+			// with
+			// permission
 			R.drawable.dessert_android, // thx irina
 			R.drawable.dessert_cupcake, // 2009
 			R.drawable.dessert_donut, // 2009
@@ -85,12 +85,12 @@ public class DessertCaseView extends FrameLayout {
 			R.drawable.dessert_petitfour, // the original and still delicious
 
 			R.drawable.dessert_donutburger, // remember kids, this was long
-											// before cronuts
+			// before cronuts
 
 			R.drawable.dessert_flan, // sholes final approach
-										// landing gear punted to flan
-										// runway foam glistens
-										// -- mcleron
+			// landing gear punted to flan
+			// runway foam glistens
+			// -- mcleron
 
 			R.drawable.dessert_keylimepie, // from an alternative timeline
 	};
@@ -198,25 +198,6 @@ public class DessertCaseView extends FrameLayout {
 		return (int) (frand(a, b));
 	}
 
-	private final Runnable mJuggle = new Runnable() {
-		@Override
-		public void run() {
-			final int N = getChildCount();
-
-			final int K = 1; // irand(1,3);
-			for (int i = 0; i < K; i++) {
-				final View child = getChildAt((int) (Math.random() * N));
-				place(child, true);
-			}
-
-			fillFreeList();
-
-			if (mStarted) {
-				mHandler.postDelayed(mJuggle, DELAY);
-			}
-		}
-	};
-
 	public void start() {
 		if (!mStarted) {
 			mStarted = true;
@@ -237,6 +218,25 @@ public class DessertCaseView extends FrameLayout {
 	<T> T pick(T[] a) {
 		return a[(int) (Math.random() * a.length)];
 	}
+
+	private final Runnable mJuggle = new Runnable() {
+		@Override
+		public void run() {
+			final int N = getChildCount();
+
+			final int K = 1; // irand(1,3);
+			for (int i = 0; i < K; i++) {
+				final View child = getChildAt((int) (Math.random() * N));
+				place(child, true);
+			}
+
+			fillFreeList();
+
+			if (mStarted) {
+				mHandler.postDelayed(mJuggle, DELAY);
+			}
+		}
+	};
 
 	<T> T pick(SparseArray<T> sa) {
 		return sa.valueAt((int) (Math.random() * sa.size()));

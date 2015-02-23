@@ -2,14 +2,14 @@ package com.dvd.android.updatechecker;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -17,7 +17,6 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class SettingsActivity extends PreferenceActivity implements
@@ -35,6 +34,7 @@ public class SettingsActivity extends PreferenceActivity implements
 	public static ListPreference mKkSysUi;
 	public static ListPreference mLSysUi;
 	public static ListPreference mLLollipopChooser;
+	private SharedPreferences prefs;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -45,21 +45,14 @@ public class SettingsActivity extends PreferenceActivity implements
 		SharedPreferences prefs = getPreferenceManager()
 				.getDefaultSharedPreferences(this);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		prefs.edit().putBoolean("setts_opened", true).apply();
 
-		mListPreferenceIcons = (ListPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_LIST_PREFERENCE_ICONS);
-
-		mCheckBoxRandomColors = (CheckBoxPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR);
-
-		mCheckBoxRandomColorsAct = (CheckBoxPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT);
+		initPrefs();
 
 		if (!mCheckBoxRandomColors.isChecked()) {
 			prefs.edit()
 					.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-							prefs.getString("colorSettings", null)).commit();
+							prefs.getString("colorSettings", null)).apply();
 			mCheckBoxRandomColorsAct.setEnabled(false);
 		}
 
@@ -67,25 +60,20 @@ public class SettingsActivity extends PreferenceActivity implements
 			mCheckBoxActionBar.setEnabled(false);
 		}
 
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_JB)) {
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 
-			getActionBar().setIcon(R.drawable.ic_launcher_settings_jb);
-
-		}
-
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_KK)) {
-
-			getActionBar().setIcon(R.drawable.ic_launcher_settings_kk);
-
-		}
-
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_L)) {
-
-			getActionBar().setIcon(R.drawable.ic_launcher_settings_l);
-
+			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
+				case "1":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
+					break;
+				case "2":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
+					break;
+				case "3":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
+					break;
+			}
 		}
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -104,61 +92,32 @@ public class SettingsActivity extends PreferenceActivity implements
 			}
 		}
 
-		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
-
-			prefs.edit()
-					.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-							prefs.getString("colorSettings", null)).commit();
-		}
-
-		Utils.applyColor(SettingsActivity.this,
-				prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+		Utils.applyColor(this, prefs.getString("colorSettings", "#ff0000"));
 
 		if (Build.VERSION.SDK_INT == 19) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
-		}
-
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+		} else {
 			findPreference(Utils.KEY_L_SYSUI).setEnabled(
 					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
-		}
 
+		}
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 
+		initPrefs();
+
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			mKkLetter = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_LETTER);
-
-			mKkText = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_TEXT);
-
-			mKkInterpolator = (ListPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_INTERPOLATOR);
-
-			mKkClicks = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_CLICKS);
-
-			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
-					Utils.KEY_KK_SYSUI);
-
 			mKkLetter.setSummary(mKkLetter.getText());
 			mKkText.setSummary(mKkText.getText());
 			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
 			mKkClicks.setSummary(mKkClicks.getText());
 			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
 		} else {
-			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
-					Utils.KEY_L_SYSUI);
-			mLSysUi.setSummary(mLSysUi.getEntry().toString());
-
-			mLLollipopChooser = (ListPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_CHOOSE_PLAT);
 			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
 					.toString());
 		}
@@ -172,48 +131,9 @@ public class SettingsActivity extends PreferenceActivity implements
 	}
 
 	@SuppressWarnings("deprecation")
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// Unregister the listener whenever a key changes
-		getPreferenceScreen().getSharedPreferences()
-				.unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-
-		getMenuInflater().inflate(R.menu.settings, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == android.R.id.home) {
-			finish();
-		}
-
-		if (id == R.id.restart) {
-			restart();
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@SuppressWarnings({ "static-access", "deprecation" })
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-
-		SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
-
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-			findPreference(Utils.KEY_L_SYSUI).setEnabled(
-					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
-		}
+	private void initPrefs() {
+		mLLollipopChooser = (ListPreference) getPreferenceScreen()
+				.findPreference(Utils.KEY_CHOOSE_PLAT);
 
 		mListPreferenceIcons = (ListPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_LIST_PREFERENCE_ICONS);
@@ -224,36 +144,65 @@ public class SettingsActivity extends PreferenceActivity implements
 		mCheckBoxRandomColorsAct = (CheckBoxPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT);
 
-		mLLollipopChooser = (ListPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_CHOOSE_PLAT);
-
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			mKkLetter = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_LETTER);
-
-			mKkText = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_TEXT);
-
-			mKkInterpolator = (ListPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_INTERPOLATOR);
-
-			mKkClicks = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_CLICKS);
-
-			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
-					Utils.KEY_KK_SYSUI);
-
-			mKkLetter.setSummary(mKkLetter.getText().toString());
-			mKkText.setSummary(mKkText.getText().toString());
-			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
-			mKkClicks.setSummary(mKkClicks.getText().toString());
-			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
-		} else {
-
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
 			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
 					Utils.KEY_L_SYSUI);
-			mLSysUi.setSummary(mLSysUi.getEntry().toString());
+			mLLollipopChooser = (ListPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_CHOOSE_PLAT);
+		} else {
+			mKkLetter = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_LETTER);
+			mKkText = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_TEXT);
+			mKkInterpolator = (ListPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_INTERPOLATOR);
+			mKkClicks = (EditTextPreference) getPreferenceScreen()
+					.findPreference(Utils.KEY_KK_CLICKS);
+			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
+					Utils.KEY_KK_SYSUI);
+		}
+	}
 
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void onPause() {
+		super.onPause();
+		getPreferenceScreen().getSharedPreferences()
+				.unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			finish();
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@SuppressWarnings({ "static-access", "deprecation" })
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+
+		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
+
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+			findPreference(Utils.KEY_L_SYSUI).setEnabled(
+					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
+		}
+
+		initPrefs();
+
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			mKkLetter.setSummary(mKkLetter.getText());
+			mKkText.setSummary(mKkText.getText());
+			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
+			mKkClicks.setSummary(mKkClicks.getText());
+			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+		} else {
+			mLSysUi.setSummary(mLSysUi.getEntry().toString());
 			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
 					.toString());
 		}
@@ -263,41 +212,36 @@ public class SettingsActivity extends PreferenceActivity implements
 			if (mCheckBoxRandomColors.isChecked()) {
 				mCheckBoxRandomColorsAct.setEnabled(true);
 			} else {
-				prefs.edit().putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-						prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+				prefs.edit()
+						.putString(
+								Utils.KEY_LIST_PREFERENCE_COLOR,
+								prefs.getString(
+										Utils.KEY_LIST_PREFERENCE_COLOR, null))
+						.apply();
 				mCheckBoxRandomColorsAct.setChecked(false);
 				mCheckBoxRandomColorsAct.setEnabled(false);
 			}
 		}
 
 		if (key.equals(Utils.KEY_CHECK_BOX_HIDE_ICON)) {
+			int checked;
 
-			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_HIDE_ICON, true)) {
+			checked = prefs.getBoolean(Utils.KEY_CHECK_BOX_HIDE_ICON, true) ? 2
+					: 1;
 
-				getPackageManager()
-						.setComponentEnabledSetting(
-								new ComponentName(
-										"com.dvd.android.updatechecker",
-										"com.dvd.android.updatechecker.UpdateActivity-sh"),
-								PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-								PackageManager.DONT_KILL_APP);
+			getPackageManager().setComponentEnabledSetting(
+					new ComponentName(this, getPackageName()
+							+ ".UpdateActivity-sh"), checked,
+					PackageManager.DONT_KILL_APP);
 
-				restart();
+			Intent intent = new Intent(Intent.ACTION_MAIN);
+			intent.addCategory(Intent.CATEGORY_HOME);
+			ResolveInfo resolveInfo = getPackageManager().resolveActivity(
+					intent, PackageManager.MATCH_DEFAULT_ONLY);
+			String currentHomePackage = resolveInfo.activityInfo.packageName;
 
-			} else {
-
-				getPackageManager()
-						.setComponentEnabledSetting(
-								new ComponentName(
-										"com.dvd.android.updatechecker",
-										"com.dvd.android.updatechecker.UpdateActivity-sh"),
-								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-								PackageManager.DONT_KILL_APP);
-
-				restart();
-
-			}
-
+			ActivityManager am = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
+			am.killBackgroundProcesses(currentHomePackage);
 		}
 
 		if (key.equals(Utils.KEY_LIST_PREFERENCE_ICONS)) {
@@ -307,80 +251,43 @@ public class SettingsActivity extends PreferenceActivity implements
 					+ " " + mListPreferenceIcons.getEntry().toString());
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.android.updatechecker",
-							"com.dvd.android.updatechecker.MainActivity-JB"),
+					new ComponentName(this, getPackageName()
+							+ ".MainActivity-JB"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.android.updatechecker",
-							"com.dvd.android.updatechecker.MainActivity-KK"),
+					new ComponentName(this, getPackageName()
+							+ ".MainActivity-KK"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
 			getPackageManager().setComponentEnabledSetting(
-					new ComponentName("com.dvd.android.updatechecker",
-							"com.dvd.android.updatechecker.MainActivity-L"),
+					new ComponentName(this, getPackageName()
+							+ ".MainActivity-L"),
 					PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 					PackageManager.DONT_KILL_APP);
 
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"1")) {
-
-				getPackageManager()
-						.setComponentEnabledSetting(
-								new ComponentName(
-										"com.dvd.android.updatechecker",
-										"com.dvd.android.updatechecker.MainActivity-JB"),
-								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-								PackageManager.DONT_KILL_APP);
-
-				restart();
-
+			String act = "L";
+			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
+				case "1":
+					act = "JB";
+					break;
+				case "2":
+					act = "KK";
+					break;
+				case "3":
+					act = "L";
+					break;
 			}
 
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"2")) {
-
-				getPackageManager()
-						.setComponentEnabledSetting(
-								new ComponentName(
-										"com.dvd.android.updatechecker",
-										"com.dvd.android.updatechecker.MainActivity-KK"),
-								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-								PackageManager.DONT_KILL_APP);
-
-				restart();
-
-			}
-
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"3")) {
-
-				getPackageManager()
-						.setComponentEnabledSetting(
-								new ComponentName(
-										"com.dvd.android.updatechecker",
-										"com.dvd.android.updatechecker.MainActivity-L"),
-								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-								PackageManager.DONT_KILL_APP);
-
-				restart();
-
-			}
+			getPackageManager().setComponentEnabledSetting(
+					new ComponentName(this, getPackageName() + ".MainActivity-"
+							+ act),
+					PackageManager.COMPONENT_ENABLED_STATE_ENABLED, 0);
 
 		}
 
 	}
 
-	public void restart() {
-		PendingIntent RESTART_INTENT = PendingIntent.getActivity(
-				this.getBaseContext(), 0, new Intent(getIntent()), 0);
-
-		AlarmManager mgr = (AlarmManager) this
-				.getSystemService(Context.ALARM_SERVICE);
-		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-				RESTART_INTENT);
-		System.exit(2);
-	}
 }

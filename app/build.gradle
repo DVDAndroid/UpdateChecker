@@ -2,26 +2,29 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "20.0.0"
-
+    buildToolsVersion '21.1.2'
     defaultConfig {
         applicationId "com.dvd.android.updatechecker"
         minSdkVersion 19
         targetSdkVersion 21
+        versionCode 320
+        versionName '5.2 - FINAL'
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.2'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
-    compile 'com.github.mrengineer13:snackbar:0.5.0'
+    compile 'com.github.mrengineer13:snackbar:1.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.dvdandroid:colorlistpreference:1.6.1'
 }

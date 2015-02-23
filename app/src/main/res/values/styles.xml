@@ -1,5 +1,5 @@
 <resources>
 
-    <style name="Theme.Transparent" parent="android:Theme.Light"/>
+    <style name="Theme" parent="android:Theme.DeviceDefault.Light"/>
 
 </resources>

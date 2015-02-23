@@ -4,15 +4,15 @@
 
     <item
         android:id="@+id/action_info"
-        android:icon="@android:drawable/android:ic_menu_info_details"
+        android:icon="@drawable/ic_menu_info_details"
         android:orderInCategory="1"
-        android:showAsAction="always|withText"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/action_info"/>
 
     <item
         android:id="@+id/action_exit"
         android:orderInCategory="2"
-        android:showAsAction="always|withText"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/action_exit"/>
 
 </menu>

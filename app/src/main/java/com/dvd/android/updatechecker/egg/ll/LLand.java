@@ -254,7 +254,7 @@ public class LLand extends FrameLayout {
 				s.z = (float) i / N;
 				s.setTranslationZ(PARAMS.SCENERY_Z * (1 + s.z));
 				s.v = 0.85f * s.z; // buildings move proportional to their
-									// distance
+				// distance
 				hsv[0] = 175;
 				hsv[1] = 0.25f;
 				hsv[2] = 1 * s.z;
@@ -484,12 +484,12 @@ public class LLand extends FrameLayout {
 		if (DEBUG)
 			L("touch: %s", ev);
 		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			poke();
-			return true;
-		case MotionEvent.ACTION_UP:
-			unpoke();
-			return true;
+			case MotionEvent.ACTION_DOWN:
+				poke();
+				return true;
+			case MotionEvent.ACTION_UP:
+				unpoke();
+				return true;
 		}
 		return false;
 	}
@@ -499,12 +499,12 @@ public class LLand extends FrameLayout {
 		if (DEBUG)
 			L("trackball: %s", ev);
 		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			poke();
-			return true;
-		case MotionEvent.ACTION_UP:
-			unpoke();
-			return true;
+			case MotionEvent.ACTION_DOWN:
+				poke();
+				return true;
+			case MotionEvent.ACTION_UP:
+				unpoke();
+				return true;
 		}
 		return false;
 	}
@@ -514,13 +514,13 @@ public class LLand extends FrameLayout {
 		if (DEBUG)
 			L("keyDown: %d", keyCode);
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_DPAD_CENTER:
-		case KeyEvent.KEYCODE_DPAD_UP:
-		case KeyEvent.KEYCODE_SPACE:
-		case KeyEvent.KEYCODE_ENTER:
-		case KeyEvent.KEYCODE_BUTTON_A:
-			poke();
-			return true;
+			case KeyEvent.KEYCODE_DPAD_CENTER:
+			case KeyEvent.KEYCODE_DPAD_UP:
+			case KeyEvent.KEYCODE_SPACE:
+			case KeyEvent.KEYCODE_ENTER:
+			case KeyEvent.KEYCODE_BUTTON_A:
+				poke();
+				return true;
 		}
 		return false;
 	}
@@ -530,13 +530,13 @@ public class LLand extends FrameLayout {
 		if (DEBUG)
 			L("keyDown: %d", keyCode);
 		switch (keyCode) {
-		case KeyEvent.KEYCODE_DPAD_CENTER:
-		case KeyEvent.KEYCODE_DPAD_UP:
-		case KeyEvent.KEYCODE_SPACE:
-		case KeyEvent.KEYCODE_ENTER:
-		case KeyEvent.KEYCODE_BUTTON_A:
-			unpoke();
-			return true;
+			case KeyEvent.KEYCODE_DPAD_CENTER:
+			case KeyEvent.KEYCODE_DPAD_UP:
+			case KeyEvent.KEYCODE_SPACE:
+			case KeyEvent.KEYCODE_ENTER:
+			case KeyEvent.KEYCODE_BUTTON_A:
+				unpoke();
+				return true;
 		}
 		return false;
 	}

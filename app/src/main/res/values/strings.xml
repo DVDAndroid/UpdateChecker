@@ -22,7 +22,6 @@
     <string name="settings">Settings</string>
     <string name="add_short_text">The shortcut %1$s has been added</string>
     <string name="curr_ver">Current version:</string>
-    <string name="device_info_default">Unknown</string>
     <string name="model">Model number</string>
     <string name="device">Codename phone</string>
     <string name="manufacturer">Manufacturer</string>
@@ -94,16 +93,7 @@
     <string name="module_ok">HAVE BEEN DETECTED SOME XPOSED MODULES WHICH MODIFY THE COLOR OF THE STATUS BAR. THESE CAN JOIN IN CONFLICT WITH THIS APP.</string>
 
     <string name="title_checking">Check updates for this app!</string>
-    <string name="checking">Checking...</string>
-    <string name="no_upds">No updates available!</string>
-    <string name="yes_up_not">Update available!\nClick here for download!</string>
-    <string name="upd_yes">Update available!\n\nCurrent code version is %1$s, available %2$s.\n\n\nDownload it now?</string>
     <string name="no_int">Please turn on Wi-Fi or mobile data.</string>
-    <string name="no_auto_upd">Enable auto updates</string>
-    <string name="cat_up">Update settings</string>
-
-    <string name="alpha_beta">WARNING!\nThe available version is in %1$s, would you download it?</string>
-    <string name="old_ver">WARNING!\nAn old version of the app is installed. Removal is required.</string>
     <string name="choose_platlogo">Choose Android L/Lollipop Platlogo</string>
     <string name="mod_copy">Copying Mode</string>
     <string name="what_mod_copy">Click on an information to copy the contents in clipboard</string>
@@ -113,8 +103,14 @@
     <string name="nineoldandroids_by" translatable="false">by JakeWharton</string>
     <string name="nineoldandroids" translatable="false">NineOldAndroids</string>
     <string name="fab_by" translatable="false">by makovkastar</string>
-    <string name="fab" translatable="false">FloatingActionButtonn</string>
+    <string name="fab" translatable="false">FloatingActionButton</string>
     <string name="snack_bar" translatable="false">SnackBar</string>
     <string name="snack_bar_by" translatable="false">by MrEngineer13</string>
     <string name="xposed_eggster" translatable="false">Xposed Module - by jamaal areeb</string>
+    <string name="myappsupdater" translatable="false">My Apps Updater</string>
+    <string name="descr_myappsupdater">To check for updates, you need to %1$s My Apps Updater.</string>
+    <string name="open">open</string>
+    <string name="install">install</string>
+    <string name="old_ver">WARNING!\\nAn old version of the app is installed. Removal is required.</string>
+
 </resources>

@@ -18,13 +18,13 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:orientation="vertical">
+             android:orientation="vertical"
+             tools:ignore="RtlHardcoded">
 
     <com.dvd.android.updatechecker.egg.ll.LLand
         android:id="@+id/world"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.dvd.android.updatechecker.egg.ll.LLand>
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/score"
@@ -39,8 +39,7 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp"
         android:textColor="#FFAAAAAA"
-        android:textSize="32sp"
-        tools:ignore="RtlHardcoded"/>
+        android:textSize="32sp"/>
 
     <TextView
         android:id="@+id/welcome"

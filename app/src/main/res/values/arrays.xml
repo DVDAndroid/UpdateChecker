@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
-    <string-array name="listArraycolors" translatable="false">
+    <string-array name="listNames" translatable="false">
         <item>Red</item>
         <item>Pink</item>
         <item>Purple</item>
@@ -23,27 +22,47 @@
         <item>Grey</item>
         <item>Blue grey</item>
     </string-array>
-
-    <string-array name="listValuescolors_material" translatable="false">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
+    <string-array name="listValues" translatable="false">
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+        <item>"6"</item>
+        <item>"7"</item>
+        <item>"8"</item>
+        <item>"9"</item>
+        <item>"10"</item>
+        <item>"11"</item>
+        <item>"12"</item>
+        <item>"13"</item>
+        <item>"14"</item>
+        <item>"15"</item>
+        <item>"16"</item>
+        <item>"17"</item>
+        <item>"18"</item>
+        <item>"19"</item>
+    </string-array>
+    <string-array name="colorsValues" translatable="false">
+        <item>#f44336</item>
+        <item>#e91e63</item>
+        <item>#9c27b0</item>
+        <item>#673ab7</item>
+        <item>#3f51b5</item>
+        <item>#2196f3</item>
+        <item>#03a9f4</item>
+        <item>#00bcd4</item>
+        <item>#009688</item>
+        <item>#4caf50</item>
+        <item>#8bc34a</item>
+        <item>#cddc39</item>
+        <item>#ffeb3b</item>
+        <item>#ffc107</item>
+        <item>#ff9800</item>
+        <item>#ff5722</item>
+        <item>#795548</item>
+        <item>#9e9e9e</item>
+        <item>#607d8b</item>
     </string-array>
 
     <string-array name="Interpolators" translatable="false">
@@ -79,10 +98,10 @@
         <item>Android L Preview</item>
         <item>Android Lollipop</item>
     </string-array>
+
     <string-array name="android_eggs_id" translatable="false">
         <item>1</item>
         <item>2</item>
     </string-array>
-
 
 </resources>

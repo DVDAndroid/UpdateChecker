@@ -4,16 +4,15 @@
         android:title="@string/cat_sel_icon">
 
         <ListPreference
-            android:defaultValue="2"
-            android:dialogIcon="@android:drawable/android:ic_menu_manage"
+            android:defaultValue="3"
+            android:dialogIcon="@drawable/ic_menu_manage"
             android:dialogLayout="@layout/icon_sel"
             android:enabled="true"
             android:entries="@array/listArrayicons"
             android:entryValues="@array/listValuesicons"
             android:key="select_icons"
-            android:summary="@string/device_info_default"
+            android:summary="@android:string/unknownName"
             android:title="@string/select_icon"/>
-
 
     </PreferenceCategory>
 
@@ -21,12 +20,14 @@
         android:title="@string/set_ver_icon">
 
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="hide_icon"
             android:summaryOff="@string/hide_icon_toast_true"
             android:summaryOn="@string/hide_icon_toast_false"
             android:title="@string/hide_icon"/>
 
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="no_add"
             android:summaryOff="@string/no_add_toast_false"
             android:summaryOn="@string/no_add_toast_true"
@@ -36,7 +37,7 @@
     <PreferenceCategory android:title="@string/color_sett">
 
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:enabled="true"
             android:key="random_colors"
             android:selectable="true"
@@ -44,21 +45,12 @@
             android:title="@string/enable_random_color"/>
 
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:enabled="true"
             android:key="random_colors_act"
             android:selectable="true"
             android:summary="@string/enable_random_color_act_summary"
             android:title="@string/enable_random_color_act"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/cat_up">
-
-        <CheckBoxPreference
-            android:key="no_auto_upd"
-            android:title="@string/no_auto_upd"/>
 
     </PreferenceCategory>
 

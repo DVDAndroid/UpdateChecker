@@ -16,15 +16,15 @@
 
     <item
         android:id="@+id/sys_info"
-        android:icon="@android:drawable/ic_menu_help"
+        android:icon="@drawable/ic_menu_help"
         android:orderInCategory="4"
-        android:showAsAction="always|withText"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/title_activity_sys_info"/>
 
     <item
         android:id="@+id/sett"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:showAsAction="always|withText"
+        android:icon="@drawable/ic_menu_manage"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/settings"/>
 
 

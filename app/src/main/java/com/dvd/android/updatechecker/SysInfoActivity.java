@@ -9,11 +9,11 @@ import com.melnykov.fab.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -44,7 +44,8 @@ public class SysInfoActivity extends PreferenceActivity {
 
 	long[] mHits = new long[3];
 	boolean copy_mod = true;
-	private String l;
+	private SharedPreferences prefs;
+	private FloatingActionButton fab;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -53,70 +54,47 @@ public class SysInfoActivity extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.sys_info);
 		setContentView(R.layout.sysui);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
+
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 
 		Preference release = findPreference(Utils.KEY_SYS_INFO_RELEASE);
+		release.setEnabled(prefs.getBoolean("setts_opened", false));
 
-		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
-				| Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR1 | Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2)) {
-			String ver = "JellyBean ";
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+			String ver = "KitKat ";
 			release.setSummary(ver + Build.VERSION.RELEASE);
 		} else {
-
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-				String ver = "KitKat ";
+			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+				String ver = "Lollipop ";
 				release.setSummary(ver + Build.VERSION.RELEASE);
-			} else {
-				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-					String ver = "Lollipop ";
-					release.setSummary(ver + Build.VERSION.RELEASE);
-				}
 			}
+		}
 
-			SharedPreferences prefs = getPreferenceManager()
-					.getDefaultSharedPreferences(this);
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
 
-			SystemBarTintManager tintManager = new SystemBarTintManager(this);
-			SystemBarTintManager.SystemBarConfig config = tintManager
-					.getConfig();
-
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					Utils.KEY_ICON_JB)) {
-
-				actionBar.setIcon(R.drawable.ic_launcher_settings_jb);
-
+			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
+				case "1":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
+					break;
+				case "2":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
+					break;
+				case "3":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
+					break;
 			}
+		}
 
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					Utils.KEY_ICON_KK)) {
+		Utils.applyColor(this, prefs.getString("colorSysInfo", "#ff0000"));
 
-				actionBar.setIcon(R.drawable.ic_launcher_settings_kk);
-
-			}
-
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					Utils.KEY_ICON_L)) {
-
-				actionBar.setIcon(R.drawable.ic_launcher_settings_l);
-
-			}
-
-			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
-
-				prefs.edit()
-						.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-								prefs.getString("colorSysInfo", null)).apply();
-			}
-
-			Utils.applyColor(SysInfoActivity.this,
-					prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
-
-			try {
-				setSummaries();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		try {
+			setSummaries();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -144,7 +122,6 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference user = findPreference(Utils.KEY_SYS_INFO_USER);
 		Preference codename = findPreference(Utils.KEY_SYS_INFO_CODENAME);
 		Preference incremental = findPreference(Utils.KEY_SYS_INFO_INCREMENTAL);
-
 		Preference api = findPreference(Utils.KEY_SYS_INFO_API);
 		Preference kernel = findPreference(Utils.KEY_SYS_INFO_KERNEL);
 		Preference root = findPreference(Utils.KEY_SYS_INFO_ROOT);
@@ -159,7 +136,7 @@ public class SysInfoActivity extends PreferenceActivity {
 		} else {
 			StringBuilder builder = new StringBuilder();
 			for (String s : Build.SUPPORTED_ABIS) {
-				builder.append(s + "  ");
+				builder.append(s).append("  ");
 			}
 			cpu.setSummary(builder);
 		}
@@ -203,24 +180,19 @@ public class SysInfoActivity extends PreferenceActivity {
 					config.getPixelInsetBottom());
 		}
 
-		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
+		fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
 		fab.attachToListView(getListView());
-		l = "";
 
 		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
 				|| Build.VERSION.RELEASE.equals("L"))
 			fab.setImageResource(R.drawable.ic_menu_copy_material);
 		else {
-			l = "\n\n\n\n";
-			fab.setImageResource(R.drawable.ic_menu_copy);
+			fab.setImageResource(R.mipmap.ic_menu_copy);
 		}
 
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				@SuppressWarnings("static-access")
-				SharedPreferences prefs;
-				getPreferenceManager();
 				prefs = PreferenceManager
 						.getDefaultSharedPreferences(getApplicationContext());
 
@@ -266,24 +238,51 @@ public class SysInfoActivity extends PreferenceActivity {
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 
-		SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
+		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
 
 		if (!copy_mod) {
 
-			SnackBar.Builder snb = new SnackBar.Builder(this);
-			snb.withMessage(getString(R.string.clipboard_message) + "\n"
-					+ preference.getTitle() + ": " + preference.getSummary()
-					+ l);
+			final SystemBarTintManager tintManager = new SystemBarTintManager(
+					this);
+			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
+				tintManager.setNavigationBarTintEnabled(true);
 
+			final SnackBar.Builder snb = new SnackBar.Builder(this);
+
+			snb.withMessage(getString(R.string.clipboard_message) + "\n"
+					+ preference.getTitle() + ": " + preference.getSummary());
+			snb.withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
+				@Override
+				public void onShow(int i) {
+					fab.hide(true);
+					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+						getWindow().setNavigationBarColor(
+								Color.parseColor("#323232"));
+					} else {
+						tintManager.setNavigationBarTintColor(Color
+								.parseColor("#323232"));
+					}
+				}
+
+				@Override
+				public void onHide(int i) {
+					fab.show();
+					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+						getWindow().setNavigationBarColor(
+								Color.parseColor("#4d000000"));
+					} else {
+						tintManager.setNavigationBarTintColor(Color
+								.parseColor("#00000000"));
+					}
+				}
+			});
 			snb.withActionMessageId(android.R.string.ok);
 			snb.withStyle(SnackBar.Style.INFO);
 			snb.withTextColorId(android.R.color.holo_green_dark);
-			snb.withDuration(SnackBar.MED_SNACK);
 			snb.show();
 
 			ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-			ClipData clip = ClipData.newPlainText("Clipoard",
+			ClipData clip = ClipData.newPlainText("Clipboard",
 					preference.getTitle() + ": " + preference.getSummary());
 			clipboard.setPrimaryClip(clip);
 		}

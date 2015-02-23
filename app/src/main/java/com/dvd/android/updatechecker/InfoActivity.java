@@ -1,24 +1,19 @@
 package com.dvd.android.updatechecker;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +21,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,6 +35,7 @@ import android.widget.Toast;
 public class InfoActivity extends PreferenceActivity {
 
 	PackageInfo pInfo;
+	private SharedPreferences prefs;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -46,39 +43,29 @@ public class InfoActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.info);
 
-		ActionBar actionBar = getActionBar();
+		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
 
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+
+			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
+				case "1":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
+					break;
+				case "2":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
+					break;
+				case "3":
+					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
+					break;
+			}
+		}
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
-
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.cancel(Utils.NOTIFICATION_ID);
-
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_JB)) {
-
-			actionBar.setIcon(R.drawable.ic_launcher_settings_jb);
-
-		}
-
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_KK)) {
-
-			actionBar.setIcon(R.drawable.ic_launcher_settings_kk);
-
-		}
-
-		if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-				Utils.KEY_ICON_L)) {
-
-			actionBar.setIcon(R.drawable.ic_launcher_settings_l);
-
-		}
 
 		Preference ver = findPreference("ver");
 		try {
@@ -86,21 +73,9 @@ public class InfoActivity extends PreferenceActivity {
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		ver.setSummary(prefs.getString("ver", pInfo.versionName + " - "
-				+ pInfo.versionCode));
 
-		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
-
-			prefs.edit()
-					.putString(Utils.KEY_LIST_PREFERENCE_COLOR,
-							prefs.getString("colorInfo", null)).apply();
-
-		}
-
-		String line = prefs.getString("new_ver_line", null);
-		if (!line.equals("NO")) {
-			updateAvailable(line);
-		}
+		ver.setSummary(getString(R.string.vers) + " " + pInfo.versionName
+				+ " - " + pInfo.versionCode);
 
 		if (Build.VERSION.SDK_INT == 19) {
 			findViewById(android.R.id.content).setPadding(0,
@@ -108,12 +83,12 @@ public class InfoActivity extends PreferenceActivity {
 					config.getPixelInsetBottom());
 		}
 
-		Utils.applyColor(InfoActivity.this,
-				prefs.getString(Utils.KEY_LIST_PREFERENCE_COLOR, null));
+		Utils.applyColor(this, prefs.getString("colorInfo", "#ff0000"));
 
 	}
 
 	@Override
+	@SuppressWarnings("deprecated")
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 		if (preference.getKey().equals(Utils.KEY_SYSTEMBARTINT)) {
@@ -121,340 +96,92 @@ public class InfoActivity extends PreferenceActivity {
 					Uri.parse("https://github.com/jgilfelt/SystemBarTint"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_ANDROID_OPENSOURCE)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("https://android.googlesource.com/"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_STACKOVERFLOW)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://stackoverflow.com"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_NINEOLDANDROIDS)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("https://github.com/JakeWharton/NineOldAndroids"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_SNACK_BAR)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("https://github.com/MrEngineer13/SnackBar"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_FAB)) {
 			Intent browserIntent = new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse("https://github.com/futuresimple/android-floating-action-button"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_EGGSTER)) {
 			Intent browserIntent = new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse("http://repo.xposed.info/module/areeb.xposed.eggster"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_GITHUB)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("https://github.com/dvdandroid/UpdateChecker"));
 			startActivity(browserIntent);
 		}
-
 		if (preference.getKey().equals(Utils.KEY_CHECKING)) {
+			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle(getString(R.string.myappsupdater));
+			alert.setNegativeButton(getString(android.R.string.cancel),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+			alert.setCancelable(false);
 
-			@SuppressWarnings({ "static-access", "deprecation" })
-			final SharedPreferences prefs = getPreferenceManager()
-					.getDefaultSharedPreferences(this);
-
-			String url = "https://sites.google.com/site/dvdandroid99/ver.txt?attredirects=0&d=1";
-			String path = "ver.txt";
-
-			doVerDownload(url, path, prefs);
+			if (Utils.isPackageInstalled(getApplicationContext(),
+					"com.dvd.android.myappsupdater")) {
+				alert.setMessage(String.format(
+						getString(R.string.descr_myappsupdater),
+						getString(R.string.open)));
+				alert.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								startActivity(new Intent(Intent.ACTION_MAIN)
+										.setClassName(
+												"com.dvd.android.myappsupdater",
+												"com.dvd.android.myappsupdater.MainActivity"));
+							}
+						});
+			} else {
+				alert.setMessage(String.format(
+						getString(R.string.descr_myappsupdater),
+						getString(R.string.install)));
+				alert.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								new DownloadApp()
+										.execute("https://github.com/DVDAndroid/dvdandroid.github.io/raw/master/apks/MyAppsUpdater.apk");
+							}
+						});
+			}
+			alert.show();
 		}
 		return false;
 	}
 
-	public void doVerDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) throws IllegalArgumentException {
-		Thread dx = new Thread() {
-			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
-					getString(R.string.checking), true);
-
-			@SuppressWarnings("unused")
-			@Override
-			public void run() {
-
-				try {
-					URL url = new URL(urlLink);
-					URLConnection connection = url.openConnection();
-					connection.connect();
-					// int fileLength = connection.getContentLength();
-					InputStream input = new BufferedInputStream(
-							url.openStream());
-					OutputStream output = new FileOutputStream(getFilesDir()
-							+ "/" + fileName);
-
-					byte data[] = new byte[1024];
-					long total = 0;
-					int count;
-					while ((count = input.read(data)) != -1) {
-						total += count;
-
-						output.write(data, 0, count);
-					}
-
-					output.flush();
-					output.close();
-					input.close();
-					dialog.dismiss();
-
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface arg0) {
-
-							try {
-								pInfo = getPackageManager().getPackageInfo(
-										getPackageName(), 0);
-							} catch (NameNotFoundException e1) {
-								e1.printStackTrace();
-							}
-
-							BufferedReader br = null;
-							try {
-								br = new BufferedReader(
-										new FileReader(new File(getFilesDir()
-												+ "/" + fileName)));
-							} catch (FileNotFoundException e) {
-								e.printStackTrace();
-							}
-
-							String versione = null;
-							try {
-								versione = br.readLine();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-
-							if (!versione.equals(pInfo.versionName)) {
-								updateAvailable(versione);
-							} else {
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-										InfoActivity.this);
-
-								alertDialogBuilder.setTitle("");
-								alertDialogBuilder
-										.setMessage(getApplicationContext()
-												.getString(R.string.no_upds));
-								alertDialogBuilder.setPositiveButton(
-										android.R.string.ok, null);
-
-								AlertDialog alertDialog = alertDialogBuilder
-										.create();
-								alertDialog.setCancelable(false);
-								alertDialog.show();
-							}
-
-						}
-					});
-
-				} catch (FileNotFoundException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									"an error is occurred", Toast.LENGTH_SHORT)
-									.show();
-						}
-
-					});
-				} catch (IllegalArgumentException e) {
-					dialog.dismiss();
-
-				} catch (IOException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.no_int),
-									Toast.LENGTH_SHORT).show();
-						}
-
-					});
-				}
-
-			}
-		};
-		dx.start();
-	}
-
-	public void updateAvailable(final String line) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				InfoActivity.this);
-
-		alertDialogBuilder.setTitle("");
-
-		String text = String.format(getResources().getString(R.string.upd_yes),
-				String.valueOf(pInfo.versionName), line);
-
-		alertDialogBuilder.setMessage(text);
-
-		@SuppressWarnings({ "static-access", "deprecation" })
-		final SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
-
-		alertDialogBuilder.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-
-						if (prefs.getString("st", null).equals("null")) {
-
-							String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
-							String path = "UpdateChecker_new_apk.apk";
-
-							doApkDownload(url, path, prefs);
-
-						} else {
-							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-									InfoActivity.this);
-
-							alertDialogBuilder.setTitle("");
-
-							String text = String.format(getResources()
-									.getString(R.string.alpha_beta), prefs
-									.getString("st", null));
-
-							alertDialogBuilder.setMessage(text);
-
-							alertDialogBuilder.setPositiveButton(
-									android.R.string.yes,
-									new DialogInterface.OnClickListener() {
-
-										@Override
-										public void onClick(
-												DialogInterface dialog, int id) {
-											String url = "https://sites.google.com/site/dvdandroid99/UpdateChecker.apk?attredirects=0&d=1";
-											String path = "UpdateChecker_new_apk.apk";
-
-											doApkDownload(url, path, prefs);
-										}
-									});
-
-							alertDialogBuilder.setNegativeButton(
-									android.R.string.no, null);
-							AlertDialog alertDialog = alertDialogBuilder
-									.create();
-							alertDialog.setCancelable(false);
-							alertDialog.show();
-						}
-					}
-				});
-
-		alertDialogBuilder.setNegativeButton(android.R.string.no, null);
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.setCancelable(false);
-		alertDialog.show();
-	}
-
-	public void doApkDownload(final String urlLink, final String fileName,
-			final SharedPreferences prefs) throws IllegalArgumentException {
-		Thread dx = new Thread() {
-			ProgressDialog dialog = ProgressDialog.show(InfoActivity.this, "",
-					"Download APK...", true);
-
-			@SuppressWarnings("unused")
-			@Override
-			public void run() {
-
-				try {
-					URL url = new URL(urlLink);
-					URLConnection connection = url.openConnection();
-					connection.connect();
-					// int fileLength = connection.getContentLength();
-					InputStream input = new BufferedInputStream(
-							url.openStream());
-					OutputStream output = new FileOutputStream(
-							Environment.getExternalStorageDirectory()
-									+ "/download/" + fileName);
-
-					byte data[] = new byte[2048];
-					long total = 0;
-					int count;
-					while ((count = input.read(data)) != -1) {
-						total += count;
-
-						output.write(data, 0, count);
-					}
-
-					output.flush();
-					output.close();
-					input.close();
-					dialog.dismiss();
-
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface arg0) {
-
-							Intent intent = new Intent(Intent.ACTION_VIEW);
-							intent.setDataAndType(Uri.fromFile(new File(
-									Environment.getExternalStorageDirectory()
-											+ "/download/" + fileName)),
-									"application/vnd.android.package-archive");
-							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
-
-						}
-					});
-
-				} catch (FileNotFoundException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									"an error is occurred", Toast.LENGTH_SHORT)
-									.show();
-						}
-
-					});
-				} catch (IllegalArgumentException e) {
-					dialog.dismiss();
-
-				} catch (IOException e) {
-					dialog.dismiss();
-					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-						@Override
-						public void onDismiss(DialogInterface dialog) {
-							Toast.makeText(getApplicationContext(),
-									getString(R.string.no_int),
-									Toast.LENGTH_SHORT).show();
-						}
-
-					});
-				}
-			}
-		};
-		dx.start();
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.info, menu);
 		return true;
 	}
@@ -465,142 +192,204 @@ public class InfoActivity extends PreferenceActivity {
 
 		int id = item.getItemId();
 
-		SharedPreferences prefs = getPreferenceManager()
-				.getDefaultSharedPreferences(this);
+		Intent shortcutIntent = new Intent(getApplicationContext(),
+				MainActivity.class);
+		Intent shortcutIntent1 = new Intent(getApplicationContext(),
+				UpdateActivity.class);
+		shortcutIntent.setAction(Intent.ACTION_MAIN);
+		shortcutIntent1.setAction(Intent.ACTION_MAIN);
 
-		if (id == R.id.sett) {
-			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setComponent(new ComponentName(
-					"com.dvd.android.updatechecker",
-					"com.dvd.android.updatechecker.SettingsActivity"));
-			startActivity(intent);
-		}
+		Intent addIntent = new Intent();
+		Intent addIntent1 = new Intent();
 
-		if (id == R.id.action_add) {
+		switch (id) {
+			case R.id.sett:
+				startActivity(new Intent(Intent.ACTION_MAIN).setClass(this,
+						SettingsActivity.class));
+				break;
+			case R.id.action_add:
+				addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+						R.string.app_name);
+				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+						R.string.verifica);
+				switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null)) {
+					case "1":
+						addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+								Intent.ShortcutIconResource.fromContext(
+										getApplicationContext(),
+										R.mipmap.ic_launcher_settings_jb));
+						break;
+					case "2":
+						addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+								Intent.ShortcutIconResource.fromContext(
+										getApplicationContext(),
+										R.mipmap.ic_launcher_settings_kk));
+						break;
+					case "3":
+						addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+								Intent.ShortcutIconResource.fromContext(
+										getApplicationContext(),
+										R.mipmap.ic_launcher_settings_l));
+						break;
+				}
 
-			Intent shortcutIntent = new Intent(getApplicationContext(),
-					MainActivity.class);
-			Intent shortcutIntent1 = new Intent(getApplicationContext(),
-					UpdateActivity.class);
-			shortcutIntent.setAction(Intent.ACTION_MAIN);
-			shortcutIntent1.setAction(Intent.ACTION_MAIN);
-
-			Intent addIntent = new Intent();
-			Intent addIntent1 = new Intent();
-
-			addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.app_name);
-			addIntent1.putExtra(Intent.EXTRA_SHORTCUT_NAME, R.string.verifica);
-
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"1")) {
-
-				addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 						Intent.ShortcutIconResource.fromContext(
 								getApplicationContext(),
-								R.drawable.ic_launcher_settings_jb));
+								R.mipmap.ic_launcher_gsm));
 
-			}
+				addIntent
+						.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
+						shortcutIntent1);
 
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"2")) {
+				addIntent
+						.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+				addIntent1
+						.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
 
-				addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-						Intent.ShortcutIconResource.fromContext(
-								getApplicationContext(),
-								R.drawable.ic_launcher_settings_kk));
+				getApplicationContext().sendBroadcast(addIntent);
 
-			}
-
-			if (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null).equals(
-					"3")) {
-
-				addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-						Intent.ShortcutIconResource.fromContext(
-								getApplicationContext(),
-								R.drawable.ic_launcher_settings_l));
-
-			}
-
-			addIntent1.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-					Intent.ShortcutIconResource
-							.fromContext(getApplicationContext(),
-									R.drawable.ic_launcher_gsm));
-
-			addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-			addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent1);
-
-			addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-			addIntent1
-					.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-
-			getApplicationContext().sendBroadcast(addIntent);
-
-			String text = String.format(
-					getResources().getString(R.string.add_short_text),
-					getString(R.string.app_name));
-
-			Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
-					.show();
-
-			if (prefs.getBoolean(Utils.KEY_CHECK_BOX_NO_ADD, false)) {
-				getApplicationContext().sendBroadcast(addIntent1);
-
-				String text1 = String.format(
+				String text = String.format(
 						getResources().getString(R.string.add_short_text),
-						getString(R.string.title_activity_update));
+						getString(R.string.app_name));
 
-				Toast.makeText(getApplicationContext(), text1,
-						Toast.LENGTH_LONG).show();
-			}
+				Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
+						.show();
 
-			return true;
-		}
+				if (prefs.getBoolean(Utils.KEY_CHECK_BOX_NO_ADD, false)) {
+					getApplicationContext().sendBroadcast(addIntent1);
 
-		if (id == R.id.action_remove) {
+					String text1 = String.format(
+							getResources().getString(R.string.add_short_text),
+							getString(R.string.title_activity_update));
 
-			Intent shortcutIntent = new Intent(getApplicationContext(),
-					MainActivity.class);
-			Intent shortcutIntent1 = new Intent(getApplicationContext(),
-					UpdateActivity.class);
+					Toast.makeText(getApplicationContext(), text1,
+							Toast.LENGTH_LONG).show();
+				}
+				break;
+			case R.id.action_remove:
 
-			shortcutIntent.setAction(Intent.ACTION_MAIN);
-			shortcutIntent1.setAction(Intent.ACTION_MAIN);
+				addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+						getApplicationContext().getString(R.string.app_name));
+				addIntent1.putExtra(
+						Intent.EXTRA_SHORTCUT_NAME,
+						getApplicationContext().getString(
+								R.string.title_activity_update));
 
-			Intent addIntent = new Intent();
-			Intent addIntent1 = new Intent();
+				addIntent
+						.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
+						shortcutIntent1);
 
-			addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-					getApplicationContext().getString(R.string.app_name));
-			addIntent1.putExtra(
-					Intent.EXTRA_SHORTCUT_NAME,
-					getApplicationContext().getString(
-							R.string.title_activity_update));
-
-			addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-			addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent1);
-
-			addIntent
-					.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
-			addIntent1
-					.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
-			getApplicationContext().sendBroadcast(addIntent);
-			getApplicationContext().sendBroadcast(addIntent1);
-
-		}
-
-		if (id == R.id.sys_info) {
-			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setComponent(new ComponentName(
-					"com.dvd.android.updatechecker",
-					"com.dvd.android.updatechecker.SysInfoActivity"));
-			startActivity(intent);
-		}
-
-		if (id == android.R.id.home) {
-			finish();
+				addIntent
+						.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
+				addIntent1
+						.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
+				getApplicationContext().sendBroadcast(addIntent);
+				getApplicationContext().sendBroadcast(addIntent1);
+				break;
+			case R.id.sys_info:
+				startActivity(new Intent(Intent.ACTION_MAIN).setClass(this,
+						SysInfoActivity.class));
+				break;
+			case android.R.id.home:
+				finish();
+				break;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public class DownloadApp extends AsyncTask<String, Void, Boolean> {
+		private Context context;
+		private ProgressDialog progressDialog;
+
+		public void setContext(Activity a) {
+			this.context = a.getApplicationContext();
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			progressDialog = ProgressDialog.show(InfoActivity.this, "",
+					"Download APK...", true);
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			try {
+				URL url = new URL(arg0[0]);
+				HttpURLConnection c = (HttpURLConnection) url.openConnection();
+				c.setRequestMethod("GET");
+				c.setDoOutput(true);
+				c.connect();
+
+				File file = new File(Environment.getExternalStorageDirectory()
+						.getAbsolutePath() + "/download/");
+				File outputFile = new File(file, context.getResources()
+						.getString(R.string.app_name) + ".apk");
+
+				FileOutputStream fos = new FileOutputStream(outputFile);
+				InputStream is = c.getInputStream();
+
+				byte[] buffer = new byte[1024];
+				int l;
+				while ((l = is.read(buffer)) != -1) {
+					fos.write(buffer, 0, l);
+				}
+				fos.flush();
+				fos.getFD().sync();
+				fos.close();
+				is.close();
+
+				return true;
+			} catch (FileNotFoundException e) {
+				progressDialog
+						.setOnDismissListener(new DialogInterface.OnDismissListener() {
+							@Override
+							public void onDismiss(DialogInterface dialog) {
+								Toast.makeText(getApplicationContext(),
+										"an error is occurred",
+										Toast.LENGTH_SHORT).show();
+							}
+						});
+				return false;
+			} catch (IllegalArgumentException e) {
+				return false;
+			} catch (IOException e) {
+				progressDialog
+						.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+							@Override
+							public void onDismiss(DialogInterface dialog) {
+								Toast.makeText(getApplicationContext(),
+										getString(R.string.no_int),
+										Toast.LENGTH_SHORT).show();
+							}
+
+						});
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			progressDialog.dismiss();
+
+			if (result) {
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.fromFile(new File(Environment
+						.getExternalStorageDirectory().getAbsolutePath()
+						+ "/download/"
+						+ context.getResources().getString(R.string.app_name)
+						+ ".apk")), "application/vnd.android.package-archive");
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(intent);
+			}
+		}
 	}
 
 }
