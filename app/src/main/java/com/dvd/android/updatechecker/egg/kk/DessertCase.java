@@ -23,6 +23,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
 
+@SuppressWarnings("all")
 public class DessertCase extends Activity {
 	DessertCaseView mView;
 

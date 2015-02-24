@@ -52,6 +52,7 @@ import android.widget.ImageView;
 import com.dvd.android.updatechecker.R;
 
 @SuppressLint("DrawAllocation")
+@SuppressWarnings("all")
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class DessertCaseView extends FrameLayout {
 	public static final float SCALE = 0.25f; // natural display size will be
@@ -219,6 +220,10 @@ public class DessertCaseView extends FrameLayout {
 		return a[(int) (Math.random() * a.length)];
 	}
 
+	<T> T pick(SparseArray<T> sa) {
+		return sa.valueAt((int) (Math.random() * sa.size()));
+	}
+
 	private final Runnable mJuggle = new Runnable() {
 		@Override
 		public void run() {
@@ -237,10 +242,6 @@ public class DessertCaseView extends FrameLayout {
 			}
 		}
 	};
-
-	<T> T pick(SparseArray<T> sa) {
-		return sa.valueAt((int) (Math.random() * sa.size()));
-	}
 
 	int random_color() {
 		// return 0xFF000000 | (int) (Math.random() * (float) 0xFFFFFF); //

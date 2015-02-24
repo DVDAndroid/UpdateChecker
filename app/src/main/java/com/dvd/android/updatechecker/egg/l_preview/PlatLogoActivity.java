@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.dvd.android.updatechecker.R;
 
+@SuppressWarnings("all")
 public class PlatLogoActivity extends Activity {
 
 	@SuppressWarnings("unused")

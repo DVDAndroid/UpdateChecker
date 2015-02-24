@@ -48,7 +48,8 @@ import android.widget.TextView;
 
 import com.dvd.android.updatechecker.R;
 
-@SuppressLint({ "RtlHardcoded", "DrawAllocation", "ClickableViewAccessibility" })
+@SuppressWarnings("all")
+@SuppressLint("all")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class LLand extends FrameLayout {
 	public static final String TAG = "LLand";
