@@ -224,25 +224,6 @@ public class DessertCaseView extends FrameLayout {
 		return sa.valueAt((int) (Math.random() * sa.size()));
 	}
 
-	private final Runnable mJuggle = new Runnable() {
-		@Override
-		public void run() {
-			final int N = getChildCount();
-
-			final int K = 1; // irand(1,3);
-			for (int i = 0; i < K; i++) {
-				final View child = getChildAt((int) (Math.random() * N));
-				place(child, true);
-			}
-
-			fillFreeList();
-
-			if (mStarted) {
-				mHandler.postDelayed(mJuggle, DELAY);
-			}
-		}
-	};
-
 	int random_color() {
 		// return 0xFF000000 | (int) (Math.random() * (float) 0xFFFFFF); //
 		// totally random
@@ -374,6 +355,25 @@ public class DessertCaseView extends FrameLayout {
 	public void place(View v, boolean animate) {
 		place(v, new Point(irand(0, mColumns), irand(0, mRows)), animate);
 	}
+
+	private final Runnable mJuggle = new Runnable() {
+		@Override
+		public void run() {
+			final int N = getChildCount();
+
+			final int K = 1; // irand(1,3);
+			for (int i = 0; i < K; i++) {
+				final View child = getChildAt((int) (Math.random() * N));
+				place(child, true);
+			}
+
+			fillFreeList();
+
+			if (mStarted) {
+				mHandler.postDelayed(mJuggle, DELAY);
+			}
+		}
+	};
 
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@SuppressLint("InlinedApi")

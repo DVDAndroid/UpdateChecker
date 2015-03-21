@@ -46,8 +46,8 @@ import android.widget.ImageView;
 
 import com.dvd.android.updatechecker.R;
 
-@SuppressLint("DrawAllocation")
 @SuppressWarnings("all")
+@SuppressLint("all")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class PlatLogoActivity extends Activity {
 	final static int[] FLAVORS = { 0xFF9C27B0, 0xFFBA68C8, // grape

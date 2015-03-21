@@ -13,16 +13,21 @@ public class UpdateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			String ver = "KitKat ";
-			openActivity(ver);
-		} else {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-				String ver = "Lollipop ";
-				openActivity(ver);
-			}
+		String ver;
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				ver = "KitKat";
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				ver = "Lollipop ";
+				break;
+			default:
+				ver = "";
+				break;
 		}
 
+		openActivity(ver);
 	}
 
 	private void openActivity(String ver) {
@@ -42,6 +47,7 @@ public class UpdateActivity extends Activity {
 		} catch (ActivityNotFoundException ex) {
 			Toast.makeText(getApplicationContext(),
 					"error! please update gsm!", Utils.duration).show();
+			finish();
 		}
 	}
 
@@ -51,6 +57,5 @@ public class UpdateActivity extends Activity {
 		if (level == TRIM_MEMORY_UI_HIDDEN) {
 			this.finish();
 		}
-
 	}
 }

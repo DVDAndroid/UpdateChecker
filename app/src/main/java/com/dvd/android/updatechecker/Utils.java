@@ -1,9 +1,14 @@
 package com.dvd.android.updatechecker;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -22,6 +27,7 @@ import android.widget.Toast;
 
 public class Utils {
 
+	private static final String FILENAME_PROC_VERSION = "/proc/version";
 	public static int NOTIFICATION_ID = 21;
 	public static String KEY_LIST_PREFERENCE_COLOR = "listPrefcolor";
 	public static String KEY_LIST_PREFERENCE_ICONS = "select_icons";
@@ -29,7 +35,6 @@ public class Utils {
 	public static String KEY_CHECK_BOX_HIDE_ICON = "hide_icon";
 	public static String KEY_CHECK_BOX_RAND_COLOR = "random_colors";
 	public static String KEY_CHECK_BOX_RAND_COLOR_ACT = "random_colors_act";
-
 	public static String KEY_SYSTEMBARTINT = "systembartint";
 	public static String KEY_ANDROID_OPENSOURCE = "android_opensource";
 	public static String KEY_STACKOVERFLOW = "stackoverflow";
@@ -39,17 +44,13 @@ public class Utils {
 	public static String KEY_EGGSTER = "eggster";
 	public static String KEY_CHECKING = "checking";
 	public static String KEY_GITHUB = "this_on_github";
-
 	public static String KEY_KK_LETTER = "kk_letter";
 	public static String KEY_KK_TEXT = "kk_text";
 	public static String KEY_KK_INTERPOLATOR = "kk_interpolator";
 	public static String KEY_KK_CLICKS = "kk_clicks";
 	public static String KEY_KK_SYSUI = "kk_sysui";
-
 	public static String KEY_L_SYSUI = "l_sysui";
-
 	public static String KEY_CHOOSE_PLAT = "platlogo";
-
 	public static String KEY_SYS_INFO_BOARD = "board";
 	public static String KEY_SYS_INFO_BOOTLOADER = "bootloader";
 	public static String KEY_SYS_INFO_CPU = "cpu";
@@ -76,10 +77,8 @@ public class Utils {
 	public static String KEY_SYS_INFO_ROOT = "root";
 	public static String KEY_SYS_INFO_XPOSED = "xposed";
 	public static String KEY_SYS_INFO_BUSYBOX = "busybox";
-
 	public static String TSB_1 = "com.mohammadag.colouredstatusbar";
 	public static String TSB_2 = "com.woalk.apps.xposed.ttsb";
-
 	public static int duration = Toast.LENGTH_SHORT;
 
 	public static boolean hasRoot() {
@@ -89,14 +88,66 @@ public class Utils {
 				|| new File("/system/priv-app/Superuser.apk").exists();
 	}
 
-	@SuppressLint("SdCardPath")
-	public static boolean hasXposed() {
-		return new File("/data/data/de.robv.android.xposed.installer").exists();
-	}
-
 	public static boolean hasBusybox() {
 		return new File("/system/xbin/busybox").exists()
 				|| new File("/system/bin/busybox").exists();
+	}
+
+	/**
+	 * Reads a line from the specified file.
+	 *
+	 * @param filename
+	 *            the file to read from
+	 *
+	 * @return the first line, if any.
+	 *
+	 * @throws IOException
+	 *             if the file couldn't be read
+	 */
+	private static String readLine(String filename) throws IOException {
+		try (BufferedReader reader = new BufferedReader(
+				new FileReader(filename), 256)) {
+			return reader.readLine();
+		}
+	}
+
+	public static String getFormattedKernelVersion() {
+		try {
+			return formatKernelVersion(readLine(FILENAME_PROC_VERSION));
+		} catch (IOException e) {
+			return "Unavailable";
+		}
+	}
+
+	public static String formatKernelVersion(String rawKernelVersion) {
+		// Example (see tests for more):
+		// Linux version 3.0.31-g6fb96c9 (android-build@xxx.xxx.xxx.xxx.com) \
+		// (gcc version 4.6.x-xxx 20120106 (prerelease) (GCC) ) #1 SMP PREEMPT \
+		// Thu Jun 28 11:02:39 PDT 2012
+
+		final String PROC_VERSION_REGEX = "Linux version (\\S+) " + /*
+																	 * group 1:
+																	 * "3.0.31-g6fb96c9"
+																	 */
+		"\\((\\S+?)\\) " + /* group 2: "x@y.com" (kernel builder) */
+		"(?:\\(gcc.+? \\)) " + /* ignore: GCC version information */
+		"(#\\d+) " + /* group 3: "#1" */
+		"(?:.*?)?" + /* ignore: optional SMP, PREEMPT, and any CONFIG_FLAGS */
+		"((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; /*
+											 * group 4:
+											 * "Thu Jun 28 11:02:39 PDT 2012"
+											 */
+
+		Matcher m = Pattern.compile(PROC_VERSION_REGEX).matcher(
+				rawKernelVersion);
+		if (!m.matches()) {
+			return "Unavailable";
+		} else if (m.groupCount() < 4) {
+			return "Unavailable";
+		}
+		return m.group(1) + "\n" + // 3.0.31-g6fb96c9
+				m.group(2) + " " + m.group(3) + "\n" + // x@y.com #1
+				m.group(4); // Thu Jun 28 11:02:39 PDT 2012
 	}
 
 	public static boolean isPackageInstalled(Context context, String packagename) {
@@ -121,6 +172,7 @@ public class Utils {
 		return random;
 	}
 
+	@SuppressLint("NewApi")
 	public static void applyColor(Activity activity, String id) {
 
 		String[] colors_values = activity.getApplicationContext()
@@ -135,48 +187,52 @@ public class Utils {
 					new ColorDrawable(Color.parseColor(color)));
 		}
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-			String icon = null;
-			SharedPreferences preferences = activity.getApplicationContext()
-					.getSharedPreferences(
-							activity.getPackageName() + "_preferences", 0);
-			switch (preferences.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
-				case "1":
-					icon = "jb";
-					break;
-				case "2":
-					icon = "kk";
-					break;
-				case "3":
-					icon = "l";
-					break;
-			}
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				SystemBarTintManager tintManager = new SystemBarTintManager(
+						activity);
+				tintManager.setStatusBarTintEnabled(true);
+				tintManager.setStatusBarTintColor(Color.parseColor(color));
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				String icon = null;
+				SharedPreferences preferences = activity
+						.getApplicationContext().getSharedPreferences(
+								activity.getPackageName() + "_preferences", 0);
+				switch (preferences.getString(Utils.KEY_LIST_PREFERENCE_ICONS,
+						"3")) {
+					case "1":
+						icon = "jb";
+						break;
+					case "2":
+						icon = "kk";
+						break;
+					case "3":
+						icon = "l";
+						break;
+				}
 
-			Bitmap bm = BitmapFactory.decodeResource(
-					activity.getResources(),
-					activity.getResources().getIdentifier(
-							"ic_launcher_settings_" + icon, "mipmap",
-							activity.getPackageName()));
-			ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(
-					activity.getString(R.string.app_name), bm, (darkenColor(
-							Color.parseColor(color), 0.85f)));
-			activity.setTaskDescription(tDesc);
+				Bitmap bm = BitmapFactory.decodeResource(
+						activity.getResources(),
+						activity.getResources().getIdentifier(
+								"ic_launcher_settings_" + icon, "mipmap",
+								activity.getPackageName()));
+				ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(
+						activity.getString(R.string.app_name), bm,
+						(darkenColor(Color.parseColor(color), 0.85f)));
+				activity.setTaskDescription(tDesc);
 
-			activity.getWindow().setStatusBarColor(
-					darkenColor(Color.parseColor(color), 0.85f));
-			activity.getWindow().setNavigationBarColor(
-					Color.parseColor("#4d000000"));
-		} else {
-			SystemBarTintManager tintManager = new SystemBarTintManager(
-					activity);
-			tintManager.setStatusBarTintEnabled(true);
-			tintManager.setStatusBarTintColor(Color.parseColor(color));
+				activity.getWindow().setStatusBarColor(
+						darkenColor(Color.parseColor(color), 0.85f));
+				activity.getWindow().setNavigationBarColor(
+						Color.parseColor("#4d000000"));
+				break;
 		}
 	}
 
 	/**
-	 * @author PeterCxy @
-	 *         https://github.com/PeterCxy/Lolistat/blob/aide/app/src/
+	 * @author PeterCxy https://github.com/PeterCxy/Lolistat/blob/aide/app/src/
 	 *         main/java/info/papdt/lolistat/support/Utility.java
 	 */
 	public static int darkenColor(int color, float factor) {

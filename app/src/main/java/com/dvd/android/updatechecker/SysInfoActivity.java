@@ -47,6 +47,10 @@ public class SysInfoActivity extends PreferenceActivity {
 	private SharedPreferences prefs;
 	private FloatingActionButton fab;
 
+	private Class KITKAT_PLATLOGO = com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class;
+	private Class L_PLATLOGO = com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class;
+	private Class LOLLIPOP_PLATLOGO = com.dvd.android.updatechecker.egg.ll.PlatLogoActivity.class;
+
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,15 +67,21 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference release = findPreference(Utils.KEY_SYS_INFO_RELEASE);
 		release.setEnabled(prefs.getBoolean("setts_opened", false));
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			String ver = "KitKat ";
-			release.setSummary(ver + Build.VERSION.RELEASE);
-		} else {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-				String ver = "Lollipop ";
-				release.setSummary(ver + Build.VERSION.RELEASE);
-			}
+		String ver;
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				ver = "KitKat ";
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				ver = "Lollipop ";
+				break;
+			default:
+				ver = "";
+				break;
 		}
+
+		release.setSummary(ver + Build.VERSION.RELEASE);
 
 		if (getActionBar() != null) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -128,7 +138,7 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference xposed = findPreference(Utils.KEY_SYS_INFO_XPOSED);
 		Preference busybox = findPreference(Utils.KEY_SYS_INFO_BUSYBOX);
 
-		kernel.setSummary((System.getProperty("os.version")));
+		kernel.setSummary(Utils.getFormattedKernelVersion());
 		board.setSummary(Build.BOARD);
 		bootloader.setSummary(Build.BOOTLOADER);
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -164,9 +174,12 @@ public class SysInfoActivity extends PreferenceActivity {
 				+ "  "
 				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
 						.exec("su -v").getInputStream())).readLine());
-
-		xposed.setSummary(Boolean.valueOf(Utils.hasXposed()).toString());
-		busybox.setSummary(Boolean.valueOf(Utils.hasBusybox()).toString()
+		xposed.setSummary(Boolean.toString(Utils.isPackageInstalled(this,
+				"de.robv.android.xposed.installer"))
+				+ (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+						|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 ? " (?)"
+						: ""));
+		busybox.setSummary(Boolean.toString(Utils.hasBusybox())
 				+ "  "
 				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
 						.exec("busybox").getInputStream())).readLine());
@@ -233,20 +246,18 @@ public class SysInfoActivity extends PreferenceActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
+	@SuppressLint("NewApi")
+	@SuppressWarnings({ "static-access", "deprecation" })
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 
 		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
+		final SystemBarTintManager tintManager = new SystemBarTintManager(this);
 
 		if (!copy_mod) {
-
-			final SystemBarTintManager tintManager = new SystemBarTintManager(
-					this);
 			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
 				tintManager.setNavigationBarTintEnabled(true);
-
 			final SnackBar.Builder snb = new SnackBar.Builder(this);
 
 			snb.withMessage(getString(R.string.clipboard_message) + "\n"
@@ -255,24 +266,32 @@ public class SysInfoActivity extends PreferenceActivity {
 				@Override
 				public void onShow(int i) {
 					fab.hide(true);
-					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-						getWindow().setNavigationBarColor(
-								Color.parseColor("#323232"));
-					} else {
-						tintManager.setNavigationBarTintColor(Color
-								.parseColor("#323232"));
+					switch (Build.VERSION.SDK_INT) {
+						case Build.VERSION_CODES.KITKAT:
+							tintManager.setNavigationBarTintColor(Color
+									.parseColor("#323232"));
+							break;
+						case Build.VERSION_CODES.LOLLIPOP:
+						case Build.VERSION_CODES.LOLLIPOP_MR1:
+							getWindow().setNavigationBarColor(
+									Color.parseColor("#323232"));
+							break;
 					}
 				}
 
 				@Override
 				public void onHide(int i) {
 					fab.show();
-					if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-						getWindow().setNavigationBarColor(
-								Color.parseColor("#4d000000"));
-					} else {
-						tintManager.setNavigationBarTintColor(Color
-								.parseColor("#00000000"));
+					switch (Build.VERSION.SDK_INT) {
+						case Build.VERSION_CODES.KITKAT:
+							tintManager.setNavigationBarTintColor(Color
+									.parseColor("#00000000"));
+							break;
+						case Build.VERSION_CODES.LOLLIPOP:
+						case Build.VERSION_CODES.LOLLIPOP_MR1:
+							getWindow().setNavigationBarColor(
+									Color.parseColor("#4d000000"));
+							break;
 					}
 				}
 			});
@@ -292,35 +311,28 @@ public class SysInfoActivity extends PreferenceActivity {
 			mHits[mHits.length - 1] = SystemClock.uptimeMillis();
 			if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
 
-				if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-					startActivity(new Intent(
-							this,
-							com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class));
-				} else {
-					if (Build.VERSION.RELEASE.equals("L")) {
-
-						startActivity(new Intent(
-								this,
-								com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
-					} else {
-						if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-
-							if (prefs.getString(Utils.KEY_CHOOSE_PLAT, null)
-									.equals("2")) {
-								startActivity(new Intent(
-										this,
-										com.dvd.android.updatechecker.egg.ll.PlatLogoActivity.class));
-							} else {
-								startActivity(new Intent(
-										this,
-										com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class));
-							}
+				switch (Build.VERSION.SDK_INT) {
+					case Build.VERSION_CODES.KITKAT:
+						startActivity(new Intent(this, KITKAT_PLATLOGO));
+						break;
+					case Build.VERSION_CODES.LOLLIPOP:
+					case Build.VERSION_CODES.LOLLIPOP_MR1:
+						if (prefs.getString(Utils.KEY_CHOOSE_PLAT, null)
+								.equals("2")) {
+							startActivity(new Intent(this, LOLLIPOP_PLATLOGO));
+						} else {
+							startActivity(new Intent(this, L_PLATLOGO));
 						}
-					}
+						break;
+					default:
+						if (Build.VERSION.RELEASE.equals("L")) {
+
+							startActivity(new Intent(this, L_PLATLOGO));
+						}
+						break;
 				}
 			}
 		}
-
 		return false;
 	}
 }

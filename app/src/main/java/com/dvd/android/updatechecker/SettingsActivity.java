@@ -34,7 +34,6 @@ public class SettingsActivity extends PreferenceActivity implements
 	public static ListPreference mKkSysUi;
 	public static ListPreference mLSysUi;
 	public static ListPreference mLLollipopChooser;
-	private SharedPreferences prefs;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -85,7 +84,8 @@ public class SettingsActivity extends PreferenceActivity implements
 			addPreferencesFromResource(R.xml.pref_kk);
 
 		} else {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+			if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+					|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
 				PreferenceCategory fakeHeader = new PreferenceCategory(this);
 				getPreferenceScreen().addPreference(fakeHeader);
 				addPreferencesFromResource(R.xml.pref_l);
@@ -94,14 +94,19 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		Utils.applyColor(this, prefs.getString("colorSettings", "#ff0000"));
 
-		if (Build.VERSION.SDK_INT == 19) {
-			findViewById(android.R.id.content).setPadding(0,
-					config.getPixelInsetTop(true), config.getPixelInsetRight(),
-					config.getPixelInsetBottom());
-		} else {
-			findPreference(Utils.KEY_L_SYSUI).setEnabled(
-					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
-
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				findViewById(android.R.id.content).setPadding(0,
+						config.getPixelInsetTop(true),
+						config.getPixelInsetRight(),
+						config.getPixelInsetBottom());
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				findPreference(Utils.KEY_L_SYSUI).setEnabled(
+						!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals(
+								"2"));
+				break;
 		}
 	}
 
@@ -111,16 +116,23 @@ public class SettingsActivity extends PreferenceActivity implements
 
 		initPrefs();
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			mKkLetter.setSummary(mKkLetter.getText());
-			mKkText.setSummary(mKkText.getText());
-			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
-			mKkClicks.setSummary(mKkClicks.getText());
-			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
-		} else {
-			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
-					.toString());
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				mKkLetter.setSummary(mKkLetter.getText());
+				mKkText.setSummary(mKkText.getText());
+				mKkInterpolator.setSummary(mKkInterpolator.getEntry()
+						.toString());
+				mKkClicks.setSummary(mKkClicks.getText());
+				mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
+						.toString());
+				mLSysUi.setSummary(mLSysUi.getEntry().toString());
+				break;
 		}
+
 		mListPreferenceIcons.setSummary(getApplicationContext().getString(
 				R.string.curr_icon)
 				+ " " + mListPreferenceIcons.getEntry().toString());
@@ -132,9 +144,6 @@ public class SettingsActivity extends PreferenceActivity implements
 
 	@SuppressWarnings("deprecation")
 	private void initPrefs() {
-		mLLollipopChooser = (ListPreference) getPreferenceScreen()
-				.findPreference(Utils.KEY_CHOOSE_PLAT);
-
 		mListPreferenceIcons = (ListPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_LIST_PREFERENCE_ICONS);
 
@@ -144,22 +153,26 @@ public class SettingsActivity extends PreferenceActivity implements
 		mCheckBoxRandomColorsAct = (CheckBoxPreference) getPreferenceScreen()
 				.findPreference(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT);
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-			mLSysUi = (ListPreference) getPreferenceScreen().findPreference(
-					Utils.KEY_L_SYSUI);
-			mLLollipopChooser = (ListPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_CHOOSE_PLAT);
-		} else {
-			mKkLetter = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_LETTER);
-			mKkText = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_TEXT);
-			mKkInterpolator = (ListPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_INTERPOLATOR);
-			mKkClicks = (EditTextPreference) getPreferenceScreen()
-					.findPreference(Utils.KEY_KK_CLICKS);
-			mKkSysUi = (ListPreference) getPreferenceScreen().findPreference(
-					Utils.KEY_KK_SYSUI);
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				mKkLetter = (EditTextPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_KK_LETTER);
+				mKkText = (EditTextPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_KK_TEXT);
+				mKkInterpolator = (ListPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_KK_INTERPOLATOR);
+				mKkClicks = (EditTextPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_KK_CLICKS);
+				mKkSysUi = (ListPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_KK_SYSUI);
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				mLSysUi = (ListPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_L_SYSUI);
+				mLLollipopChooser = (ListPreference) getPreferenceScreen()
+						.findPreference(Utils.KEY_CHOOSE_PLAT);
+				break;
 		}
 	}
 
@@ -186,25 +199,32 @@ public class SettingsActivity extends PreferenceActivity implements
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 
-		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
+		SharedPreferences prefs = getPreferenceManager()
+				.getDefaultSharedPreferences(this);
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+		if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP)
+				|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
 			findPreference(Utils.KEY_L_SYSUI).setEnabled(
 					!prefs.getString(Utils.KEY_CHOOSE_PLAT, null).equals("2"));
 		}
 
 		initPrefs();
 
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-			mKkLetter.setSummary(mKkLetter.getText());
-			mKkText.setSummary(mKkText.getText());
-			mKkInterpolator.setSummary(mKkInterpolator.getEntry().toString());
-			mKkClicks.setSummary(mKkClicks.getText());
-			mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
-		} else {
-			mLSysUi.setSummary(mLSysUi.getEntry().toString());
-			mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
-					.toString());
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				mKkLetter.setSummary(mKkLetter.getText());
+				mKkText.setSummary(mKkText.getText());
+				mKkInterpolator.setSummary(mKkInterpolator.getEntry()
+						.toString());
+				mKkClicks.setSummary(mKkClicks.getText());
+				mKkSysUi.setSummary(mKkSysUi.getEntry().toString());
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				mLSysUi.setSummary(mLSysUi.getEntry().toString());
+				mLLollipopChooser.setSummary(mLLollipopChooser.getEntry()
+						.toString());
+				break;
 		}
 
 		if (key.equals(Utils.KEY_CHECK_BOX_RAND_COLOR)) {

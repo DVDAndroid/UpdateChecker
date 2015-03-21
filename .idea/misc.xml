@@ -7,7 +7,7 @@
     <option name="id" value="1417267710337" />
     <option name="importOrder" value="java;javax;org;com;android;de.robv.android.xposed;com.dvd;" />
     <option name="name" value="default" />
-    <option name="pathToConfigFileJava" value="$PROJECT_DIR$/../../workspace/NotificationTest/.settings/org.eclipse.jdt.core.prefs" />
+    <option name="pathToConfigFileJava" value="$USER_HOME$/.AndroidStudio/config/eclipsecodeformatter/org.eclipse.jdt.core.prefs" />
   </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />

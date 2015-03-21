@@ -18,21 +18,27 @@ package com.dvd.android.updatechecker.egg.ll;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.dvd.android.updatechecker.R;
 
 @SuppressWarnings("all")
 public class LLandActivity extends Activity {
+	LLand mLand;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lland);
-		LLand world = (LLand) findViewById(R.id.world);
-		world.setScoreField((TextView) findViewById(R.id.score));
-		world.setSplash(findViewById(R.id.welcome));
-		Log.v(LLand.TAG, "focus: " + world.requestFocus());
+		mLand = (LLand) findViewById(R.id.world);
+		mLand.setScoreField((TextView) findViewById(R.id.score));
+		mLand.setSplash(findViewById(R.id.welcome));
+		// Log.v(LLand.TAG, "focus: " + mLand.requestFocus());
+	}
+
+	@Override
+	public void onPause() {
+		mLand.stop();
+		super.onPause();
 	}
 }
