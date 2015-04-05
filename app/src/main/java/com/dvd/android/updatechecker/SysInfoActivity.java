@@ -1,13 +1,5 @@
 package com.dvd.android.updatechecker;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import com.github.mrengineer13.snackbar.SnackBar;
-import com.melnykov.fab.FloatingActionButton;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -24,6 +16,14 @@ import android.preference.PreferenceScreen;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.github.mrengineer13.snackbar.SnackBar;
+import com.melnykov.fab.FloatingActionButton;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class SysInfoActivity extends PreferenceActivity {
 
@@ -68,16 +68,55 @@ public class SysInfoActivity extends PreferenceActivity {
 		release.setEnabled(prefs.getBoolean("setts_opened", false));
 
 		String ver;
+		fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
+		fab.attachToListView(getListView());
+
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				prefs = PreferenceManager
+						.getDefaultSharedPreferences(getApplicationContext());
+
+				if (prefs.getBoolean("copy_mod", true)) {
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.what_mod_copy),
+							Toast.LENGTH_LONG).show();
+					prefs.edit().putBoolean("copy_mod", false).apply();
+				}
+
+				for (String p : sysinfolist_pref) {
+					findPreference(p).setSelectable(copy_mod);
+				}
+
+				copy_mod = !copy_mod;
+
+			}
+		});
+
+		fab.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view) {
+				Toast.makeText(getApplicationContext(),
+						getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
+						.show();
+				return false;
+			}
+		});
+
 		switch (Build.VERSION.SDK_INT) {
 			case Build.VERSION_CODES.KITKAT:
 				ver = "KitKat ";
+				fab.setImageResource(R.drawable.ic_menu_copy);
 				break;
 			case Build.VERSION_CODES.LOLLIPOP:
 			case Build.VERSION_CODES.LOLLIPOP_MR1:
 				ver = "Lollipop ";
+				fab.setImageResource(R.drawable.ic_menu_copy_material);
 				break;
 			default:
 				ver = "";
+				fab.setImageResource(Build.VERSION.RELEASE.equals("L") ? R.drawable.ic_menu_copy_material
+						: R.drawable.ic_menu_copy);
 				break;
 		}
 
@@ -192,49 +231,6 @@ public class SysInfoActivity extends PreferenceActivity {
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
 		}
-
-		fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
-		fab.attachToListView(getListView());
-
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
-				|| Build.VERSION.RELEASE.equals("L"))
-			fab.setImageResource(R.drawable.ic_menu_copy_material);
-		else {
-			fab.setImageResource(R.mipmap.ic_menu_copy);
-		}
-
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				prefs = PreferenceManager
-						.getDefaultSharedPreferences(getApplicationContext());
-
-				if (prefs.getBoolean("copy_mod", true)) {
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.what_mod_copy),
-							Toast.LENGTH_LONG).show();
-					prefs.edit().putBoolean("copy_mod", false).apply();
-				}
-
-				for (String p : sysinfolist_pref) {
-					findPreference(p).setSelectable(copy_mod);
-				}
-
-				copy_mod = !copy_mod;
-
-			}
-		});
-
-		fab.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View view) {
-				Toast.makeText(getApplicationContext(),
-						getString(R.string.what_mod_copy), Toast.LENGTH_LONG)
-						.show();
-				return false;
-			}
-		});
-
 	}
 
 	@Override

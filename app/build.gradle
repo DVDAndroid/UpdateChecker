@@ -7,8 +7,8 @@ android {
         applicationId "com.dvd.android.updatechecker"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 325
-        versionName '5.2.1 - FINAL'
+        versionCode 326
+        versionName '5.2.2 - FINAL'
     }
     buildTypes {
         release {
