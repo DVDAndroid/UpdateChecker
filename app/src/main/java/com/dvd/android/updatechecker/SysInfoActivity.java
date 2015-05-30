@@ -115,8 +115,15 @@ public class SysInfoActivity extends PreferenceActivity {
 				break;
 			default:
 				ver = "";
-				fab.setImageResource(Build.VERSION.RELEASE.equals("L") ? R.drawable.ic_menu_copy_material
-						: R.drawable.ic_menu_copy);
+				fab.setImageResource(R.drawable.ic_menu_copy);
+				break;
+		}
+
+		switch (Build.VERSION.RELEASE) {
+			case "L":
+			case "M":
+				ver = "";
+				fab.setImageResource(R.drawable.ic_menu_copy_material);
 				break;
 		}
 
@@ -322,7 +329,6 @@ public class SysInfoActivity extends PreferenceActivity {
 						break;
 					default:
 						if (Build.VERSION.RELEASE.equals("L")) {
-
 							startActivity(new Intent(this, L_PLATLOGO));
 						}
 						break;

@@ -16,8 +16,6 @@
 
 package com.dvd.android.updatechecker.egg.ll;
 
-import java.util.ArrayList;
-
 import android.animation.TimeAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -48,6 +46,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import com.dvd.android.updatechecker.R;
 
@@ -176,6 +176,7 @@ public class LLand extends FrameLayout {
 		if (tv != null) {
 			tv.setTranslationZ(PARAMS.HUD_Z);
 			if (!(mAnimating && mPlaying)) {
+				tv.setText(String.valueOf(0));
 				tv.setTranslationY(-500);
 			}
 		}

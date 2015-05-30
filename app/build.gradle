@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '22'
+    buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "com.dvd.android.updatechecker"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 326
-        versionName '5.2.2 - FINAL'
+        versionCode 327
+        versionName '5.2.3 - FINAL'
     }
     buildTypes {
         release {
@@ -23,8 +23,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    compile 'com.melnykov:floatingactionbutton:1.2.0'
-    compile 'com.github.mrengineer13:snackbar:1.1.0'
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
+    compile 'com.github.mrengineer13:snackbar:1.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.dvdandroid:colorlistpreference:1.6.1'
 }

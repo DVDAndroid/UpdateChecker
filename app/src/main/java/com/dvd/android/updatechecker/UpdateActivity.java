@@ -27,6 +27,13 @@ public class UpdateActivity extends Activity {
 				break;
 		}
 
+		switch (Build.VERSION.RELEASE) {
+			case "L":
+			case "M":
+				ver = "";
+				break;
+		}
+
 		openActivity(ver);
 	}
 
