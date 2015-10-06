@@ -50,6 +50,8 @@ public class SysInfoActivity extends PreferenceActivity {
 	private Class KITKAT_PLATLOGO = com.dvd.android.updatechecker.egg.kk.PlatLogoActivity.class;
 	private Class L_PLATLOGO = com.dvd.android.updatechecker.egg.l_preview.PlatLogoActivity.class;
 	private Class LOLLIPOP_PLATLOGO = com.dvd.android.updatechecker.egg.ll.PlatLogoActivity.class;
+	private Class M_PLATLOGO = com.dvd.android.updatechecker.egg.m_preview.PlatLogoActivity.class;
+	private Class MARSHMALLOW_PLATLOGO = com.dvd.android.updatechecker.egg.mm.PlatLogoActivity.class;
 
 	@SuppressWarnings({ "deprecation", "static-access" })
 	@Override
@@ -67,9 +69,8 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference release = findPreference(Utils.KEY_SYS_INFO_RELEASE);
 		release.setEnabled(prefs.getBoolean("setts_opened", false));
 
-		String ver;
+		String ver = Utils.getAndroidVersion();
 		fab = (FloatingActionButton) findViewById(R.id.floatingactionbutton);
-		fab.attachToListView(getListView());
 
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -105,16 +106,14 @@ public class SysInfoActivity extends PreferenceActivity {
 
 		switch (Build.VERSION.SDK_INT) {
 			case Build.VERSION_CODES.KITKAT:
-				ver = "KitKat ";
 				fab.setImageResource(R.drawable.ic_menu_copy);
 				break;
 			case Build.VERSION_CODES.LOLLIPOP:
 			case Build.VERSION_CODES.LOLLIPOP_MR1:
-				ver = "Lollipop ";
+			case Build.VERSION_CODES.M:
 				fab.setImageResource(R.drawable.ic_menu_copy_material);
 				break;
 			default:
-				ver = "";
 				fab.setImageResource(R.drawable.ic_menu_copy);
 				break;
 		}
@@ -122,28 +121,13 @@ public class SysInfoActivity extends PreferenceActivity {
 		switch (Build.VERSION.RELEASE) {
 			case "L":
 			case "M":
-				ver = "";
 				fab.setImageResource(R.drawable.ic_menu_copy_material);
 				break;
 		}
 
 		release.setSummary(ver + Build.VERSION.RELEASE);
 
-		if (getActionBar() != null) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-
-			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
-				case "1":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
-					break;
-				case "2":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
-					break;
-				case "3":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
-					break;
-			}
-		}
+		Utils.setActionBarIcon(prefs, this);
 
 		Utils.applyColor(this, prefs.getString("colorSysInfo", "#ff0000"));
 
@@ -167,7 +151,8 @@ public class SysInfoActivity extends PreferenceActivity {
 		Preference hardware = findPreference(Utils.KEY_SYS_INFO_HARDWARE);
 		Preference host = findPreference(Utils.KEY_SYS_INFO_HOST);
 		Preference id = findPreference(Utils.KEY_SYS_INFO_ID);
-		Preference manufacturer = findPreference(Utils.KEY_SYS_INFO_MANUFACTURER);
+		Preference manufacturer = findPreference(
+				Utils.KEY_SYS_INFO_MANUFACTURER);
 		Preference model = findPreference(Utils.KEY_SYS_INFO_MODEL);
 		Preference product = findPreference(Utils.KEY_SYS_INFO_PRODUCT);
 		Preference radio = findPreference(Utils.KEY_SYS_INFO_RADIO);
@@ -216,24 +201,27 @@ public class SysInfoActivity extends PreferenceActivity {
 		incremental.setSummary(Build.VERSION.INCREMENTAL);
 		api.setSummary(String.valueOf(Build.VERSION.SDK_INT));
 
-		root.setSummary(Boolean.valueOf(Utils.hasRoot()).toString()
-				+ "  "
-				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
-						.exec("su -v").getInputStream())).readLine());
-		xposed.setSummary(Boolean.toString(Utils.isPackageInstalled(this,
-				"de.robv.android.xposed.installer"))
+		root.setSummary(
+				Boolean.valueOf(Utils.hasRoot()).toString() + "  "
+						+ new BufferedReader(new InputStreamReader(Runtime
+								.getRuntime().exec("su -v").getInputStream()))
+										.readLine());
+		xposed.setSummary(Boolean
+				.toString(Utils.isPackageInstalled(this,
+						"de.robv.android.xposed.installer"))
 				+ (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
-						|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 ? " (?)"
-						: ""));
-		busybox.setSummary(Boolean.toString(Utils.hasBusybox())
-				+ "  "
-				+ new BufferedReader(new InputStreamReader(Runtime.getRuntime()
-						.exec("busybox").getInputStream())).readLine());
+						|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1
+								? " (?)" : ""));
+		busybox.setSummary(
+				Boolean.toString(Utils.hasBusybox()) + "  "
+						+ new BufferedReader(new InputStreamReader(Runtime
+								.getRuntime().exec("busybox").getInputStream()))
+										.readLine());
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		if (Build.VERSION.SDK_INT == 19) {
+		if (Utils.isKitKat()) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
@@ -251,59 +239,62 @@ public class SysInfoActivity extends PreferenceActivity {
 
 	@Override
 	@SuppressLint("NewApi")
-	@SuppressWarnings({ "static-access", "deprecation" })
+	@SuppressWarnings("all")
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
 			Preference preference) {
 
-		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
 		final SystemBarTintManager tintManager = new SystemBarTintManager(this);
 
 		if (!copy_mod) {
-			if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT)
+			if (Utils.isKitKat())
 				tintManager.setNavigationBarTintEnabled(true);
 			final SnackBar.Builder snb = new SnackBar.Builder(this);
 
 			snb.withMessage(getString(R.string.clipboard_message) + "\n"
 					+ preference.getTitle() + ": " + preference.getSummary());
-			snb.withVisibilityChangeListener(new SnackBar.OnVisibilityChangeListener() {
-				@Override
-				public void onShow(int i) {
-					fab.hide(true);
-					switch (Build.VERSION.SDK_INT) {
-						case Build.VERSION_CODES.KITKAT:
-							tintManager.setNavigationBarTintColor(Color
-									.parseColor("#323232"));
-							break;
-						case Build.VERSION_CODES.LOLLIPOP:
-						case Build.VERSION_CODES.LOLLIPOP_MR1:
-							getWindow().setNavigationBarColor(
-									Color.parseColor("#323232"));
-							break;
-					}
-				}
+			snb.withVisibilityChangeListener(
+					new SnackBar.OnVisibilityChangeListener() {
+						@Override
+						public void onShow(int i) {
+							fab.hide(true);
+							switch (Build.VERSION.SDK_INT) {
+								case Build.VERSION_CODES.KITKAT:
+									tintManager.setNavigationBarTintColor(
+											Color.parseColor("#323232"));
+									break;
+								case Build.VERSION_CODES.LOLLIPOP:
+								case Build.VERSION_CODES.LOLLIPOP_MR1:
+								case Build.VERSION_CODES.M:
+									getWindow().setNavigationBarColor(
+											Color.parseColor("#323232"));
+									break;
+							}
+						}
 
-				@Override
-				public void onHide(int i) {
-					fab.show();
-					switch (Build.VERSION.SDK_INT) {
-						case Build.VERSION_CODES.KITKAT:
-							tintManager.setNavigationBarTintColor(Color
-									.parseColor("#00000000"));
-							break;
-						case Build.VERSION_CODES.LOLLIPOP:
-						case Build.VERSION_CODES.LOLLIPOP_MR1:
-							getWindow().setNavigationBarColor(
-									Color.parseColor("#4d000000"));
-							break;
-					}
-				}
-			});
+						@Override
+						public void onHide(int i) {
+							fab.show();
+							switch (Build.VERSION.SDK_INT) {
+								case Build.VERSION_CODES.KITKAT:
+									tintManager.setNavigationBarTintColor(
+											Color.parseColor("#00000000"));
+									break;
+								case Build.VERSION_CODES.LOLLIPOP:
+								case Build.VERSION_CODES.LOLLIPOP_MR1:
+								case Build.VERSION_CODES.M:
+									getWindow().setNavigationBarColor(
+											Color.parseColor("#4d000000"));
+									break;
+							}
+						}
+					});
 			snb.withActionMessageId(android.R.string.ok);
 			snb.withStyle(SnackBar.Style.INFO);
 			snb.withTextColorId(android.R.color.holo_green_dark);
 			snb.show();
 
-			ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+			ClipboardManager clipboard = (ClipboardManager) getSystemService(
+					CLIPBOARD_SERVICE);
 			ClipData clip = ClipData.newPlainText("Clipboard",
 					preference.getTitle() + ": " + preference.getSummary());
 			clipboard.setPrimaryClip(clip);
@@ -327,9 +318,23 @@ public class SysInfoActivity extends PreferenceActivity {
 							startActivity(new Intent(this, L_PLATLOGO));
 						}
 						break;
+					case Build.VERSION_CODES.M:
+						if (prefs.getString(Utils.KEY_CHOOSE_PLAT, null)
+								.equals("2")) {
+							startActivity(
+									new Intent(this, MARSHMALLOW_PLATLOGO));
+						} else {
+							startActivity(new Intent(this, M_PLATLOGO));
+						}
+						break;
 					default:
-						if (Build.VERSION.RELEASE.equals("L")) {
-							startActivity(new Intent(this, L_PLATLOGO));
+						switch (Build.VERSION.RELEASE) {
+							case "L":
+								startActivity(new Intent(this, L_PLATLOGO));
+								break;
+							case "M":
+								startActivity(new Intent(this, M_PLATLOGO));
+								break;
 						}
 						break;
 				}

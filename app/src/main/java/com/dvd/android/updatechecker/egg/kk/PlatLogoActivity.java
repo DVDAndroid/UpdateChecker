@@ -16,9 +16,6 @@
 
 package com.dvd.android.updatechecker.egg.kk;
 
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -49,6 +46,9 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
+
 import com.dvd.android.updatechecker.R;
 
 @SuppressWarnings("all")
@@ -71,8 +71,8 @@ public class PlatLogoActivity extends Activity {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-		Typeface bold = Typeface
-				.createFromAsset(getAssets(), "Roboto-Bold.ttf");
+		Typeface bold = Typeface.createFromAsset(getAssets(),
+				"Roboto-Bold.ttf");
 		Typeface light = Typeface.createFromAsset(getAssets(),
 				"Roboto-Light.ttf");
 
@@ -228,8 +228,7 @@ public class PlatLogoActivity extends Activity {
 				}
 				ViewPropertyAnimator.animate(letter).cancel();
 				final float offset = (int) ViewHelper.getRotation(letter) % 360;
-				ViewPropertyAnimator
-						.animate(letter)
+				ViewPropertyAnimator.animate(letter)
 						.rotationBy(
 								(Math.random() > 0.5f ? 360 : -360) - offset)
 						.setInterpolator(whichinterp).setDuration(dur).start();
@@ -252,18 +251,14 @@ public class PlatLogoActivity extends Activity {
 					logo.setVisibility(View.VISIBLE);
 					ViewHelper.setScaleX(logo, 0.5F);
 					ViewHelper.setScaleY(logo, 0.5F);
-					ViewPropertyAnimator
-							.animate(logo)
-							.scaleX(1.0F)
-							.alpha(1.0F)
-							.scaleY(1.0F)
-							.setDuration(1000L)
+					ViewPropertyAnimator.animate(logo).scaleX(1.0F).alpha(1.0F)
+							.scaleY(1.0F).setDuration(1000L)
 							.setInterpolator(
 									new AnticipateOvershootInterpolator())
 							.setStartDelay(500L).start();
 					ViewHelper.setAlpha(tv, 0F);
-					ViewPropertyAnimator.animate(tv).alpha(1f)
-							.setDuration(1000).setStartDelay(1000).start();
+					ViewPropertyAnimator.animate(tv).alpha(1f).setDuration(1000)
+							.setStartDelay(1000).start();
 
 					// removed original API methods from Giupy as they were
 					// already handled by nineolddroid helpers
@@ -283,9 +278,8 @@ public class PlatLogoActivity extends Activity {
 
 				if (Build.VERSION.SDK_INT > 10) {
 					try {
-						startActivity(new Intent(Intent.ACTION_MAIN)
-								.setFlags(
-										Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+						startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
+								Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
 								// .addCategory("com.android.internal.category.PLATLOGO"));
 								.setClassName("com.dvd.android.updatechecker",
 										"com.dvd.android.updatechecker.egg.kk.DessertCase"));

@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Android M/Marshmallow Egg">
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/android_eggs_m"
+            android:entryValues="@array/android_eggs_id"
+            android:key="platlogo"
+            android:title="@string/choose_platlogo_m"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

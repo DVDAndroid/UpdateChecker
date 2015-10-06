@@ -1,7 +1,5 @@
 package com.dvd.android.updatechecker;
 
-import java.util.Random;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,10 +17,12 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import com.dvd.android.library.colorlistpreference.ColorListPreference;
 
-public class MainActivity extends PreferenceActivity implements
-		SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends PreferenceActivity
+		implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	private ColorListPreference mListPreferenceColor;
 	private SharedPreferences prefs;
@@ -42,14 +42,13 @@ public class MainActivity extends PreferenceActivity implements
 		prefs = getPreferenceManager().getDefaultSharedPreferences(this);
 
 		if (prefs.getBoolean("welcome", true)) {
-			Toast.makeText(getApplicationContext(),
-					getString(R.string.welcome), Utils.duration).show();
+			Toast.makeText(getApplicationContext(), getString(R.string.welcome),
+					Utils.duration).show();
 
 			prefs.edit().putBoolean("setts_opened", false).apply();
 
-			prefs.edit()
-					.putString(Utils.KEY_KK_TEXT,
-							"ANDROID " + Build.VERSION.RELEASE).apply();
+			prefs.edit().putString(Utils.KEY_KK_TEXT,
+					"ANDROID " + Build.VERSION.RELEASE).apply();
 
 			prefs.edit().putString("new_ver_line", "NO").apply();
 
@@ -80,16 +79,16 @@ public class MainActivity extends PreferenceActivity implements
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 					MainActivity.this);
 
-			alertDialogBuilder.setTitle(getApplicationContext().getString(
-					R.string.warn));
+			alertDialogBuilder
+					.setTitle(getApplicationContext().getString(R.string.warn));
 			alertDialogBuilder.setMessage(getString(R.string.old_ver));
 			alertDialogBuilder.setPositiveButton(android.R.string.ok,
 					new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int id) {
 
-							Uri packageURI = Uri.parse("package:"
-									+ "com.dvd.updatechecker");
+							Uri packageURI = Uri.parse(
+									"package:" + "com.dvd.updatechecker");
 							Intent uninstallIntent = new Intent(
 									Intent.ACTION_DELETE, packageURI);
 							startActivity(uninstallIntent);
@@ -102,6 +101,28 @@ public class MainActivity extends PreferenceActivity implements
 			alertDialog.show();
 		}
 
+		setUpColors();
+
+		try {
+			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		TextView tv1 = (TextView) findViewById(R.id.version);
+		tv1.setText(" " + getApplicationContext().getString(R.string.vers) + " "
+				+ pInfo.versionName + "-" + pInfo.versionCode);
+
+		TextView tv2 = (TextView) findViewById(R.id.credit);
+		tv2.setText("by " + getApplicationContext().getString(R.string.my_name)
+				+ " ");
+
+		Utils.setActionBarIcon(prefs, this);
+
+		Utils.applyColor(this, mListPreferenceColor.getValue());
+	}
+
+	private void setUpColors() {
 		if (prefs.getBoolean(Utils.KEY_CHECK_BOX_RAND_COLOR_ACT, true)) {
 			Random rnd = new Random();
 			int colorInfo = Utils.getRandomWithExclusion(rnd, 1, 19, 2, 12, 13);
@@ -128,55 +149,21 @@ public class MainActivity extends PreferenceActivity implements
 				prefs.edit()
 						.putString("colorInfo", mListPreferenceColor.getValue())
 						.apply();
-				prefs.edit()
-						.putString("colorSysInfo",
-								mListPreferenceColor.getValue()).apply();
-				prefs.edit()
-						.putString("colorSettings",
-								mListPreferenceColor.getValue()).apply();
+				prefs.edit().putString("colorSysInfo",
+						mListPreferenceColor.getValue()).apply();
+				prefs.edit().putString("colorSettings",
+						mListPreferenceColor.getValue()).apply();
 			} else {
 				prefs.edit()
 						.putString("colorInfo", mListPreferenceColor.getValue())
 						.apply();
-				prefs.edit()
-						.putString("colorSysInfo",
-								mListPreferenceColor.getValue()).apply();
-				prefs.edit()
-						.putString("colorSettings",
-								mListPreferenceColor.getValue()).apply();
+				prefs.edit().putString("colorSysInfo",
+						mListPreferenceColor.getValue()).apply();
+				prefs.edit().putString("colorSettings",
+						mListPreferenceColor.getValue()).apply();
 			}
 		}
 
-		try {
-			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-		} catch (PackageManager.NameNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		TextView tv1 = (TextView) findViewById(R.id.version);
-		tv1.setText(" " + getApplicationContext().getString(R.string.vers)
-				+ " " + pInfo.versionName + "-" + pInfo.versionCode);
-
-		TextView tv2 = (TextView) findViewById(R.id.credit);
-		tv2.setText("by " + getApplicationContext().getString(R.string.my_name)
-				+ " ");
-
-		if (getActionBar() != null) {
-			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
-				case "1":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
-					break;
-				case "2":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
-					break;
-				case "3":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
-					break;
-			}
-
-		}
-
-		Utils.applyColor(this, mListPreferenceColor.getValue());
 	}
 
 	@Override

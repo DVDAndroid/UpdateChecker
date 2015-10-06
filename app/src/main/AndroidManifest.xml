@@ -134,6 +134,48 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.dvd.android.updatechecker.egg.m_preview.ShruggyActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="locked"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dvd.android.updatechecker.egg.m_preview.PlatLogoActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="locked"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dvd.android.updatechecker.egg.mm.PlatLogoActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dvd.android.updatechecker.egg.mm.MLandActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.dvd.android.updatechecker.SysInfoActivity"
             android:label="@string/title_activity_sys_info"
             android:screenOrientation="fullSensor">

@@ -32,7 +32,7 @@
         android:layout_gravity="top|start"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/scorecard"
+        android:background="@drawable/scorecard_lp"
         android:paddingBottom="8dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"

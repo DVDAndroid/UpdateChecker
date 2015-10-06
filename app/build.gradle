@@ -1,19 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
     defaultConfig {
         applicationId "com.dvd.android.updatechecker"
         minSdkVersion 19
-        targetSdkVersion 22
-        versionCode 327
-        versionName '5.2.3 - FINAL'
+        targetSdkVersion 23
+        versionCode 330
+        versionName '5.3 - FINAL'
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
     productFlavors {

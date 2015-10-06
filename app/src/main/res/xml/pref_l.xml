@@ -2,10 +2,10 @@
     <PreferenceCategory android:title="Android L/Lollipop Egg">
         <ListPreference
             android:defaultValue="2"
-            android:entries="@array/android_eggs"
+            android:entries="@array/android_eggs_lp"
             android:entryValues="@array/android_eggs_id"
             android:key="platlogo"
-            android:title="@string/choose_platlogo"/>
+            android:title="@string/choose_platlogo_lp"/>
     </PreferenceCategory>
 
     <PreferenceCategory

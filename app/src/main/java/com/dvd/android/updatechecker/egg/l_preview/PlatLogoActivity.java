@@ -2,8 +2,6 @@
 
 package com.dvd.android.updatechecker.egg.l_preview;
 
-import java.util.Random;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -21,6 +19,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
+
+import java.util.Random;
 
 import com.dvd.android.updatechecker.R;
 
@@ -41,11 +41,11 @@ public class PlatLogoActivity extends Activity {
 		String sui = getSharedPreferences(
 				"com.dvd.android.updatechecker_preferences",
 				Context.MODE_PRIVATE).getString("l_sysui",
-				getString(R.string.none));
+						getString(R.string.none));
 		DisplayMetrics metrics = new DisplayMetrics();
-		LayoutParams pos1 = new LayoutParams(r.nextInt(1000), r.nextInt(1000)), pos2 = new LayoutParams(
-				r.nextInt(1000), r.nextInt(1000)), label = new LayoutParams(-2,
-				-2);
+		LayoutParams pos1 = new LayoutParams(r.nextInt(1000), r.nextInt(1000)),
+				pos2 = new LayoutParams(r.nextInt(1000), r.nextInt(1000)),
+				label = new LayoutParams(-2, -2);
 
 		build.setText("android_L.flv - build 1236599");
 		build.setTextSize(18);
@@ -86,8 +86,9 @@ public class PlatLogoActivity extends Activity {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				LayoutParams newpos1 = new LayoutParams(r.nextInt(1000),
-						r.nextInt(1000)), newpos2 = new LayoutParams(
-						r.nextInt(1000), r.nextInt(1000));
+						r.nextInt(1000)),
+						newpos2 = new LayoutParams(r.nextInt(1000),
+								r.nextInt(1000));
 				newpos1.topMargin = r.nextInt(200);
 				newpos1.leftMargin = r.nextInt(200);
 				newpos2.topMargin = r.nextInt(200);

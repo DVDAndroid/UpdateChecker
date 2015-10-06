@@ -18,29 +18,29 @@
 -->
 
 <resources>
-    <dimen name="obstacle_spacing">380dp</dimen>
-    <dimen name="translation_per_sec">100dp</dimen>
-    <dimen name="boost_dv">550dp</dimen>
-    <dimen name="player_hit_size">40dp</dimen>
-    <dimen name="player_size">40dp</dimen>
-    <dimen name="obstacle_width">90dp</dimen>
-    <dimen name="obstacle_stem_width">12dp</dimen>
-    <dimen name="obstacle_gap">170dp</dimen>
-    <dimen name="obstacle_height_min">48dp</dimen>
-    <dimen name="building_width_min">20dp</dimen>
-    <dimen name="building_width_max">250dp</dimen>
-    <dimen name="building_height_min">20dp</dimen>
-    <dimen name="cloud_size_min">10dp</dimen>
-    <dimen name="cloud_size_max">100dp</dimen>
-    <dimen name="sun_size">45dp</dimen>
-    <dimen name="moon_size">30dp</dimen>
-    <dimen name="star_size_min">3dp</dimen>
-    <dimen name="star_size_max">5dp</dimen>
-    <dimen name="G">30dp</dimen>
-    <dimen name="max_v">1000dp</dimen>
-    <dimen name="scenery_z">6dp</dimen>
-    <dimen name="obstacle_z">18dp</dimen>
-    <dimen name="player_z">18dp</dimen>
-    <dimen name="player_z_boost">20dp</dimen>
-    <dimen name="hud_z">35dp</dimen>
+    <dimen name="obstacle_spacing_lp">380dp</dimen>
+    <dimen name="translation_per_sec_lp">100dp</dimen>
+    <dimen name="boost_dv_lp">550dp</dimen>
+    <dimen name="player_hit_size_lp">40dp</dimen>
+    <dimen name="player_size_lp">40dp</dimen>
+    <dimen name="obstacle_width_lp">90dp</dimen>
+    <dimen name="obstacle_stem_width_lp">12dp</dimen>
+    <dimen name="obstacle_gap_lp">170dp</dimen>
+    <dimen name="obstacle_height_min_lp">48dp</dimen>
+    <dimen name="building_width_min_lp">20dp</dimen>
+    <dimen name="building_width_max_lp">250dp</dimen>
+    <dimen name="building_height_min_lp">20dp</dimen>
+    <dimen name="cloud_size_min_lp">10dp</dimen>
+    <dimen name="cloud_size_max_lp">100dp</dimen>
+    <dimen name="sun_size_lp">45dp</dimen>
+    <dimen name="moon_size_lp">30dp</dimen>
+    <dimen name="star_size_min_lp">3dp</dimen>
+    <dimen name="star_size_max_lp">5dp</dimen>
+    <dimen name="G_lp">30dp</dimen>
+    <dimen name="max_v_lp">1000dp</dimen>
+    <dimen name="scenery_z_lp">6dp</dimen>
+    <dimen name="obstacle_z_lp">18dp</dimen>
+    <dimen name="player_z_lp">18dp</dimen>
+    <dimen name="player_z_boost_lp">20dp</dimen>
+    <dimen name="hud_z_lp">35dp</dimen>
 </resources>

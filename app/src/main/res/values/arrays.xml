@@ -94,9 +94,14 @@
         <item>3</item>
     </string-array>
 
-    <string-array name="android_eggs" translatable="false">
+    <string-array name="android_eggs_lp" translatable="false">
         <item>Android L Preview</item>
         <item>Android Lollipop</item>
+    </string-array>
+
+    <string-array name="android_eggs_m" translatable="false">
+        <item>Android M Preview</item>
+        <item>Android Marshmallow</item>
     </string-array>
 
     <string-array name="android_eggs_id" translatable="false">

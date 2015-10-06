@@ -1,17 +1,5 @@
 package com.dvd.android.updatechecker;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -24,6 +12,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.widget.Toast;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -125,21 +125,22 @@ public class Utils {
 		// (gcc version 4.6.x-xxx 20120106 (prerelease) (GCC) ) #1 SMP PREEMPT \
 		// Thu Jun 28 11:02:39 PDT 2012
 
-		final String PROC_VERSION_REGEX = "Linux version (\\S+) " + /*
-																	 * group 1:
-																	 * "3.0.31-g6fb96c9"
-																	 */
-		"\\((\\S+?)\\) " + /* group 2: "x@y.com" (kernel builder) */
-		"(?:\\(gcc.+? \\)) " + /* ignore: GCC version information */
-		"(#\\d+) " + /* group 3: "#1" */
-		"(?:.*?)?" + /* ignore: optional SMP, PREEMPT, and any CONFIG_FLAGS */
-		"((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; /*
-											 * group 4:
-											 * "Thu Jun 28 11:02:39 PDT 2012"
-											 */
+		final String PROC_VERSION_REGEX = "Linux version (\\S+) "
+				+ /*
+					 * group 1: "3.0.31-g6fb96c9"
+					 */
+				"\\((\\S+?)\\) " + /* group 2: "x@y.com" (kernel builder) */
+				"(?:\\(gcc.+? \\)) " + /* ignore: GCC version information */
+				"(#\\d+) " + /* group 3: "#1" */
+				"(?:.*?)?"
+				+ /* ignore: optional SMP, PREEMPT, and any CONFIG_FLAGS */
+				"((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; /*
+														 * group 4:
+														 * "Thu Jun 28 11:02:39 PDT 2012"
+														 */
 
-		Matcher m = Pattern.compile(PROC_VERSION_REGEX).matcher(
-				rawKernelVersion);
+		Matcher m = Pattern.compile(PROC_VERSION_REGEX)
+				.matcher(rawKernelVersion);
 		if (!m.matches()) {
 			return "Unavailable";
 		} else if (m.groupCount() < 4) {
@@ -150,7 +151,8 @@ public class Utils {
 				m.group(4); // Thu Jun 28 11:02:39 PDT 2012
 	}
 
-	public static boolean isPackageInstalled(Context context, String packagename) {
+	public static boolean isPackageInstalled(Context context,
+			String packagename) {
 		PackageManager pm = context.getPackageManager();
 		try {
 			pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
@@ -175,8 +177,8 @@ public class Utils {
 	@SuppressLint("NewApi")
 	public static void applyColor(Activity activity, String id) {
 
-		String[] colors_values = activity.getApplicationContext()
-				.getResources().getStringArray(R.array.colorsValues);
+		String[] colors_values = activity.getResources()
+				.getStringArray(R.array.colorsValues);
 		ArrayList<String> colors_values_array = new ArrayList<>(
 				Arrays.asList(colors_values));
 
@@ -196,9 +198,10 @@ public class Utils {
 				break;
 			case Build.VERSION_CODES.LOLLIPOP:
 			case Build.VERSION_CODES.LOLLIPOP_MR1:
+			case Build.VERSION_CODES.M:
 				String icon = null;
-				SharedPreferences preferences = activity
-						.getApplicationContext().getSharedPreferences(
+				SharedPreferences preferences = activity.getApplicationContext()
+						.getSharedPreferences(
 								activity.getPackageName() + "_preferences", 0);
 				switch (preferences.getString(Utils.KEY_LIST_PREFERENCE_ICONS,
 						"3")) {
@@ -220,13 +223,13 @@ public class Utils {
 								activity.getPackageName()));
 				ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription(
 						activity.getString(R.string.app_name), bm,
-						(darkenColor(Color.parseColor(color), 0.85f)));
+						(Color.parseColor(color)));
 				activity.setTaskDescription(tDesc);
 
 				activity.getWindow().setStatusBarColor(
 						darkenColor(Color.parseColor(color), 0.85f));
-				activity.getWindow().setNavigationBarColor(
-						Color.parseColor("#4d000000"));
+				activity.getWindow()
+						.setNavigationBarColor(Color.parseColor("#4d000000"));
 				break;
 		}
 	}
@@ -241,4 +244,65 @@ public class Utils {
 		hsv[2] *= factor;
 		return Color.HSVToColor(hsv);
 	}
+
+	public static void setActionBarIcon(SharedPreferences prefs,
+			Activity activity) {
+		assert activity.getActionBar() != null;
+		switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
+			case "1":
+				activity.getActionBar()
+						.setIcon(R.mipmap.ic_launcher_settings_jb);
+				break;
+			case "2":
+				activity.getActionBar()
+						.setIcon(R.mipmap.ic_launcher_settings_kk);
+				break;
+			case "3":
+				activity.getActionBar()
+						.setIcon(R.mipmap.ic_launcher_settings_l);
+				break;
+		}
+	}
+
+	public static String getAndroidVersion() {
+		String ver;
+		switch (Build.VERSION.SDK_INT) {
+			case Build.VERSION_CODES.KITKAT:
+				ver = "KitKat";
+				break;
+			case Build.VERSION_CODES.LOLLIPOP:
+			case Build.VERSION_CODES.LOLLIPOP_MR1:
+				ver = "Lollipop ";
+				break;
+			case Build.VERSION_CODES.M:
+				ver = "Marshmallow ";
+				break;
+			default:
+				ver = "";
+				break;
+		}
+
+		switch (Build.VERSION.RELEASE) {
+			case "L":
+			case "M":
+				ver = "";
+				break;
+		}
+
+		return ver;
+	}
+
+	public static boolean isMarshmellow() {
+		return Build.VERSION_CODES.M >= Build.VERSION.SDK_INT;
+	}
+
+	public static boolean isLollipop() {
+		return Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP
+				|| Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1;
+	}
+
+	public static boolean isKitKat() {
+		return Build.VERSION_CODES.KITKAT >= Build.VERSION.SDK_INT;
+	}
+
 }

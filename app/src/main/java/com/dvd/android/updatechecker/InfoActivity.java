@@ -1,16 +1,6 @@
 package com.dvd.android.updatechecker;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
-import android.app.Activity;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -19,21 +9,33 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class InfoActivity extends PreferenceActivity {
 
+	private static final int WRITE_EXTERNAL_PERMISSION = 69;
 	PackageInfo pInfo;
 	private SharedPreferences prefs;
 
@@ -48,23 +50,14 @@ public class InfoActivity extends PreferenceActivity {
 		if (getActionBar() != null) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 
-			switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
-				case "1":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_jb);
-					break;
-				case "2":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_kk);
-					break;
-				case "3":
-					getActionBar().setIcon(R.mipmap.ic_launcher_settings_l);
-					break;
-			}
+			Utils.setActionBarIcon(prefs, this);
 		}
 
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
-		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager nm = (NotificationManager) getSystemService(
+				Context.NOTIFICATION_SERVICE);
 		nm.cancel(Utils.NOTIFICATION_ID);
 
 		Preference ver = findPreference("ver");
@@ -77,7 +70,7 @@ public class InfoActivity extends PreferenceActivity {
 		ver.setSummary(getString(R.string.vers) + " " + pInfo.versionName
 				+ " - " + pInfo.versionCode);
 
-		if (Build.VERSION.SDK_INT == 19) {
+		if (Utils.isKitKat()) {
 			findViewById(android.R.id.content).setPadding(0,
 					config.getPixelInsetTop(true), config.getPixelInsetRight(),
 					config.getPixelInsetBottom());
@@ -107,8 +100,8 @@ public class InfoActivity extends PreferenceActivity {
 			startActivity(browserIntent);
 		}
 		if (preference.getKey().equals(Utils.KEY_NINEOLDANDROIDS)) {
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("https://github.com/JakeWharton/NineOldAndroids"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+					.parse("https://github.com/JakeWharton/NineOldAndroids"));
 			startActivity(browserIntent);
 		}
 		if (preference.getKey().equals(Utils.KEY_SNACK_BAR)) {
@@ -117,15 +110,13 @@ public class InfoActivity extends PreferenceActivity {
 			startActivity(browserIntent);
 		}
 		if (preference.getKey().equals(Utils.KEY_FAB)) {
-			Intent browserIntent = new Intent(
-					Intent.ACTION_VIEW,
-					Uri.parse("https://github.com/futuresimple/android-floating-action-button"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+					"https://github.com/futuresimple/android-floating-action-button"));
 			startActivity(browserIntent);
 		}
 		if (preference.getKey().equals(Utils.KEY_EGGSTER)) {
-			Intent browserIntent = new Intent(
-					Intent.ACTION_VIEW,
-					Uri.parse("http://repo.xposed.info/module/areeb.xposed.eggster"));
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(
+					"http://repo.xposed.info/module/areeb.xposed.eggster"));
 			startActivity(browserIntent);
 		}
 		if (preference.getKey().equals(Utils.KEY_GITHUB)) {
@@ -147,9 +138,9 @@ public class InfoActivity extends PreferenceActivity {
 
 			if (Utils.isPackageInstalled(getApplicationContext(),
 					"com.dvd.android.myappsupdater")) {
-				alert.setMessage(String.format(
-						getString(R.string.descr_myappsupdater),
-						getString(R.string.open)));
+				alert.setMessage(
+						String.format(getString(R.string.descr_myappsupdater),
+								getString(R.string.open)));
 				alert.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 							@Override
@@ -162,16 +153,16 @@ public class InfoActivity extends PreferenceActivity {
 							}
 						});
 			} else {
-				alert.setMessage(String.format(
-						getString(R.string.descr_myappsupdater),
-						getString(R.string.install)));
+				alert.setMessage(
+						String.format(getString(R.string.descr_myappsupdater),
+								getString(R.string.install)));
 				alert.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								new DownloadApp()
-										.execute("https://github.com/DVDAndroid/dvdandroid.github.io/raw/master/apks/MyAppsUpdater.apk");
+								new DownloadApp().execute(
+										"https://github.com/DVDAndroid/dvdandroid.github.io/raw/master/apks/MyAppsUpdater.apk?raw=true");
 							}
 						});
 			}
@@ -212,7 +203,7 @@ public class InfoActivity extends PreferenceActivity {
 						R.string.app_name);
 				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_NAME,
 						R.string.verifica);
-				switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, null)) {
+				switch (prefs.getString(Utils.KEY_LIST_PREFERENCE_ICONS, "3")) {
 					case "1":
 						addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 								Intent.ShortcutIconResource.fromContext(
@@ -238,20 +229,19 @@ public class InfoActivity extends PreferenceActivity {
 								getApplicationContext(),
 								R.mipmap.ic_launcher_gsm));
 
-				addIntent
-						.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+				addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
+						shortcutIntent);
 				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
 						shortcutIntent1);
 
-				addIntent
-						.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-				addIntent1
-						.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+				addIntent.setAction(
+						"com.android.launcher.action.INSTALL_SHORTCUT");
+				addIntent1.setAction(
+						"com.android.launcher.action.INSTALL_SHORTCUT");
 
 				getApplicationContext().sendBroadcast(addIntent);
 
-				String text = String.format(
-						getResources().getString(R.string.add_short_text),
+				String text = String.format(getString(R.string.add_short_text),
 						getString(R.string.app_name));
 
 				Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG)
@@ -261,7 +251,7 @@ public class InfoActivity extends PreferenceActivity {
 					getApplicationContext().sendBroadcast(addIntent1);
 
 					String text1 = String.format(
-							getResources().getString(R.string.add_short_text),
+							getString(R.string.add_short_text),
 							getString(R.string.title_activity_update));
 
 					Toast.makeText(getApplicationContext(), text1,
@@ -272,20 +262,19 @@ public class InfoActivity extends PreferenceActivity {
 
 				addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
 						getApplicationContext().getString(R.string.app_name));
-				addIntent1.putExtra(
-						Intent.EXTRA_SHORTCUT_NAME,
-						getApplicationContext().getString(
-								R.string.title_activity_update));
+				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_NAME,
+						getApplicationContext()
+								.getString(R.string.title_activity_update));
 
-				addIntent
-						.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+				addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
+						shortcutIntent);
 				addIntent1.putExtra(Intent.EXTRA_SHORTCUT_INTENT,
 						shortcutIntent1);
 
-				addIntent
-						.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
-				addIntent1
-						.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
+				addIntent.setAction(
+						"com.android.launcher.action.UNINSTALL_SHORTCUT");
+				addIntent1.setAction(
+						"com.android.launcher.action.UNINSTALL_SHORTCUT");
 				getApplicationContext().sendBroadcast(addIntent);
 				getApplicationContext().sendBroadcast(addIntent1);
 				break;
@@ -301,13 +290,22 @@ public class InfoActivity extends PreferenceActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public class DownloadApp extends AsyncTask<String, Void, Boolean> {
-		private Context context;
-		private ProgressDialog progressDialog;
-
-		public void setContext(Activity a) {
-			this.context = a.getApplicationContext();
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			@NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions,
+				grantResults);
+		if (requestCode == WRITE_EXTERNAL_PERMISSION) {
+			if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+				Toast.makeText(this,
+						"This feature will not work without permission to write external storage.",
+						Toast.LENGTH_LONG).show();
+			}
 		}
+	}
+
+	public class DownloadApp extends AsyncTask<String, Void, Boolean> {
+		private ProgressDialog progressDialog;
 
 		@Override
 		protected void onPreExecute() {
@@ -319,6 +317,15 @@ public class InfoActivity extends PreferenceActivity {
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
+			if (checkSelfPermission(
+					Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+				requestPermissions(
+						new String[] {
+								Manifest.permission.WRITE_EXTERNAL_STORAGE },
+						WRITE_EXTERNAL_PERMISSION);
+				return false;
+			}
+
 			try {
 				URL url = new URL(arg0[0]);
 				HttpURLConnection c = (HttpURLConnection) url.openConnection();
@@ -328,8 +335,7 @@ public class InfoActivity extends PreferenceActivity {
 
 				File file = new File(Environment.getExternalStorageDirectory()
 						.getAbsolutePath() + "/download/");
-				File outputFile = new File(file, context.getResources()
-						.getString(R.string.app_name) + ".apk");
+				File outputFile = new File(file, "MyAppsUpdater.apk");
 
 				FileOutputStream fos = new FileOutputStream(outputFile);
 				InputStream is = c.getInputStream();
@@ -346,8 +352,8 @@ public class InfoActivity extends PreferenceActivity {
 
 				return true;
 			} catch (FileNotFoundException e) {
-				progressDialog
-						.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				progressDialog.setOnDismissListener(
+						new DialogInterface.OnDismissListener() {
 							@Override
 							public void onDismiss(DialogInterface dialog) {
 								Toast.makeText(getApplicationContext(),
@@ -359,8 +365,8 @@ public class InfoActivity extends PreferenceActivity {
 			} catch (IllegalArgumentException e) {
 				return false;
 			} catch (IOException e) {
-				progressDialog
-						.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				progressDialog.setOnDismissListener(
+						new DialogInterface.OnDismissListener() {
 
 							@Override
 							public void onDismiss(DialogInterface dialog) {
@@ -381,13 +387,13 @@ public class InfoActivity extends PreferenceActivity {
 
 			if (result) {
 				Intent intent = new Intent(Intent.ACTION_VIEW);
-				intent.setDataAndType(Uri.fromFile(new File(Environment
-						.getExternalStorageDirectory().getAbsolutePath()
-						+ "/download/"
-						+ context.getResources().getString(R.string.app_name)
-						+ ".apk")), "application/vnd.android.package-archive");
+				intent.setDataAndType(
+						Uri.fromFile(new File(Environment
+								.getExternalStorageDirectory().getAbsolutePath()
+								+ "/download/MyAppsUpdater.apk")),
+						"application/vnd.android.package-archive");
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(intent);
+				startActivity(intent);
 			}
 		}
 	}

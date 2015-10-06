@@ -16,10 +16,6 @@
 
 package com.dvd.android.updatechecker.egg.kk;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -48,6 +44,10 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 import com.dvd.android.updatechecker.R;
 
@@ -79,7 +79,7 @@ public class DessertCaseView extends FrameLayout {
 
 	private static final int[] RARE_PASTRIES = {
 
-	R.drawable.dessert_zombiegingerbread, // thx hackbod
+			R.drawable.dessert_zombiegingerbread, // thx hackbod
 			R.drawable.dessert_dandroid, // thx morrildl
 			R.drawable.dessert_jandycane, // thx nes
 
@@ -98,13 +98,8 @@ public class DessertCaseView extends FrameLayout {
 
 	private static final int NUM_PASTRIES = PASTRIES.length
 			+ RARE_PASTRIES.length;
-
-	private final SparseArray<Drawable> mDrawables = new SparseArray<Drawable>(
-			NUM_PASTRIES);
-
 	private static final float[] MASK = { 0f, 0f, 0f, 0f, 255f, 0f, 0f, 0f, 0f,
 			255f, 0f, 0f, 0f, 0f, 255f, 1f, 0f, 0f, 0f, 0f };
-
 	private static final float[] ALPHA_MASK = { 0f, 0f, 0f, 0f, 255f, 0f, 0f,
 			0f, 0f, 255f, 0f, 0f, 0f, 0f, 255f, 0f, 0f, 0f, 1f, 0f };
 	private static final float PROB_2X = 0.33f;
@@ -112,6 +107,8 @@ public class DessertCaseView extends FrameLayout {
 	private static final float PROB_3X = 0.1f;
 	private static final float PROB_4X = 0.01f;
 	static int DURATION = 500;
+	private final SparseArray<Drawable> mDrawables = new SparseArray<Drawable>(
+			NUM_PASTRIES);
 	private final int mCellSize;
 	private final Set<Point> mFreeList = new HashSet<Point>();
 	private final Handler mHandler = new Handler();
@@ -121,12 +118,31 @@ public class DessertCaseView extends FrameLayout {
 	private int mWidth, mHeight;
 	private int mRows, mColumns;
 	private View[] mCells;
+	private final Runnable mJuggle = new Runnable() {
+		@Override
+		public void run() {
+			final int N = getChildCount();
+
+			final int K = 1; // irand(1,3);
+			for (int i = 0; i < K; i++) {
+				final View child = getChildAt((int) (Math.random() * N));
+				place(child, true);
+			}
+
+			fillFreeList();
+
+			if (mStarted) {
+				mHandler.postDelayed(mJuggle, DELAY);
+			}
+		}
+	};
 
 	public DessertCaseView(Context context) {
 		this(context, null);
 
-		int katDuration = context.getSharedPreferences("preferenceggs",
-				Context.MODE_PRIVATE).getInt("kk_duration", 500);
+		int katDuration = context
+				.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE)
+				.getInt("kk_duration", 500);
 
 		try {
 
@@ -233,7 +249,8 @@ public class DessertCaseView extends FrameLayout {
 	}
 
 	@Override
-	protected synchronized void onSizeChanged(int w, int h, int oldw, int oldh) {
+	protected synchronized void onSizeChanged(int w, int h, int oldw,
+			int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		if (mWidth == w && mHeight == h)
 			return;
@@ -356,25 +373,6 @@ public class DessertCaseView extends FrameLayout {
 		place(v, new Point(irand(0, mColumns), irand(0, mRows)), animate);
 	}
 
-	private final Runnable mJuggle = new Runnable() {
-		@Override
-		public void run() {
-			final int N = getChildCount();
-
-			final int K = 1; // irand(1,3);
-			for (int i = 0; i < K; i++) {
-				final View child = getChildAt((int) (Math.random() * N));
-				place(child, true);
-			}
-
-			fillFreeList();
-
-			if (mStarted) {
-				mHandler.postDelayed(mJuggle, DELAY);
-			}
-		}
-	};
-
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@SuppressLint("InlinedApi")
 	public synchronized void place(View v, Point pt, boolean animate) {
@@ -428,7 +426,8 @@ public class DessertCaseView extends FrameLayout {
 							.setInterpolator(new AccelerateInterpolator())
 							.setListener(new Animator.AnimatorListener() {
 								@Override
-								public void onAnimationStart(Animator animator) {
+								public void onAnimationStart(
+										Animator animator) {
 								}
 
 								@Override
@@ -437,11 +436,13 @@ public class DessertCaseView extends FrameLayout {
 								}
 
 								@Override
-								public void onAnimationCancel(Animator animator) {
+								public void onAnimationCancel(
+										Animator animator) {
 								}
 
 								@Override
-								public void onAnimationRepeat(Animator animator) {
+								public void onAnimationRepeat(
+										Animator animator) {
 								}
 							}).start();
 				} else {
@@ -468,12 +469,11 @@ public class DessertCaseView extends FrameLayout {
 			set1.start();
 
 			AnimatorSet set2 = new AnimatorSet();
-			set2.playTogether(
-					ObjectAnimator.ofFloat(v, View.ROTATION, rot),
-					ObjectAnimator.ofFloat(v, View.X, i * mCellSize
-							+ (scale - 1) * mCellSize / 2),
-					ObjectAnimator.ofFloat(v, View.Y, j * mCellSize
-							+ (scale - 1) * mCellSize / 2));
+			set2.playTogether(ObjectAnimator.ofFloat(v, View.ROTATION, rot),
+					ObjectAnimator.ofFloat(v, View.X,
+							i * mCellSize + (scale - 1) * mCellSize / 2),
+					ObjectAnimator.ofFloat(v, View.Y,
+							j * mCellSize + (scale - 1) * mCellSize / 2));
 			set2.setInterpolator(new DecelerateInterpolator());
 			set2.setDuration(DURATION);
 			set2.start();

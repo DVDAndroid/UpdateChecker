@@ -94,7 +94,8 @@
 
     <string name="title_checking">Check updates for this app!</string>
     <string name="no_int">Please turn on Wi-Fi or mobile data.</string>
-    <string name="choose_platlogo">Choose Android L/Lollipop Platlogo</string>
+    <string name="choose_platlogo_lp">Choose Android L/Lollipop Platlogo</string>
+    <string name="choose_platlogo_m">Choose Android M/Marshmallow Platlogo</string>
     <string name="mod_copy">Copying Mode</string>
     <string name="what_mod_copy">Click on an information to copy the contents in clipboard</string>
     <string name="action_info">Info</string>

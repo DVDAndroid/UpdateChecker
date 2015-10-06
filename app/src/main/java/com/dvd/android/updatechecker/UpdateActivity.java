@@ -13,37 +13,16 @@ public class UpdateActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		String ver;
-		switch (Build.VERSION.SDK_INT) {
-			case Build.VERSION_CODES.KITKAT:
-				ver = "KitKat";
-				break;
-			case Build.VERSION_CODES.LOLLIPOP:
-			case Build.VERSION_CODES.LOLLIPOP_MR1:
-				ver = "Lollipop ";
-				break;
-			default:
-				ver = "";
-				break;
-		}
-
-		switch (Build.VERSION.RELEASE) {
-			case "L":
-			case "M":
-				ver = "";
-				break;
-		}
-
-		openActivity(ver);
+		openActivity();
 	}
 
-	private void openActivity(String ver) {
+	private void openActivity() {
 
-		Toast.makeText(
-				getApplicationContext(),
+		Toast.makeText(getApplicationContext(),
 				getApplicationContext().getString(R.string.curr_ver) + "\n"
-						+ "\n" + "Android " + ver + Build.VERSION.RELEASE
-						+ "\n" + "              API:" + Build.VERSION.SDK_INT,
+						+ "\n" + "Android " + Utils.getAndroidVersion()
+						+ Build.VERSION.RELEASE + "\n" + "              API:"
+						+ Build.VERSION.SDK_INT,
 				Utils.duration).show();
 
 		try {
@@ -52,8 +31,8 @@ public class UpdateActivity extends Activity {
 					"com.google.android.gms.update.SystemUpdateActivity"));
 
 		} catch (ActivityNotFoundException ex) {
-			Toast.makeText(getApplicationContext(),
-					"error! please update gsm!", Utils.duration).show();
+			Toast.makeText(getApplicationContext(), "error! please update gsm!",
+					Utils.duration).show();
 			finish();
 		}
 	}

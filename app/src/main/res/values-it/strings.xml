@@ -91,7 +91,8 @@
     <string name="title_checking">Controlla aggiornamenti per questa app!</string>
     <string name="no_int">Per favore, accendi il Wi-Fi o la connessione dati.</string>
 
-    <string name="choose_platlogo">Scegli Android L/Lollipop Platlogo</string>
+    <string name="choose_platlogo_lp">Scegli Android L/Lollipop Platlogo</string>
+    <string name="choose_platlogo_m">Scegli Android M/Marshmallow Platlogo</string>
     <string name="mod_copy">Modalità copiatore</string>
     <string name="what_mod_copy">Clicca su una informazione per copiare il contenuto negli appunti</string>
     <string name="clipboard_message">Copiato nella clipboard:</string>

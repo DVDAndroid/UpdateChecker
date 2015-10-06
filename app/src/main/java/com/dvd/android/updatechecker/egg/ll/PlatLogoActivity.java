@@ -88,8 +88,9 @@ public class PlatLogoActivity extends Activity {
 	public void onAttachedToWindow() {
 		final DisplayMetrics dm = getResources().getDisplayMetrics();
 		final float dp = dm.density;
-		final int size = (int) (Math.min(
-				Math.min(dm.widthPixels, dm.heightPixels), 600 * dp) - 100 * dp);
+		final int size = (int) (Math
+				.min(Math.min(dm.widthPixels, dm.heightPixels), 600 * dp)
+				- 100 * dp);
 		final View stick = new View(this) {
 			Paint mPaint = new Paint();
 			Path mShadow = new Path();
@@ -128,14 +129,16 @@ public class PlatLogoActivity extends Activity {
 				c.drawPath(mShadow, mPaint);
 			}
 		};
-		mLayout.addView(stick, new FrameLayout.LayoutParams((int) (32 * dp),
-				ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER_HORIZONTAL));
+		mLayout.addView(stick,
+				new FrameLayout.LayoutParams((int) (32 * dp),
+						ViewGroup.LayoutParams.MATCH_PARENT,
+						Gravity.CENTER_HORIZONTAL));
 		stick.setAlpha(0f);
 		final ImageView im = new ImageView(this);
 		im.setTranslationZ(20);
 		im.setScaleX(0);
 		im.setScaleY(0);
-		final Drawable platlogo = getDrawable(R.drawable.platlogo);
+		final Drawable platlogo = getDrawable(R.drawable.platlogo_lp);
 		platlogo.setAlpha(0);
 		im.setImageDrawable(platlogo);
 		im.setBackground(makeRipple());
@@ -181,15 +184,14 @@ public class PlatLogoActivity extends Activity {
 								public void run() {
 									try {
 										startActivity(new Intent(
-												Intent.ACTION_MAIN)
-												.setFlags(
+												Intent.ACTION_MAIN).setFlags(
 														Intent.FLAG_ACTIVITY_NEW_TASK
 																| Intent.FLAG_ACTIVITY_CLEAR_TASK
 																| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-												// .addCategory("com.android.internal.category.PLATLOGO"));
-												.setClassName(
-														"com.dvd.android.updatechecker",
-														"com.dvd.android.updatechecker.egg.ll.LLandActivity"));
+														// .addCategory("com.android.internal.category.PLATLOGO"));
+														.setClassName(
+																"com.dvd.android.updatechecker",
+																"com.dvd.android.updatechecker.egg.ll.LLandActivity"));
 									} catch (ActivityNotFoundException ex) {
 										Log.e("PlatLogoActivity",
 												"No more eggs.");
@@ -228,8 +230,8 @@ public class PlatLogoActivity extends Activity {
 				}
 			}
 		});
-		mLayout.addView(im, new FrameLayout.LayoutParams(size, size,
-				Gravity.CENTER));
+		mLayout.addView(im,
+				new FrameLayout.LayoutParams(size, size, Gravity.CENTER));
 		im.animate().scaleX(0.3f).scaleY(0.3f).setInterpolator(mInterpolator)
 				.setDuration(500).setStartDelay(800).start();
 	}
